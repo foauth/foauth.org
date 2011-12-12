@@ -11,7 +11,7 @@ Expires: October 8, 2011                                        D. Hardt
 
 
                   The OAuth 2.0 Authorization Protocol
-                         draft-ietf-oauth-v2-14
+                         draft-ietf-oauth-v2-15
 
 Abstract
 
@@ -585,13 +585,12 @@ Internet-Draft                  OAuth 2.0                     April 2011
    MAY include a query component as defined by [RFC3986] section 3,
    which MUST be retained when adding additional query parameters.
 
-   Requests to the authorization endpoint result in resource owner
-   authentication and the transmission of sensitive information.  If the
-   response includes an access token, the authorization server MUST
-   require TLS 1.2 as defined in [RFC5246] and MAY support additional
-   transport-layer mechanisms meeting its security requirements.  If the
-   response does not include an access token, the authorization server
-   SHOULD require TLS 1.2 and any additional transport-layer mechanism
+   Since requests to the authorization endpoint result in user
+   authentication and the transmission of clear-text credentials (in the
+   HTTP response), the authorization server MUST require the use of a
+   transport-layer security mechanism when sending requests to the token
+   endpoints.  The authorization server MUST support TLS 1.2 as defined
+   in [RFC5246], and MAY support additional transport-layer mechanisms
    meeting its security requirements.
 
    The authorization server MUST support the use of the HTTP "GET"
@@ -609,6 +608,7 @@ Internet-Draft                  OAuth 2.0                     April 2011
    omitted from the request.  The authorization server SHOULD ignore
    unrecognized request parameters.
 
+   Request and response parameters MUST NOT repeat more than once,
 
 
 
@@ -617,7 +617,6 @@ Hammer-Lahav, et al.     Expires October 8, 2011               [Page 11]
 Internet-Draft                  OAuth 2.0                     April 2011
 
 
-   Request and response parameters MUST NOT repeat more than once,
    unless noted otherwise.
 
 2.1.1.  Redirection URI
@@ -665,6 +664,7 @@ Internet-Draft                  OAuth 2.0                     April 2011
    authorization server MUST require the use of a transport-layer
    security mechanism when sending requests to the token endpoints.  The
    authorization server MUST support TLS 1.2 as defined in [RFC5246],
+   and MAY support additional transport-layer mechanisms meeting its
 
 
 
@@ -673,7 +673,6 @@ Hammer-Lahav, et al.     Expires October 8, 2011               [Page 12]
 Internet-Draft                  OAuth 2.0                     April 2011
 
 
-   and MAY support additional transport-layer mechanisms meeting its
    security requirements.
 
    The token endpoint requires client authentication as described in
@@ -721,6 +720,7 @@ Internet-Draft                  OAuth 2.0                     April 2011
    other means.  For readability purposes only, this specification is
    written under the assumption that the authorization server requires
    some form of client authentication.  However, such language does not
+   affect the authorization server's discretion in allowing
 
 
 
@@ -729,7 +729,6 @@ Hammer-Lahav, et al.     Expires October 8, 2011               [Page 13]
 Internet-Draft                  OAuth 2.0                     April 2011
 
 
-   affect the authorization server's discretion in allowing
    unauthenticated client requests.
 
 3.1.  Client Password Authentication
@@ -777,6 +776,7 @@ Internet-Draft                  OAuth 2.0                     April 2011
 
 
    When using a method other than client password authentication to
+   exchange an authorization code grant type, the authorization server
 
 
 
@@ -785,7 +785,6 @@ Hammer-Lahav, et al.     Expires October 8, 2011               [Page 14]
 Internet-Draft                  OAuth 2.0                     April 2011
 
 
-   exchange an authorization code grant type, the authorization server
    MUST define a method for mapping the client credentials to the client
    identifier used to obtain the authorization code.
 
@@ -808,6 +807,7 @@ Internet-Draft                  OAuth 2.0                     April 2011
    capable of interacting with the resource owner's user-agent
    (typically a web browser) and capable of receiving incoming requests
    (via redirection) from the authorization server.
+
 
 
 
