@@ -4,13 +4,13 @@
 Network Working Group                               E. Hammer-Lahav, Ed.
 Internet-Draft                                                    Yahoo!
 Intended status: Standards Track                             D. Recordon
-Expires: November 10, 2010                                      Facebook
+Expires: November 14, 2010                                      Facebook
                                                                 D. Hardt
-                                                             May 9, 2010
+                                                            May 13, 2010
 
 
                          The OAuth 2.0 Protocol
-                         draft-ietf-oauth-v2-04
+                         draft-ietf-oauth-v2-05
 
 Abstract
 
@@ -37,7 +37,7 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on November 10, 2010.
+   This Internet-Draft will expire on November 14, 2010.
 
 Copyright Notice
 
@@ -52,7 +52,7 @@ Copyright Notice
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 1]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 1]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -73,57 +73,54 @@ Table of Contents
      2.4.  Notational Conventions . . . . . . . . . . . . . . . . . .  8
      2.5.  Conformance  . . . . . . . . . . . . . . . . . . . . . . .  8
    3.  Obtaining an Access Token  . . . . . . . . . . . . . . . . . .  9
-     3.1.  Authorization Endpoint . . . . . . . . . . . . . . . . . .  9
-     3.2.  Token Endpoint . . . . . . . . . . . . . . . . . . . . . . 10
-       3.2.1.  Response Format  . . . . . . . . . . . . . . . . . . . 10
-     3.3.  Flow Parameters  . . . . . . . . . . . . . . . . . . . . . 12
-     3.4.  Client Credentials . . . . . . . . . . . . . . . . . . . . 12
-     3.5.  User-Agent Flow  . . . . . . . . . . . . . . . . . . . . . 12
-       3.5.1.  Client Requests Authorization  . . . . . . . . . . . . 14
-       3.5.2.  Client Extracts Access Token . . . . . . . . . . . . . 17
-     3.6.  Web Server Flow  . . . . . . . . . . . . . . . . . . . . . 17
-       3.6.1.  Client Requests Authorization  . . . . . . . . . . . . 19
-       3.6.2.  Client Requests Access Token . . . . . . . . . . . . . 21
-     3.7.  Device Flow  . . . . . . . . . . . . . . . . . . . . . . . 23
-       3.7.1.  Client Requests Authorization  . . . . . . . . . . . . 25
-       3.7.2.  Client Requests Access Token . . . . . . . . . . . . . 27
-     3.8.  Username and Password Flow . . . . . . . . . . . . . . . . 29
-       3.8.1.  Client Requests Access Token . . . . . . . . . . . . . 30
-     3.9.  Client Credentials Flow  . . . . . . . . . . . . . . . . . 32
-       3.9.1.  Client Requests Access Token . . . . . . . . . . . . . 32
-     3.10. Assertion Flow . . . . . . . . . . . . . . . . . . . . . . 34
-       3.10.1. Client Requests Access Token . . . . . . . . . . . . . 35
-   4.  Refreshing an Access Token . . . . . . . . . . . . . . . . . . 36
-   5.  Accessing a Protected Resource . . . . . . . . . . . . . . . . 38
-     5.1.  The Authorization Request Header . . . . . . . . . . . . . 39
-     5.2.  Bearer Token Requests  . . . . . . . . . . . . . . . . . . 40
-       5.2.1.  URI Query Parameter  . . . . . . . . . . . . . . . . . 41
-       5.2.2.  Form-Encoded Body Parameter  . . . . . . . . . . . . . 41
-     5.3.  Cryptographic Tokens Requests  . . . . . . . . . . . . . . 42
-       5.3.1.  The 'hmac-sha256' Algorithm  . . . . . . . . . . . . . 43
-   6.  Identifying a Protected Resource . . . . . . . . . . . . . . . 46
-     6.1.  The WWW-Authenticate Response Header . . . . . . . . . . . 46
-       6.1.1.  The 'realm' Attribute  . . . . . . . . . . . . . . . . 47
-       6.1.2.  The 'authorization-uri' Attribute  . . . . . . . . . . 47
+     3.1.  Client Credentials . . . . . . . . . . . . . . . . . . . .  9
+     3.2.  End-User Endpoint  . . . . . . . . . . . . . . . . . . . .  9
+     3.3.  Token Endpoint . . . . . . . . . . . . . . . . . . . . . . 10
+       3.3.1.  Client Authentication  . . . . . . . . . . . . . . . . 11
+       3.3.2.  Response Format  . . . . . . . . . . . . . . . . . . . 12
+     3.4.  Flow Parameters  . . . . . . . . . . . . . . . . . . . . . 14
+     3.5.  User-Agent Flow  . . . . . . . . . . . . . . . . . . . . . 15
+       3.5.1.  Client Requests Authorization  . . . . . . . . . . . . 16
+       3.5.2.  Client Extracts Access Token . . . . . . . . . . . . . 19
+     3.6.  Web Server Flow  . . . . . . . . . . . . . . . . . . . . . 20
+       3.6.1.  Client Requests Authorization  . . . . . . . . . . . . 21
+       3.6.2.  Client Requests Access Token . . . . . . . . . . . . . 24
+     3.7.  Device Flow  . . . . . . . . . . . . . . . . . . . . . . . 25
+       3.7.1.  Client Requests Authorization  . . . . . . . . . . . . 27
+       3.7.2.  Client Requests Access Token . . . . . . . . . . . . . 29
+     3.8.  Username and Password Flow . . . . . . . . . . . . . . . . 31
+       3.8.1.  Client Requests Access Token . . . . . . . . . . . . . 33
+     3.9.  Client Credentials Flow  . . . . . . . . . . . . . . . . . 35
+       3.9.1.  Client Requests Access Token . . . . . . . . . . . . . 35
+     3.10. Assertion Flow . . . . . . . . . . . . . . . . . . . . . . 37
+       3.10.1. Client Requests Access Token . . . . . . . . . . . . . 38
+   4.  Refreshing an Access Token . . . . . . . . . . . . . . . . . . 40
+   5.  Accessing a Protected Resource . . . . . . . . . . . . . . . . 42
+     5.1.  The Authorization Request Header . . . . . . . . . . . . . 43
+     5.2.  Bearer Token Requests  . . . . . . . . . . . . . . . . . . 44
+       5.2.1.  URI Query Parameter  . . . . . . . . . . . . . . . . . 45
+       5.2.2.  Form-Encoded Body Parameter  . . . . . . . . . . . . . 45
+     5.3.  Cryptographic Tokens Requests  . . . . . . . . . . . . . . 46
+       5.3.1.  The 'hmac-sha256' Algorithm  . . . . . . . . . . . . . 47
+   6.  Identifying a Protected Resource . . . . . . . . . . . . . . . 50
+     6.1.  The WWW-Authenticate Response Header . . . . . . . . . . . 50
+   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 51
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 2]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 2]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
 
-       6.1.3.  The 'algorithms' Attribute . . . . . . . . . . . . . . 47
-       6.1.4.  The 'error' Attribute  . . . . . . . . . . . . . . . . 47
-   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 47
-   8.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 47
-   9.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 47
-   Appendix A.  Differences from OAuth 1.0a . . . . . . . . . . . . . 47
-   Appendix B.  Document History  . . . . . . . . . . . . . . . . . . 48
-   10. References . . . . . . . . . . . . . . . . . . . . . . . . . . 49
-     10.1. Normative References . . . . . . . . . . . . . . . . . . . 49
-     10.2. Informative References . . . . . . . . . . . . . . . . . . 50
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 50
+   8.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 51
+   9.  Acknowledgements . . . . . . . . . . . . . . . . . . . . . . . 52
+   Appendix A.  Differences from OAuth 1.0a . . . . . . . . . . . . . 52
+   Appendix B.  Document History  . . . . . . . . . . . . . . . . . . 52
+   10. References . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+     10.1. Normative References . . . . . . . . . . . . . . . . . . . 53
+     10.2. Informative References . . . . . . . . . . . . . . . . . . 55
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 55
 
 
 
@@ -164,7 +161,10 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 3]
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 3]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -220,7 +220,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 4]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 4]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -260,9 +260,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
          The authorization server may be the same server as the resource
          server, or a separate entity.
 
-   authorization endpoint
+   end-user endpoint
          The authorization server's HTTP endpoint capable of
-         authenticating the resource owner and obtaining authorization.
+         authenticating the end-user and obtaining authorization.
 
    token endpoint
          The authorization server's HTTP endpoint capable of issuing
@@ -276,7 +276,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 5]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 5]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -332,7 +332,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 6]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 6]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -388,7 +388,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 7]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 7]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -444,7 +444,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 8]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 8]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -470,42 +470,67 @@ Internet-Draft                  OAuth 2.0                       May 2010
    the resource owner as long as the authorization grant is still valid.
    The token refresh method is described in Section 4.
 
-3.1.  Authorization Endpoint
+3.1.  Client Credentials
 
-   Clients direct the resource owner to the authorization endpoint to
-   approve their access request.  Before granting access, the resource
-   owner first authenticates with the authorization server.  The way in
-   which the authorization server authenticates the end-user (e.g.
-   username and password login, OpenID, session cookies) and in which
-   the authorization server obtains the end-user's authorization,
-   including whether it uses a secure channel such as TLS/SSL, is beyond
-   the scope of this specification.  However, the authorization server
-   MUST first verify the identity of the end-user.
+   When requesting access from the authorization server, the client
+   identifies itself using a set of client credentials.  The client
+   credentials include a client identifier and an OPTIONAL symmetric
+   shared secret.  The means through which the client obtains these
+   credentials are beyond the scope of this specification, but usually
+   involve registration with the authorization server.
 
-   The URI of the authorization endpoint can be found in the service
-   documentation, or can be obtained by the client by making an
-   unauthorized protected resource request (from the "WWW-Authenticate"
-   response header auth-uri (Section 6.1.2) attribute).
+   The client identifier is used by the authorization server to
+   establish the identity of the client for the purpose of presenting
+   information to the resource owner prior to granting access, as well
+   as for providing different service levels to different clients.  They
+   can also be used to block unauthorized clients from requesting
+   access.
 
-   The authorization endpoint advertised by the resource server MAY
-   include a query component as defined by [RFC3986] section 3.
+   Due to the nature of some clients, authorization servers SHOULD NOT
+   make assumptions about the confidentiality of client credentials
+   without establishing trust with the client operator.  Authorization
+   servers SHOULD NOT issue client secrets to clients incapable of
+   keeping their secrets confidential.
 
-   Since requests to the authorization endpoint result in user
-   authentication and the transmission of sensitive values, the
-   authorization server SHOULD require the use of a transport-layer
-   mechanism such as TLS/SSL (or a secure channel with equivalent
-   protections) when sending requests to the authorization endpoints.
+3.2.  End-User Endpoint
+
+   In flows that involved an end-user, clients direct the end-user to
+   the end-user endpoint to approve their access request.  When
+   accessing the end-user endpoint, the end-user first authenticates
 
 
 
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010               [Page 9]
+Hammer-Lahav, et al.    Expires November 14, 2010               [Page 9]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
 
-3.2.  Token Endpoint
+   with the authorization server, and then approves or denies the access
+   request.
+
+   The way in which the authorization server authenticates the end-user
+   (e.g. username and password login, OpenID, session cookies) and in
+   which the authorization server obtains the end-user's authorization,
+   including whether it uses a secure channel such as TLS/SSL, is beyond
+   the scope of this specification.  However, the authorization server
+   MUST first verify the identity of the end-user.
+
+   The URI of the end-user endpoint can be found in the service
+   documentation, or can be obtained by the client by making an
+   unauthorized protected resource request (from the "WWW-Authenticate"
+   response header "user-uri" attribute as described by Section 5.1).
+
+   The end-user endpoint advertised by the resource server MAY include a
+   query component as defined by [RFC3986] section 3, which must be
+   retained when adding additional query parameters.
+
+   Since requests to the end-user endpoint result in user authentication
+   and the transmission of sensitive values, the authorization server
+   SHOULD require the use of a transport-layer mechanism such as TLS/SSL
+   (or a secure channel with equivalent protections) when sending
+   requests to the end-user endpoint.
+
+3.3.  Token Endpoint
 
    After obtaining authorization from the resource owner, clients
    request an access token from the authorization server's token
@@ -514,7 +539,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
    The URI of the token endpoint can be found in the service
    documentation, or can be obtained by the client by making an
    unauthorized protected resource request (from the "WWW-Authenticate"
-   response header token-uri (Section 6.1.2) attribute).
+   response header "token-uri" attribute as described by Section 5.1).
 
    The token endpoint advertised by the resource server MAY include a
    query component as defined by [RFC3986] section 3.
@@ -525,41 +550,144 @@ Internet-Draft                  OAuth 2.0                       May 2010
    mechanism such as TLS/SSL (or a secure channel with equivalent
    protections) when sending requests to the token endpoints.
 
-3.2.1.  Response Format
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 10]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
+3.3.1.  Client Authentication
+
+   The token endpoint requires the client to authenticate itself to the
+   authorization server.  This is done by including the client
+   identifier (and optional secret) in the request.  The client
+   identifier and secret are included in the request using two request
+   parameters: "client_id" and "client_secret".
+
+   For example (line breaks are for display purposes only):
+
+
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Content-Type: application/x-www-form-urlencoded
+
+     type=web_server&client_id=s6BhdRkqt3&
+     client_secret=gX1fBat3bV&code=i1WsRn1uB1&
+     redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+
+
+   The client MAY include the client credentials using an HTTP
+   authentication scheme instead of using the "client_id" and
+   "client_secret" request parameters.  Including the client credentials
+   using an HTTP authentication scheme fullfills the requirements of
+   including the parameters as defined by the various flows.  The client
+   MUST NOT include the client credentials using more than one
+   mechanism.
+
+   The authorization server MUST accept the client credentials using
+   both the request parameters, and the HTTP Basic authentication scheme
+   as defined in [RFC2617].  The authorization server MAY support
+   additional HTTP authentication schemes.
+
+   For example (line breaks are for display purposes only):
+
+
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
+     Content-Type: application/x-www-form-urlencoded
+
+     type=web_server&code=i1WsRn1uB1&
+     redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 11]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
+3.3.2.  Response Format
 
    Authorization servers respond to client requests by including a set
    of response parameters in the entity body of the HTTP response.  The
-   response uses the "application/json" media type as defined by
-   [RFC4627].
+   response uses one of three formats based on the format requested by
+   the client (using the "format" request parameter):
 
-   The parameters are serialized into a JSON structure by adding each
-   parameter at the highest structure level.  Parameter names and string
-   values are included as JSON strings.  Numerical number are included
-   as JSON numbers.
+   o  The "application/json" media type as defined by [RFC4627].  The
+      parameters are serialized into a JSON structure by adding each
+      parameter at the highest structure level.  Parameter names and
+      string values are included as JSON strings.  Numerical values are
+      included as JSON numbers.
+
+      For example:
+
+
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600,
+       "refresh_token":"8xLOxBtZp8"
+     }
+
+
+   o  The "application/xml" media type as defined by [RFC3023].  The
+      parameters are serialized into an XML structure by adding each
+      parameter as a child element of the root "<OAuth>" element. [[ Add
+      namespace ]]
+
+      For example:
+
+
+     <?xml version='1.0' encoding="utf-8"?>
+     <OAuth>
+       <access_token>SlAV32hkKG</access_token>
+       <expires_in>3600</expires_in>
+       <refresh_token>8xLOxBtZp8</refresh_token>
+     </OAuth>
+
+
+   o  The "application/x-www-form-urlencoded" media type as defined by
+      [W3C.REC-html40-19980424].
+
+      For example (line breaks are for display purposes only):
+
+
+     access_token=SlAV32hkKG&expires_in=3600&
+     refresh_token=8xLOxBtZp8
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 12]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
 
    The authorization server MUST include the HTTP "Cache-Control"
    response header field with a value of "no-store" in any response
    containing tokens, secrets, or other sensitive information.
 
-3.2.1.1.  Access Token Response
+3.3.2.1.  Access Token Response
 
    After receiving and verifying a valid and authorized access token
    request from the client (as described in each of the flows below),
-   the authorization server constructs a JSON-formatted response which
-   includes the common parameters set as well as additional flow-
-   specific parameters.  The formatted parameters are sent to the client
-   in the entity body of the HTTP response with a 200 status code (OK).
+   the authorization server constructs the response using the format
+   requested by the client, which includes the common parameters set as
+   well as additional flow-specific parameters.  The formatted
+   parameters are sent to the client in the entity body of the HTTP
+   response with a 200 status code (OK).
 
    The token response contains the following common parameters:
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 10]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
 
    access_token
          REQUIRED.  The access token issued by the authorization server.
@@ -584,18 +712,38 @@ Internet-Draft                  OAuth 2.0                       May 2010
          and each string adds an additional access range to the
          requested scope.
 
-   For example (line breaks are for display purposes only):
+
+
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 13]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"access_token":"SlAV32hkKG","expires_in":3600,
-     "refresh_token":"8xLOxBtZp8"}
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600,
+       "refresh_token":"8xLOxBtZp8"
+     }
 
 
-3.2.1.2.  Error Response
+3.3.2.2.  Error Response
 
    If the token request is invalid or unauthorized, the authorization
    server constructs a JSON-formatted response which includes the common
@@ -609,14 +757,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
          REQUIRED.  The parameter value MUST be set to one of the values
          specified by each flow.
 
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 11]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    For example:
 
 
@@ -624,10 +764,12 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"incorrect_client_credentials"}
+     {
+       "error":"incorrect_client_credentials"
+     }
 
 
-3.3.  Flow Parameters
+3.4.  Flow Parameters
 
    The sizes of tokens and other values received from the authorization
    server, are left undefined by this specification.  Clients should
@@ -635,29 +777,15 @@ Internet-Draft                  OAuth 2.0                       May 2010
    the expected size of any value they issue.
 
    Unless otherwise noted, all the protocol parameter names and values
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 14]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    are case sensitive.
-
-3.4.  Client Credentials
-
-   When requesting access from the authorization server, the client
-   identifies itself using a set of client credentials.  The client
-   credentials include a client identifier and an OPTIONAL symmetric
-   shared secret.  The means through which the client obtains these
-   credentials are beyond the scope of this specification, but usually
-   involve registration with the authorization server.
-
-   The client identifier is used by the authorization server to
-   establish the identity of the client for the purpose of presenting
-   information to the resource owner prior to granting access, as well
-   as for providing different service levels to different clients.  They
-   can also be used to block unauthorized clients from requesting
-   access.
-
-   Due to the nature of some clients, authorization servers SHOULD NOT
-   make assumptions about the confidentiality of client credentials
-   without establishing trust with the client operator.  Authorization
-   servers SHOULD NOT issue client secrets to clients incapable of
-   keeping their secrets confidential.
 
 3.5.  User-Agent Flow
 
@@ -665,14 +793,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
    applications residing in a user-agent, typically implemented in a
    browser using a scripting language such as JavaScript.  These clients
    cannot keep client secrets confidential and the authentication of the
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 12]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    client is based on the user-agent's same-origin policy.
 
    Unlike other flows in which the client makes separate authorization
@@ -713,21 +833,19 @@ Internet-Draft                  OAuth 2.0                       May 2010
                                  Figure 3
 
    The user-agent flow illustrated in Figure 3 includes the following
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 15]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    steps:
 
    (A)  The client sends the user-agent to the authorization server and
         includes its client identifier and redirection URI in the
         request.
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 13]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
 
    (B)  The authorization server authenticates the end-user (via the
         user-agent) and establishes whether the end-user grants or
@@ -754,13 +872,13 @@ Internet-Draft                  OAuth 2.0                       May 2010
    In order for the end-user to grant the client access, the client
    sends the end-user to the authorization server.  The client
    constructs the request URI by adding the following URI query
-   parameters to the user authorization endpoint URI:
+   parameters to the end-user endpoint URI:
 
    type
          REQUIRED.  The parameter value MUST be set to "user_agent".
 
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    redirect_uri
          REQUIRED unless a redirection URI has been established between
@@ -772,18 +890,18 @@ Internet-Draft                  OAuth 2.0                       May 2010
          MAY restrict the redirection URI to not include a query
          component as defined by [RFC3986] section 3.
 
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 16]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    state
          OPTIONAL.  An opaque value used by the client to maintain state
          between the request and callback.  The authorization server
          includes this value when redirecting the user-agent back to the
          client.
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 14]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
 
    scope
          OPTIONAL.  The scope of the access request expressed as a list
@@ -827,20 +945,20 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    If the client has previously registered a redirection URI with the
    authorization server, the authorization server MUST verify that the
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 17]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    redirection URI received matches the registered URI associated with
    the client identifier.
 
    The authorization server authenticates the end-user and obtains an
    authorization decision (by asking the end-user or establishing
    approval via other means).  The authorization server sends the end-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 15]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    user's user-agent to the provided client redirection URI using an
    HTTP redirection response.
 
@@ -879,23 +997,24 @@ Internet-Draft                  OAuth 2.0                       May 2010
     Location: http://example.com/rd#access_token=FJQbwq9&expires_in=3600
 
 
+
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 18]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
 3.5.1.2.  End-user Denies Authorization
 
    If the end-user denied the access request, the authorization server
    responds to the client by adding the following parameters, using the
    "application/x-www-form-urlencoded" format as defined by
    [W3C.REC-html40-19980424], to the redirection URI fragment:
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 16]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
 
    error
          REQUIRED.  The parameter value MUST be set to "user_denied".
@@ -938,19 +1057,20 @@ Internet-Draft                  OAuth 2.0                       May 2010
    agent, and extracting the access token (and other parameters)
    contained in the fragment.
 
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 19]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
 3.6.  Web Server Flow
 
    The web server flow is a user delegation flow suitable for clients
    capable of interacting with the end-user's user-agent (typically a
    web browser) and capable of receiving incoming requests from the
    authorization server (capable of acting as an HTTP server).
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 17]
-
-Internet-Draft                  OAuth 2.0                       May 2010
 
 
      +----------+         Client Identifier       +---------------+
@@ -979,10 +1099,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
    steps:
 
    (A)  The web client initiates the flow by redirecting the end-user's
-        user-agent to the authorization endpoint with its client
-        identifier and a redirect URI to which the authorization server
-        will send the end-user back once authorization is received (or
-        denied).
+        user-agent to the end-user endpoint with its client identifier
+        and a redirect URI to which the authorization server will send
+        the end-user back once authorization is received (or denied).
 
    (B)  The authorization server authenticates the end-user (via the
         user-agent) and establishes whether the end-user grants or
@@ -993,21 +1112,19 @@ Internet-Draft                  OAuth 2.0                       May 2010
         URI provided earlier.  The authorization includes a verification
         code for the client to use to obtain an access token.
 
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 20]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    (D)  The client requests an access token from the authorization
         server by including its client credentials (identifier and
         secret), as well as the verification code received in the
         previous step.
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 18]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
 
    (E)  The authorization server validates the client credentials and
         the verification code and responds back with the access token.
@@ -1017,13 +1134,13 @@ Internet-Draft                  OAuth 2.0                       May 2010
    In order for the end-user to grant the client access, the client
    sends the end-user to the authorization server.  The client
    constructs the request URI by adding the following URI query
-   parameters to the user authorization endpoint URI:
+   parameters to the end-user endpoint URI:
 
    type
          REQUIRED.  The parameter value MUST be set to "web_server".
 
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    redirect_uri
          REQUIRED unless a redirection URI has been established between
@@ -1049,6 +1166,17 @@ Internet-Draft                  OAuth 2.0                       May 2010
          and each string adds an additional access range to the
          requested scope.
 
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 21]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    immediate
          OPTIONAL.  The parameter value must be set to "true" or
          "false".  If set to "true", the authorization server MUST NOT
@@ -1057,14 +1185,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
          end-user's identity via other means (e.g. browser cookies) and
          checks if the end-user has previously approved an identical
          access request by the same client and if that access grant is
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 19]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
          still active.  If the authorization server does not support an
          immediate check or if it is unable to establish the end-user's
          identity or approval status, it MUST deny the request without
@@ -1103,6 +1223,16 @@ Internet-Draft                  OAuth 2.0                       May 2010
    constructs the request URI by adding the following parameters to the
    query component of redirection URI provided by the client:
 
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 22]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    code
          REQUIRED.  The verification code generated by the authorization
          server.
@@ -1113,14 +1243,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
          the client.
 
    The verification code should expire shortly after it is issued and
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 20]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    allowed for a single use.
 
    For example, the authorization server redirects the end-user's user-
@@ -1161,6 +1283,12 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Host: client.example.com
 
 
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 23]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    The authorization flow concludes unsuccessfully.
 
 3.6.2.  Client Requests Access Token
@@ -1170,22 +1298,15 @@ Internet-Draft                  OAuth 2.0                       May 2010
    constructs a request URI by adding the following parameters to the
    request:
 
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 21]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    type
          REQUIRED.  The parameter value MUST be set to "web_server".
 
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    client_secret
          REQUIRED if the client identifier has a matching secret.  The
-         client secret as described in Section 3.4.
+         client secret as described in Section 3.1.
 
    code
          REQUIRED.  The verification code received from the
@@ -1200,6 +1321,11 @@ Internet-Draft                  OAuth 2.0                       May 2010
          bearer token (an access token without a matching secret) as
          described by Section 5.2.
 
+   format
+         OPTIONAL.  The response format requested by the client.  Value
+         MUST be one of "json", "xml", or "form".  Defaults to "json" if
+         no omitted.
+
    For example, the client makes the following HTTPS request (line
    breaks are for display purposes only):
 
@@ -1213,39 +1339,34 @@ Internet-Draft                  OAuth 2.0                       May 2010
      redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
 
 
-   The authorization server MUST verify that the verification code,
-   client identity, client secret, and redirection URI are all valid and
-   match its stored association.  If the request is valid, the
-   authorization server issues a successful response as described in
-   Section 3.2.1.1.
 
-
-
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 22]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 24]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
 
-   For example (line breaks are for display purposes only):
+   The authorization server MUST verify that the verification code,
+   client identity, client secret, and redirection URI are all valid and
+   match its stored association.  If the request is valid, the
+   authorization server issues a successful response as described in
+   Section 3.3.2.1.
+
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"access_token":"SlAV32hkKG","expires_in":3600,
-     "refresh_token":"8xLOxBtZp8"}
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600,
+       "refresh_token":"8xLOxBtZp8"
+     }
 
 
    If the request is invalid, the authorization server returns an error
-   response as described in Section 3.2.1.2 with one of the following
+   response as described in Section 3.3.2.2 with one of the following
    error codes:
 
    o  "redirect_uri_mismatch"
@@ -1261,7 +1382,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"incorrect_client_credentials"}
+     {
+       "error":"incorrect_client_credentials"
+     }
 
 
 3.7.  Device Flow
@@ -1270,6 +1393,14 @@ Internet-Draft                  OAuth 2.0                       May 2010
    executing on devices which do not have an easy data-entry method
    (e.g. game consoles or media hub), but where the end-user has
    separate access to a user-agent on another computer or device (e.g.
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 25]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    home computer, a laptop, or a smart phone).  The client is incapable
    of receiving incoming requests from the authorization server
    (incapable of acting as an HTTP server).
@@ -1281,14 +1412,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
    server repeatedly until the end-user completes the approval process.
 
    This device flow does not utilize the client secret since the client
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 23]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    executables reside on a local device which makes the client secret
    accessible and exploitable.
 
@@ -1323,38 +1446,39 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    The device flow illustrated in Figure 5 includes the following steps:
 
-   (A)  The client requests access from the authorization server and
-        includes its client identifier in the request.
-
-   (B)  The authorization server issues a verification code, a user
-        code, and provides the end-user authorization URI.
-
-   (C)  The client instructs the end-user to use its user-agent
-        (elsewhere) and visit the provided authorization URI.  The
-        client provides the user with the user code to enter in order to
-        grant access.
 
 
 
 
 
 
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 24]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 26]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
 
+   (A)  The client requests access from the authorization server and
+        includes its client identifier in the request.
+
+   (B)  The authorization server issues a verification code, an end-user
+        code, and provides the end-user verification URI.
+
+   (C)  The client instructs the end-user to use its user-agent
+        (elsewhere) and visit the provided end-user verification URI.
+        The client provides the end-user with the end-user code to enter
+        in order to grant access.
+
    (D)  The authorization server authenticates the end-user (via the
         user-agent) and prompts the end-user to grant the client's
         access request.  If the end-user agrees to the client's access
-        request, the end-user enters the user code provided by the
-        client.
+        request, the end-user enters the end-user code provided by the
+        client.  The authorization server validates the end-user code
+        provided by the end-user.
 
    (E)  While the end-user authorizes (or denies) the client's request
         (D), the client repeatedly polls the authorization server to
-        find out if the end-user completed the user authorization step.
-        The client includes the verification code and its client
+        find out if the end-user completed the end-user authorization
+        step.  The client includes the verification code and its client
         identifier.
 
    (F)  Assuming the end-user granted access, the authorization server
@@ -1372,7 +1496,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
          REQUIRED.  The parameter value MUST be set to "device_code".
 
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    scope
          OPTIONAL.  The scope of the access request expressed as a list
@@ -1381,6 +1505,18 @@ Internet-Draft                  OAuth 2.0                       May 2010
          multiple space-delimited strings, their order does not matter,
          and each string adds an additional access range to the
          requested scope.
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 27]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
+   format
+         OPTIONAL.  The response format requested by the client.  Value
+         MUST be one of "json", "xml", or "form".  Defaults to "json" if
+         no omitted.
 
    For example, the client makes the following HTTPS request (line
    breaks are for display purposes only):
@@ -1392,26 +1528,19 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
    In response, the authorization server generates a verification code
-   and a user code and includes them in the HTTP response body using the
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 25]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
-   "application/json" format as described by Section 3.2.1 with a 200
-   status code (OK).  The response contains the following parameters:
+   and an end-user code and includes them in the HTTP response body
+   using the "application/json" format as described by Section 3.3.2
+   with a 200 status code (OK).  The response contains the following
+   parameters:
 
    code
          REQUIRED.  The verification code.
 
    user_code
-         REQUIRED.  The user code.
+         REQUIRED.  The end-user code.
 
-   user_uri
-         REQUIRED.  The user authorization URI on the authorization
+   verification_uri
+         REQUIRED.  The end-user verification URI on the authorization
          server.  The URI should be short and easy to remember as end-
          users will be asked to manually type it into their user-agent.
 
@@ -1424,38 +1553,47 @@ Internet-Draft                  OAuth 2.0                       May 2010
          client SHOULD wait between polling requests to the token
          endpoint.
 
-   For example (line breaks are for display purposes only):
+
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 28]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"code":"74tq5miHKB","user_code":"94248","user_uri":"http%3A%2F%2
-     Fwww%2Eexample%2Ecom%2Fdevice","interval"=5}
+     {
+       "code":"74tq5miHKB",
+       "user_code":"94248",
+       "verification_uri":"http://www.example.com/device",
+       "interval"=5
+     }
 
 
-   The client displays the user code and the user authorization URI to
-   the end-user, and instructs the end-user to visit the URI using a
-   user-agent and enter the user code.
+   The client displays the end-user code and the end-user verification
+   URI to the end-user, and instructs the end-user to visit the URI
+   using a user-agent and enter the end-user code.
 
-   The end-user manually types the provided URI and authenticates with
-   the authorization server.  The authorization server prompts the end-
-   user to authorize the client's request by entering the user code
-   provided by the client.  Once the end-user approves or denies the
-   request, the authorization server informs the end-user to return to
-   the device for further instructions.
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 26]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
+   The end-user manually types the provided verification URI and
+   authenticates with the authorization server.  The authorization
+   server prompts the end-user to authorize the client's request by
+   entering the end-user code provided by the client.  Once the end-user
+   approves or denies the request, the authorization server informs the
+   end-user to return to the device for further instructions.
 
 3.7.2.  Client Requests Access Token
 
@@ -1477,8 +1615,18 @@ Internet-Draft                  OAuth 2.0                       May 2010
    type
          REQUIRED.  The parameter value MUST be set to "device_token".
 
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 29]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    code
          The verification code received from the authorization server.
@@ -1489,44 +1637,49 @@ Internet-Draft                  OAuth 2.0                       May 2010
          bearer token (an access token without a matching secret) as
          described by Section 5.2.
 
+   format
+         OPTIONAL.  The response format requested by the client.  Value
+         MUST be one of "json", "xml", or "form".  Defaults to "json" if
+         no omitted.
+
    For example, the client makes the following HTTPS request (line
    breaks are for display purposes only):
 
 
      POST /token?type=device_token&client_id=s6BhdRkqt3
-          &code=J2vC42OifV HTTP/1.1
+          &code=74tq5miHKB HTTP/1.1
      Host: server.example.com
 
 
    If the end-user authorized the request, the authorization server
-   issues an access token response as described in Section 3.2.1.1.
+   issues an access token response as described in Section 3.3.2.1.
 
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 27]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
-   For example (line breaks are for display purposes only):
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"access_token":"SlAV32hkKG","expires_in":3600,
-     "refresh_token":"8xLOxBtZp8"}
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600,
+       "refresh_token":"8xLOxBtZp8"
+     }
 
 
    If the request is invalid, the authorization server returns an error
-   response as described in Section 3.2.1.2 with one of the following
+   response as described in Section 3.3.2.2 with one of the following
    error codes:
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 30]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
 
    o  "authorization_declined"
 
@@ -1539,13 +1692,15 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"authorization_declined"}
+     {
+       "error":"authorization_declined"
+     }
 
 
    If the end-user authorization is pending or expired without receiving
    any response from the end-user, or the client is exceeding the
    allowed polling interval, the authorization server returns an error
-   response as described in Section 3.2.1.2 with one of the following
+   response as described in Section 3.3.2.2 with one of the following
    error codes:
 
    o  "'authorization_pending"
@@ -1554,21 +1709,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    o  "code_expired"
 
-
-
-
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 28]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    For example:
 
 
@@ -1576,7 +1716,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"authorization_pending"}
+     {
+       "error":"authorization_pending"
+     }
 
 
 3.8.  Username and Password Flow
@@ -1586,6 +1728,14 @@ Internet-Draft                  OAuth 2.0                       May 2010
    to migrate existing clients using direct authentication schemes such
    as HTTP Basic or Digest authentication to OAuth by converting the
    end-user credentials stored with tokens.
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 31]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
 
    However, unlike the HTTP Basic authentication scheme defined in
    [RFC2617], the end-user's credentials are used in a single request
@@ -1619,12 +1769,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
      +--------+                                  +---------------+
 
 
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 29]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
                                  Figure 6
 
    The username and password flow illustrated in Figure 6 includes the
@@ -1639,6 +1783,16 @@ Internet-Draft                  OAuth 2.0                       May 2010
    (C)  The authorization server validates the end-user credentials and
         the client credentials and issues an access token.
 
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 32]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
 3.8.1.  Client Requests Access Token
 
    The client requests an access token by making an HTTP "POST" request
@@ -1649,10 +1803,10 @@ Internet-Draft                  OAuth 2.0                       May 2010
          REQUIRED.  The parameter value MUST be set to "username".
 
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    client_secret
-         REQUIRED.  The client secret as described in Section 3.4.
+         REQUIRED.  The client secret as described in Section 3.1.
          OPTIONAL if no client secret was issued.
 
    username
@@ -1673,15 +1827,27 @@ Internet-Draft                  OAuth 2.0                       May 2010
          OPTIONAL.  The access token secret type as described by
          Section 5.3.  If omitted, the authorization server will issue a
          bearer token (an access token without a matching secret) as
+         described by Section 5.2.
+
+   format
+         OPTIONAL.  The response format requested by the client.  Value
+         MUST be one of "json", "xml", or "form".  Defaults to "json" if
+         no omitted.
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 30]
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 33]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
-
-         described by Section 5.2.
 
    For example, the client makes the following HTTPS request (line
    breaks are for display purposes only):
@@ -1696,21 +1862,24 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    The authorization server MUST validate the client credentials and
    end-user credentials and if valid issues an access token response as
-   described in Section 3.2.1.1.
+   described in Section 3.3.2.1.
 
-   For example (line breaks are for display purposes only):
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"access_token":"SlAV32hkKG","expires_in":3600,
-     "refresh_token":"8xLOxBtZp8"}
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600,
+       "refresh_token":"8xLOxBtZp8"
+     }
 
 
    If the request is invalid, the authorization server returns an error
-   response as described in Section 3.2.1.2 with one of the following
+   response as described in Section 3.3.2.2 with one of the following
    error codes:
 
    o  "incorrect_client_credentials"
@@ -1725,14 +1894,13 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"incorrect_client_credentials"}
+     {
+       "error":"incorrect_client_credentials"
+     }
 
 
 
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 31]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 34]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -1778,17 +1946,17 @@ Internet-Draft                  OAuth 2.0                       May 2010
          "client_credentials".
 
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    client_secret
-         REQUIRED.  The client secret as described in Section 3.4.
+         REQUIRED.  The client secret as described in Section 3.1.
 
 
 
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 32]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 35]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -1807,8 +1975,12 @@ Internet-Draft                  OAuth 2.0                       May 2010
          bearer token (an access token without a matching secret) as
          described by Section 5.2.
 
-   For example, the client makes the following HTTPS request (line
-   breaks are for display purposes only):
+   format
+         OPTIONAL.  The response format requested by the client.  Value
+         MUST be one of "json", "xml", or "form".  Defaults to "json" if
+         no omitted.
+
+   For example, the client makes the following HTTPS request:
 
 
      POST /token HTTP/1.1
@@ -1819,35 +1991,35 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    The authorization server MUST validate the client credentials and if
    valid issues an access token response as described in
-   Section 3.2.1.1.
+   Section 3.3.2.1.
 
-   For example (line breaks are for display purposes only):
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"access_token":"SlAV32hkKG","expires_in":3600,
-     "refresh_token":"8xLOxBtZp8"}
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600,
+       "refresh_token":"8xLOxBtZp8"
+     }
 
 
    If the request is invalid, the authorization server returns an error
-   response as described in Section 3.2.1.2 with one of the following
-   error codes:
-
-   o  "incorrect_client_credentials"
+   response as described in Section 3.3.2.2 with one of the following
 
 
 
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 33]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 36]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
+
+   error codes:
+
+   o  "incorrect_client_credentials"
 
    For example:
 
@@ -1856,7 +2028,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"incorrect_client_credentials"}
+     {
+       "error":"incorrect_client_credentials"
+     }
 
 
 3.10.  Assertion Flow
@@ -1890,20 +2064,20 @@ Internet-Draft                  OAuth 2.0                       May 2010
    The assertion flow illustrated in Figure 8 includes the following
    steps:
 
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 37]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    (A)  The client sends an access token request to the authorization
         server and includes an assertion.
 
    (B)  The authorization server validates the assertion and issues an
         access token.
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 34]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
 
 3.10.1.  Client Requests Access Token
 
@@ -1921,6 +2095,15 @@ Internet-Draft                  OAuth 2.0                       May 2010
    assertion
          REQUIRED.  The assertion.
 
+   client_id
+         OPTIONAL.  The client identifier as described in Section 3.1.
+         The authorization server MAY require including the client
+         credentials with the request based on the assertion properties.
+
+   client_secret
+         OPTIONAL.  The client secret as described in Section 3.1.  MUST
+         NOT be included if the "client_id" parameter is omitted.
+
    scope
          OPTIONAL.  The scope of the access request expressed as a list
          of space-delimited strings.  The value of the "scope" parameter
@@ -1935,6 +2118,22 @@ Internet-Draft                  OAuth 2.0                       May 2010
          bearer token (an access token without a matching secret) as
          described by Section 5.2.
 
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 38]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
+   format
+         OPTIONAL.  The response format requested by the client.  Value
+         MUST be one of "json", "xml", or "form".  Defaults to "json" if
+         no omitted.
+
    For example, the client makes the following HTTPS request (line
    breaks are for display purposes only):
 
@@ -1946,38 +2145,45 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
    The authorization server MUST validate the assertion and if valid
-   issues an access token response as described in Section 3.2.1.1.  The
+   issues an access token response as described in Section 3.3.2.1.  The
    authorization server SHOULD NOT issue a refresh token.
 
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 35]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
-   For example (line breaks are for display purposes only):
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"access_token":"SlAV32hkKG","expires_in":3600}
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600
+     }
 
 
    If the request is invalid, the authorization server returns an error
-   response as described in Section 3.2.1.2 with one of the following
+   response as described in Section 3.3.2.2 with one of the following
    error codes:
 
    o  "invalid_assertion"
 
    o  "unknown_format"
+
+
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 39]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
 
    For example:
 
@@ -1986,7 +2192,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"invalid_assertion"}
+     {
+       "error":"invalid_assertion"
+     }
 
 
    Authorization servers SHOULD issue access tokens with a limited
@@ -2003,18 +2211,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
    authorization flow again or involve the resource owner.  It is also
    used to obtain a new token with different security properties (e.g.
    bearer token, token with shared symmetric secret).
-
-
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 36]
-
-Internet-Draft                  OAuth 2.0                       May 2010
 
 
      +--------+          Client Credentials,     +---------------+
@@ -2036,8 +2232,17 @@ Internet-Draft                  OAuth 2.0                       May 2010
    type
          REQUIRED.  The parameter value MUST be set to "refresh".
 
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 40]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
    client_id
-         REQUIRED.  The client identifier as described in Section 3.4.
+         REQUIRED.  The client identifier as described in Section 3.1.
 
    client_secret
          REQUIRED if the client was issued a secret.  The client secret.
@@ -2052,6 +2257,11 @@ Internet-Draft                  OAuth 2.0                       May 2010
          bearer token (an access token without a matching secret) as
          described by Section 5.2.
 
+   format
+         OPTIONAL.  The response format requested by the client.  Value
+         MUST be one of "json", "xml", or "form".  Defaults to "json" if
+         no omitted.
+
    For example, the client makes the following HTTPS request (line break
    are for display purposes only):
 
@@ -2065,33 +2275,43 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
    verify the client credential, the validity of the refresh token, and
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 37]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    that the resource owner's authorization is still valid.  If the
    request is valid, the authorization server issues an access token
-   response as described in Section 3.2.1.1.  The authorization server
+   response as described in Section 3.3.2.1.  The authorization server
    MAY issue a new refresh token in which case the client MUST NOT use
    the previous refresh token and replace it with the newly issued
    refresh token.
 
-   For example (line breaks are for display purposes only):
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 41]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
+   For example:
 
 
      HTTP/1.1 200 OK
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"access_token":"SlAV32hkKG","expires_in":3600}
+     {
+       "access_token":"SlAV32hkKG",
+       "expires_in":3600
+     }
 
 
    If the request is invalid, the authorization server returns an error
-   response as described in Section 3.2.1.2 with one of the following
+   response as described in Section 3.3.2.2 with one of the following
    error codes:
 
    o  "incorrect_client_credentials"
@@ -2107,7 +2327,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
      Content-Type: application/json
      Cache-Control: no-store
 
-     {"error":"incorrect_client_credentials"}
+     {
+       "error":"incorrect_client_credentials"
+     }
 
 
 
@@ -2121,16 +2343,16 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    The method in which a client uses an access token depends on the
    security properties of the access tokens.  By default, access tokens
+   are issued without a matching secret.  Clients MAY request an access
+   token with a matching secret by specifying the desired secret type
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 38]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 42]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
 
-   are issued without a matching secret.  Clients MAY request an access
-   token with a matching secret by specifying the desired secret type
    using the "secret_type" token request parameter.
 
    When an access token does not include a matching secret, the access
@@ -2180,7 +2402,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 39]
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 43]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2236,7 +2460,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 40]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 44]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2292,7 +2516,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 41]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 45]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2348,7 +2572,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 42]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 46]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2404,7 +2628,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 43]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 47]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2460,7 +2684,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 44]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 48]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2516,7 +2740,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 45]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 49]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2532,11 +2756,11 @@ Internet-Draft                  OAuth 2.0                       May 2010
 6.  Identifying a Protected Resource
 
    Clients access protected resources after locating the appropriate
-   authorization and token endpoints and obtaining an access token.  In
-   many cases, interacting with a protected resource requires prior
-   knowledge of the protected resource properties and methods, as well
-   as its authentication requirements (i.e. establishing client
-   identity, locating the authorization and token endpoints).
+   end-user and token endpoints and obtaining an access token.  In many
+   cases, interacting with a protected resource requires prior knowledge
+   of the protected resource properties and methods, as well as its
+   authentication requirements (i.e. establishing client identity,
+   locating the end-user and token endpoints).
 
    However, there are cases in which clients are unfamiliar with the
    protected resource, including whether the resource requires
@@ -2552,9 +2776,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
 6.1.  The WWW-Authenticate Response Header
 
    A resource server receiving a request for a protected resource
-   without a valid access token MUST respond with a 401 HTTP status code
-   (Unauthorized), and includes at least one "Token" "WWW-Authenticate"
-   response header field challenge.
+   without a valid access token MUST respond with a 401 (Unauthorized)
+   or 403 (Forbidden) HTTP status code, and include at least one "Token"
+   "WWW-Authenticate" response header field challenge.
 
    The "WWW-Authenticate" header field uses the framework defined by
    [RFC2617] as follows:
@@ -2572,7 +2796,7 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 46]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 50]
 
 Internet-Draft                  OAuth 2.0                       May 2010
 
@@ -2580,29 +2804,41 @@ Internet-Draft                  OAuth 2.0                       May 2010
      challenge       = "Token" RWS token-challenge
 
      token-challenge = realm
-                       [ CS authz-uri ]
+                       [ CS user-uri ]
                        [ CS token-uri ]
                        [ CS algorithms ]
+                       [ CS scope ]
                        [ CS error ]
 
-     authz-uri       = "auth-uri" "=" URI-Reference
+     user-uri       = "user-uri" "=" URI-Reference
      token-uri       = "token-uri" "=" URI-Reference
      algorithms      = "algorithms" "=" <"> 1#algorithm-name  <">
+     scope           = "scope" "=" <"> 1#URI-Reference  <">
      error           = "error" "=" <"> token <">
 
      CS              = OWS "," OWS
 
 
-6.1.1.  The 'realm' Attribute
-
    The "realm" attribute is used to provide the protected resources
    partition as defined by [RFC2617].
 
-6.1.2.  The 'authorization-uri' Attribute
+   The "user-uri" and "token-uri" attributes provide a way for the
+   resource server to advertise the URIs of the end-user and token
+   endpoints capable of issuing an access token suitable for accessing
+   the requested resource.
 
-6.1.3.  The 'algorithms' Attribute
+   The "algorithms" attribute is a space-delimited list of the
+   cryptographic algorithms supported by the resource server.  The
+   client MAY request an access token with a suitable matching secret by
+   using the "secret_type" request parameter as described in
+   Section 5.3.
 
-6.1.4.  The 'error' Attribute
+   The "scope" attribute is a space-delimited list of URIs (relative or
+   absolute) indicating the required scope of the access token for
+   accessing the requested resource.
+
+   The "error" attribute is used to inform the client the reason why an
+   access request was declined. [[ Add list of error codes ]]
 
 
 7.  Security Considerations
@@ -2615,6 +2851,12 @@ Internet-Draft                  OAuth 2.0                       May 2010
    [[ Not Yet ]]
 
 
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 51]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
 9.  Acknowledgements
 
    [[ Add OAuth 1.0a authors + WG contributors ]]
@@ -2625,17 +2867,30 @@ Appendix A.  Differences from OAuth 1.0a
    [[ Todo ]]
 
 
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 47]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
 Appendix B.  Document History
 
    [[ to be removed by RFC editor before publication as an RFC ]]
+
+   -05
+
+   o  Corrected device example.
+
+   o  Added client credentials parameters to the assertion flow as
+      OPTIONAL.
+
+   o  Added the ability to send client credentials using an HTTP
+      authentication scheme.
+
+   o  Initial text for the "WWW-Authenticate" header (also added scope
+      support).
+
+   o  Change authorization endpoint to end-user endpoint.
+
+   o  In the device flow, change the "user_uri" parameter to
+      "verification_uri" to avoid confusion with the end-user endpoint.
+
+   o  Add "format" request parameter and support for XML and form-
+      encoded responses.
 
    -04
 
@@ -2648,6 +2903,15 @@ Appendix B.  Document History
 
    o  Changed client credentials language not to always be server-
       issued.
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 52]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
 
    o  Added a "scope" response parameter.
 
@@ -2681,14 +2945,6 @@ Appendix B.  Document History
 
    -00
 
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 48]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    o  Initial draft based on a combination of WRAP and OAuth 1.0a.
 
 
@@ -2705,6 +2961,14 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    [NIST FIPS-180-3]
               National Institute of Standards and Technology, "Secure
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 53]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
+
               Hash Standard (SHS). FIPS PUB 180-3, October 2008".
 
    [RFC2045]  Freed, N. and N. Borenstein, "Multipurpose Internet Mail
@@ -2729,6 +2993,9 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
    [RFC2818]  Rescorla, E., "HTTP Over TLS", RFC 2818, May 2000.
 
+   [RFC3023]  Murata, M., St. Laurent, S., and D. Kohn, "XML Media
+              Types", RFC 3023, January 2001.
+
    [RFC3447]  Jonsson, J. and B. Kaliski, "Public-Key Cryptography
               Standards (PKCS) #1: RSA Cryptography Specifications
               Version 2.1", RFC 3447, February 2003.
@@ -2737,14 +3004,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
               10646", STD 63, RFC 3629, November 2003.
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 49]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, January 2005.
 
@@ -2756,6 +3015,15 @@ Internet-Draft                  OAuth 2.0                       May 2010
               Specification", World Wide Web Consortium
               Recommendation REC-html40-19980424, April 1998,
               <http://www.w3.org/TR/1998/REC-html40-19980424>.
+
+
+
+
+
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 54]
+
+Internet-Draft                  OAuth 2.0                       May 2010
+
 
 10.2.  Informative References
 
@@ -2791,16 +3059,6 @@ Authors' Addresses
    URI:   http://www.davidrecordon.com/
 
 
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 50]
-
-Internet-Draft                  OAuth 2.0                       May 2010
-
-
    Dick Hardt
 
    Email: dick.hardt@gmail.com
@@ -2818,40 +3076,6 @@ Internet-Draft                  OAuth 2.0                       May 2010
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hammer-Lahav, et al.    Expires November 10, 2010              [Page 51]
+Hammer-Lahav, et al.    Expires November 14, 2010              [Page 55]
 
 
