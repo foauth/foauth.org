@@ -1,4 +1,4 @@
-import foauth
+import foauth.providers
 
 
 class Etsy(foauth.providers.Oauth1):
