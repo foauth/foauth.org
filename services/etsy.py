@@ -3,7 +3,7 @@ import foauth
 
 class Etsy(foauth.providers.Oauth1):
     # General info about the provider
-    provider_url = 'http//www.etsy.com/'
+    provider_url = 'http://www.etsy.com/'
     favicon_url = 'http://www.etsy.com/images/favicon.ico'
     docs_url = 'http://www.etsy.com/developers/documentation'
 
