@@ -5,17 +5,17 @@ Network Working Group                               E. Hammer-Lahav, Ed.
 Internet-Draft                                                    Yahoo!
 Obsoletes: 5849 (if approved)                                D. Recordon
 Intended status: Standards Track                                Facebook
-Expires: June 4, 2011                                           D. Hardt
+Expires: July 25, 2011                                          D. Hardt
                                                                Microsoft
-                                                        December 1, 2010
+                                                        January 21, 2011
 
 
-                    The OAuth 2.0 Protocol Framework
-                         draft-ietf-oauth-v2-11
+                  The OAuth 2.0 Authorization Protocol
+                         draft-ietf-oauth-v2-12
 
 Abstract
 
-   This specification describes the OAuth 2.0 protocol framework.
+   This specification describes the OAuth 2.0 authorization protocol.
 
 Status of this Memo
 
@@ -32,11 +32,11 @@ Status of this Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 4, 2011.
+   This Internet-Draft will expire on July 25, 2011.
 
 Copyright Notice
 
-   Copyright (c) 2010 IETF Trust and the persons identified as the
+   Copyright (c) 2011 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -52,76 +52,53 @@ Copyright Notice
 
 
 
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 1]
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 1]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
 Table of Contents
 
-   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  4
-     1.1.  Notational Conventions . . . . . . . . . . . . . . . . . .  5
-     1.2.  Terminology  . . . . . . . . . . . . . . . . . . . . . . .  5
-     1.3.  Overview . . . . . . . . . . . . . . . . . . . . . . . . .  7
-     1.4.  Access Grants  . . . . . . . . . . . . . . . . . . . . . .  8
-       1.4.1.  Authorization Code . . . . . . . . . . . . . . . . . .  8
-       1.4.2.  Resource Owner Password Credentials  . . . . . . . . . 10
-       1.4.3.  Client Credentials . . . . . . . . . . . . . . . . . . 10
-       1.4.4.  Refresh Token  . . . . . . . . . . . . . . . . . . . . 11
-       1.4.5.  Assertion  . . . . . . . . . . . . . . . . . . . . . . 12
-   2.  Client Profiles  . . . . . . . . . . . . . . . . . . . . . . . 12
-     2.1.  Web Server . . . . . . . . . . . . . . . . . . . . . . . . 12
-     2.2.  User-Agent . . . . . . . . . . . . . . . . . . . . . . . . 14
-     2.3.  Native Application . . . . . . . . . . . . . . . . . . . . 15
-     2.4.  Autonomous . . . . . . . . . . . . . . . . . . . . . . . . 16
-   3.  Client Credentials . . . . . . . . . . . . . . . . . . . . . . 17
-     3.1.  Client Password Credentials  . . . . . . . . . . . . . . . 17
-     3.2.  Client Assertion Credentials . . . . . . . . . . . . . . . 18
-   4.  Obtaining End-User Authorization . . . . . . . . . . . . . . . 20
-     4.1.  Authorization Request  . . . . . . . . . . . . . . . . . . 20
-     4.2.  Authorization Response . . . . . . . . . . . . . . . . . . 22
-     4.3.  Error Response . . . . . . . . . . . . . . . . . . . . . . 24
-       4.3.1.  Error Codes  . . . . . . . . . . . . . . . . . . . . . 25
-   5.  Obtaining an Access Token  . . . . . . . . . . . . . . . . . . 25
-     5.1.  Access Grant Types . . . . . . . . . . . . . . . . . . . . 27
-       5.1.1.  Authorization Code . . . . . . . . . . . . . . . . . . 27
-       5.1.2.  Resource Owner Password Credentials  . . . . . . . . . 27
-       5.1.3.  Client Credentials . . . . . . . . . . . . . . . . . . 28
-       5.1.4.  Refresh Token  . . . . . . . . . . . . . . . . . . . . 28
-       5.1.5.  Assertion  . . . . . . . . . . . . . . . . . . . . . . 29
-     5.2.  Access Token Response  . . . . . . . . . . . . . . . . . . 30
-     5.3.  Error Response . . . . . . . . . . . . . . . . . . . . . . 31
-       5.3.1.  Error Codes  . . . . . . . . . . . . . . . . . . . . . 32
-   6.  Accessing a Protected Resource . . . . . . . . . . . . . . . . 33
-     6.1.  Access Token Types . . . . . . . . . . . . . . . . . . . . 33
-     6.2.  The WWW-Authenticate Response Header Field . . . . . . . . 33
-       6.2.1.  Error Codes  . . . . . . . . . . . . . . . . . . . . . 35
-   7.  Extensibility  . . . . . . . . . . . . . . . . . . . . . . . . 36
-     7.1.  Defining New Client Credentials Types  . . . . . . . . . . 36
-     7.2.  Defining New Endpoint Parameters . . . . . . . . . . . . . 36
-     7.3.  Defining New Header Field Parameters . . . . . . . . . . . 36
-     7.4.  Defining New Access Grant Types  . . . . . . . . . . . . . 37
-   8.  Security Considerations  . . . . . . . . . . . . . . . . . . . 37
-   9.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 37
-     9.1.  The OAuth Parameters Registry  . . . . . . . . . . . . . . 37
-       9.1.1.  Registration Template  . . . . . . . . . . . . . . . . 37
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 2]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-       9.1.2.  Example  . . . . . . . . . . . . . . . . . . . . . . . 38
-   Appendix A.  Examples  . . . . . . . . . . . . . . . . . . . . . . 38
-   Appendix B.  Contributors  . . . . . . . . . . . . . . . . . . . . 38
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.1.  Roles  . . . . . . . . . . . . . . . . . . . . . . . . . .  3
+     1.2.  Access Token . . . . . . . . . . . . . . . . . . . . . . .  5
+     1.3.  Authorization Grant  . . . . . . . . . . . . . . . . . . .  6
+     1.4.  Refresh Token  . . . . . . . . . . . . . . . . . . . . . .  7
+     1.5.  Notational Conventions . . . . . . . . . . . . . . . . . .  9
+   2.  Client Authentication  . . . . . . . . . . . . . . . . . . . .  9
+     2.1.  Client Password Authentication . . . . . . . . . . . . . .  9
+     2.2.  Other Client Authentication Methods  . . . . . . . . . . . 10
+   3.  Protocol Endpoints . . . . . . . . . . . . . . . . . . . . . . 11
+     3.1.  Authorization Endpoint . . . . . . . . . . . . . . . . . . 11
+     3.2.  Token Endpoint . . . . . . . . . . . . . . . . . . . . . . 12
+   4.  Requesting an Access Token . . . . . . . . . . . . . . . . . . 13
+     4.1.  Authorization Code . . . . . . . . . . . . . . . . . . . . 13
+     4.2.  Implicit Grant . . . . . . . . . . . . . . . . . . . . . . 19
+     4.3.  Resource Owner Password Credentials  . . . . . . . . . . . 24
+     4.4.  Client Credentials . . . . . . . . . . . . . . . . . . . . 26
+     4.5.  Extensions . . . . . . . . . . . . . . . . . . . . . . . . 28
+   5.  Issuing an Access Token  . . . . . . . . . . . . . . . . . . . 28
+     5.1.  Successful Response  . . . . . . . . . . . . . . . . . . . 28
+     5.2.  Error Response . . . . . . . . . . . . . . . . . . . . . . 30
+   6.  Refreshing an Access Token . . . . . . . . . . . . . . . . . . 31
+   7.  Accessing Protected Resources  . . . . . . . . . . . . . . . . 32
+     7.1.  Access Token Types . . . . . . . . . . . . . . . . . . . . 33
+   8.  Extensibility  . . . . . . . . . . . . . . . . . . . . . . . . 33
+     8.1.  Defining Access Token Types  . . . . . . . . . . . . . . . 33
+     8.2.  Defining New Endpoint Parameters . . . . . . . . . . . . . 34
+     8.3.  Defining New Authorization Grant Types . . . . . . . . . . 34
+   9.  Security Considerations  . . . . . . . . . . . . . . . . . . . 34
+   10. IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 35
+     10.1. The OAuth Access Token Type Registry . . . . . . . . . . . 35
+     10.2. The OAuth Parameters Registry  . . . . . . . . . . . . . . 36
+   Appendix A.  Examples  . . . . . . . . . . . . . . . . . . . . . . 39
+   Appendix B.  Contributors  . . . . . . . . . . . . . . . . . . . . 39
    Appendix C.  Acknowledgements  . . . . . . . . . . . . . . . . . . 39
    Appendix D.  Document History  . . . . . . . . . . . . . . . . . . 39
-   10. References . . . . . . . . . . . . . . . . . . . . . . . . . . 44
-     10.1. Normative References . . . . . . . . . . . . . . . . . . . 44
-     10.2. Informative References . . . . . . . . . . . . . . . . . . 45
-   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 46
+   11. References . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+     11.1. Normative References . . . . . . . . . . . . . . . . . . . 43
+     11.2. Informative References . . . . . . . . . . . . . . . . . . 45
+   Authors' Addresses . . . . . . . . . . . . . . . . . . . . . . . . 45
 
 
 
@@ -131,51 +108,12 @@ Internet-Draft                  OAuth 2.0                  December 2010
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 3]
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 2]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
 1.  Introduction
-
-   With the increasing use of distributed web services and cloud
-   computing, third-party applications require access to server-hosted
-   resources.  These resources are usually protected and require
-   authentication using the resource owner's credentials (typically a
-   username and password).
 
    In the traditional client-server authentication model, the client
    accesses a protected resource on the server by authenticating with
@@ -187,192 +125,87 @@ Internet-Draft                  OAuth 2.0                  December 2010
    o  Third-party applications are required to store the resource-
       owner's credentials for future use, typically a password in clear-
       text.
-
    o  Servers are required to support password authentication, despite
       the security weaknesses created by passwords.
-
    o  Third-party applications gain overly broad access to the resource-
       owner's protected resources, leaving resource owners without any
-      ability to restrict access to a limited subset of resources, to
-      limit access duration, or to limit access to the methods supported
-      by these resources.
-
+      ability to restrict duration or access to a limited subset of
+      resources.
    o  Resource owners cannot revoke access to an individual third-party
       without revoking access to all third-parties, and must do so by
       changing their password.
 
-   OAuth addresses these issues by separating the role of the client
-   from that of the resource owner.  In OAuth, the client (which is
-   usually not the resource owner, but is acting on the resource owner's
-   behalf) requests access to resources controlled by the resource owner
-   and hosted by the resource server, and is issued a different set of
-   credentials than those of the resource owner.
+   OAuth addresses these issues by introducing an authorization layer
+   and separating the role of the client from that of the resource
+   owner.  In OAuth, the client requests access to resources controlled
+   by the resource owner and hosted by the resource server, and is
+   issued a different set of credentials than those of the resource
+   owner.
 
    Instead of using the resource owner's credentials to access protected
-   resources, the client obtains an access token - a string which
-   denotes a specific scope, duration, and other attributes.  Access
-   tokens are issued to third-party clients by an authorization server
-   with the approval of the resource owner.  The client uses the access
-   token to access the protected resources hosted by the resource
-   server.
+   resources, the client obtains an access token - a string denoting a
+   specific scope, duration, and other access attributes.  Access tokens
+   are issued to third-party clients by an authorization server with the
+   approval of the resource owner.  The client uses the access token to
+   access the protected resources hosted by the resource server.
 
    For example, a web user (resource owner) can grant a printing service
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 4]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
    (client) access to her protected photos stored at a photo sharing
    service (resource server), without sharing her username and password
    with the printing service.  Instead, she authenticates directly with
-   an authentication service trusted by the photo sharing service
-   (authorization server) which issues the printing service delegation-
-   specific credentials (token).
+   a server trusted by the photo sharing service (authorization server)
+   which issues the printing service delegation-specific credentials
+   (access token).
 
-   Access tokens can have different formats, structures, and methods of
-   utilization (e.g. cryptographic properties), based on the resource
-   server security requirements.  Access token attributes and the
-   methods used to access protected resources are beyond the scope of
-   this specification and are defined by companion specifications.  The
-   interaction between the authorization server and resource server is
-   beyond the scope of this specification.
+1.1.  Roles
 
-1.1.  Notational Conventions
+   OAuth includes four roles working together to grant and provide
+   access to protected resources - access restricted resources which
 
-   The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT',
-   'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this
-   document are to be interpreted as described in [RFC2119].
 
-   This document uses the Augmented Backus-Naur Form (ABNF) notation of
-   [I-D.ietf-httpbis-p1-messaging].  Additionally, the following rules
-   are included from [RFC3986]: URI-reference; and from
-   [I-D.ietf-httpbis-p1-messaging]: OWS, RWS, and quoted-string.
 
-   Unless otherwise noted, all the protocol parameter names and values
-   are case sensitive.
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 3]
+
+Internet-Draft                  OAuth 2.0                   January 2011
 
-1.2.  Terminology
 
-   protected resource
-         An access-restricted resource which can be obtained using an
-         OAuth-authenticated request.
-
-   resource server
-         A server capable of accepting and responding to protected
-         resource requests.
-
-   client
-         An application obtaining authorization and making protected
-         resource requests.
+   require authentication to access:
 
    resource owner
-         An entity capable of granting access to a protected resource.
-
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 5]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   end-user
-         A human resource owner.
-
-   token
-         A string representing an access authorization issued to the
-         client.  The string is usually opaque to the client.  Tokens
-         represent specific scopes and durations of access, granted by
-         the resource owner, and enforced by the resource server and
-         authorization servers.  The token may denote an identifier used
-         to retrieve the authorization information, or self-contain the
-         authorization information in a verifiable manner (i.e. a token
-         string consisting of some data and a signature).  Tokens may be
-         pure capabilities.  Specific additional authentication
-         credentials may be required in order for a client to use a
-         token.
-
-   access token
-         A token used by the client to make authenticated requests on
-         behalf of the resource owner.
-
-   refresh token
-         A token used by the client to obtain a new access token without
-         having to involve the resource owner.
-
-   authorization code  A short-lived token representing the
-         authorization provided by the end-user.  The authorization code
-         is used to obtain an access token and a refresh token.
-
-   access grant  A general term used to describe the intermediate
-         credentials (such as an end-user password or authorization
-         code) representing the resource owner authorization.  Access
-         grants are used by the client to obtain an access token.  By
-         exchanging access grants of different types for an access
-         token, the resource server is only required to support a single
-         authentication scheme.
-
+      An entity capable of granting access to a protected resource.
+      When the resource owner is a person, it is referred to as an end-
+      user.
+   resource server
+      The server hosting the protected resources, capable of accepting
+      and responding to protected resource requests using access tokens.
+   client
+      An application making protected resource requests on behalf of the
+      resource owner and with its authorization.
    authorization server
-         A server capable of issuing tokens after successfully
-         authenticating the resource owner and obtaining authorization.
-         The authorization server may be the same server as the resource
-         server, or a separate entity.  A single authorization server
-         may issue tokens for multiple resource servers.
+      The server issuing access tokens to the client after successfully
+      authenticating the resource owner and obtaining authorization.
 
-   end-user authorization endpoint
-         The authorization server's HTTP endpoint capable of
-         authenticating the end-user and obtaining authorization.  The
-         end-user authorization endpoint is described in Section 4.
+   The interaction between the authorization server and resource server
+   is beyond the scope of this specification.  The authorization server
+   may be the same server as the resource server or a separate entity.
+   A single authorization server may issue access tokens accepted by
+   multiple resource servers.
 
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 6]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   token endpoint
-         The authorization server's HTTP endpoint capable of issuing
-         tokens and refreshing expired tokens.  The token endpoint is
-         described in Section 5.
-
-   client identifier
-         A unique identifier issued to the client to identify itself to
-         the authorization server.  Client identifiers may have a
-         matching secret.  The client identifier is described in
-         Section 3.
-
-1.3.  Overview
-
-   OAuth provides a method for clients to access a protected resource on
-   behalf of a resource owner.  Before a client can access a protected
-   resource, it must first obtain authorization (access grant) from the
-   resource owner, then exchange the access grant for an access token
-   (representing the grant's scope, duration, and other attributes).
-   The client accesses the protected resource by presenting the access
-   token to the resource server.
-
-   The access token provides an abstraction layer, replacing different
-   authorization constructs (e.g. username and password, assertion) for
-   a single token understood by the resource server.  This abstraction
-   enables issuing access tokens valid for a short time period, as well
-   as removing the resource server's need to understand a wide range of
-   authentication schemes.
+   When interacting with the authorization server, the client identifies
+   itself using a set of client credentials which include a client
+   identifier and other authentication attributes.  The means through
+   which the client obtains its credentials are beyond the scope of this
+   specification, but typically involve registration with the
+   authorization server.
 
 
      +--------+                               +---------------+
      |        |--(A)- Authorization Request ->|   Resource    |
      |        |                               |     Owner     |
-     |        |<-(B)----- Access Grant -------|               |
+     |        |<-(B)-- Authorization Grant ---|               |
      |        |                               +---------------+
      |        |
-     |        |           Access Grant &      +---------------+
+     |        |        Authorization Grant &  +---------------+
      |        |--(C)--- Client Credentials -->| Authorization |
      | Client |                               |     Server    |
      |        |<-(D)----- Access Token -------|               |
@@ -387,579 +220,295 @@ Internet-Draft                  OAuth 2.0                  December 2010
 
 
 
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 7]
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 4]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
                      Figure 1: Abstract Protocol Flow
 
-   The abstract flow illustrated in Figure 1 describes the overall
-   protocol architecture and includes the following steps:
+   The abstract flow illustrated in Figure 1 describes the interaction
+   between the four roles and includes the following steps:
 
    (A)  The client requests authorization from the resource owner.  The
-        authorization request can be made directly to the resource
-        owner, or preferably indirectly via an intermediary such as an
-        authorization server.
-
-   (B)  The client receives an access grant which represents the
-        authorization provided by the resource owner.
-
+        authorization request can be made directly to the resource owner
+        (as shown), or preferably indirectly via an intermediary such as
+        an authorization server.
+   (B)  The client receives an authorization grant which represents the
+        authorization provided by the resource owner.  The authorization
+        grant type depends on the method used by the client and
+        supported by the authorization server to obtain it.
    (C)  The client requests an access token by authenticating with the
-        authorization server using its client credentials, and
-        presenting the access grant.
-
+        authorization server using its client credentials (prearranged
+        between the client and authorization server) and presenting the
+        authorization grant.
    (D)  The authorization server validates the client credentials and
-        the access grant, and if valid issues an access token.
-
-   (E)  The client makes a protected resource request to the resource
-        server by presenting the access token.
-
+        the authorization grant, and if valid issues an access token.
+   (E)  The client requests the protected resource from the resource
+        server and authenticates by presenting the access token.
    (F)  The resource server validates the access token, and if valid,
         serves the request.
 
-1.4.  Access Grants
+1.2.  Access Token
 
-   The access grant represents the authorization provided by the
-   resource owner.  The access grant type depends on the method used by
-   the client and supported by the authorization server to obtain it.
+   An access token is a string representing an authorization issued to
+   the client.  The string is usually opaque to the client.  Tokens
+   represent specific scopes and durations of access, granted by the
+   resource owner, and enforced by the resource server and authorization
+   server.
 
-1.4.1.  Authorization Code
+   The token may denote an identifier used to retrieve the authorization
+   information, or self-contain the authorization information in a
+   verifiable manner (i.e. a token string consisting of some data and a
+   signature).  Tokens may be pure capabilities.  Additional
+   authentication credentials may be required in order for the client to
+   use a token.
 
-   The authorization code is an access grant obtained by directing the
-   end-user to an authorization server.  The authorization server
-   authenticates the end-user, obtains authorization, and issues the an
-   authorization code to the client.  Because the end-user only
-   authenticates with the authorization server, the end-user's password
-   is never shared with the client.
+   The access token provides an abstraction layer, replacing different
+   authorization constructs (e.g. username and password) with a single
+   token understood by the resource server.  This abstraction enables
+   issuing access tokens more restrictive than the authorization grant
+   used to obtain them, as well as removing the resource server's need
+   to understand a wide range of authentication methods.
 
-   The authorization code access grant is suitable when the client is
-   interacting with an end-user via a user-agent.
-
-
+   Access tokens can have different formats, structures, and methods of
+   utilization (e.g. cryptographic properties) based on the resource
 
 
 
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 8]
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 5]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-     +----------+
-     |          |
-     | End-User |
-     |          |
-     +----------+
-          ^
-          |
-         (B)
-     +----|-----+        Client Identifier     +---------------+
-     |         -+--(A)--- & Redirect URI ----->|               |
-     |  User-   |                              | Authorization |
-     |  Agent  -|--(B)-- User authenticates -->|     Server    |
-     |          |                              |               |
-     |         -+--(C)-- Authorization Code --<|               |
-     +-|----|---+                              +---------------+
-      (A)  (C)
-       |    |
-       ^    v
-     +---------+
-     |         |
-     |  Client |
-     |         |
-     +---------+
+   server security requirements.  Access token attributes and the
+   methods used to access protected resources are beyond the scope of
+   this specification and are defined by companion specifications.
+
+1.3.  Authorization Grant
+
+   An authorization grant is a general term used to describe the
+   intermediate credentials representing the resource owner
+   authorization, and serves as an abstraction layer.  An authorization
+   grant is used by the client to obtain an access token.
+
+1.3.1.  Authorization Code
+
+   The authorization code is obtained by using an authorization server
+   as an intermediary between the client and resource owner.  Instead of
+   requesting authorization directly from the resource owner, the client
+   directs the resource owner to an authorization server (via its user-
+   agent), which in turns directs the resource owner back to the client
+   with the authorization code.
+
+   Before directing the resource owner back to the client with the
+   authorization code, the authorization server authenticates the
+   resource owner and obtains authorization.  Because the resource owner
+   only authenticates with the authorization server, the resource
+   owner's credentials are never shared with the client.
+
+   The authorization code provides a few important security benefits
+   such as the ability to authenticate the client and issuing the access
+   token directly to the client without potentially exposing it to
+   others, including the resource owner.
+
+1.3.2.  Implicit
+
+   An implicit grant is issued when the resource owner's authorization
+   is expressed directly as an access token, without using an
+   intermediate credential.  The implicit grant is issued in a similar
+   manner as an authorization code, but instead of the resource owner
+   being redirected back to the client with the authorization code, it
+   is redirected back with an access token and its related attributes.
+
+   When issuing an implicit grant, the authorization server cannot
+   verify the identity of the client, and the access token may be
+   exposed to the resource owner or other applications with access to
+   the resource owner's user-agent.
+
+   Implicit grants improve the responsiveness and efficiency of some
+   clients (such as a client implemented as an in-browser application)
+   since it reduces the number of round trip required to obtain an
 
 
-                 Figure 2: Obtaining an Authorization Code
 
-   The authorization code flow illustrated in Figure 2 includes the
-   following steps:
-
-   (A)  The client initiates the flow by directing the end-user's user-
-        agent to the authorization server's end-user authorization
-        endpoint.  The client includes its client identifier, requested
-        scope, local state, and a redirection URI (to which the
-        authorization server will send the user-agent back once access
-        is granted or denied).
-
-   (B)  The authorization server authenticates the end-user (via the
-        user-agent) and establishes whether the end-user grants or
-        denies the client's access request.
-
-   (C)  If access is granted, the authorization server directs the user-
-        agent back to the client using the redirection URI provided.
-        The authorization server includes an authorization code for the
-        client to use to obtain an access token.
-
-   Once the client obtains an authorization code, it requests an access
-   token by authenticating with the authorization server (using its
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                  [Page 9]
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 6]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-   client credentials) and presenting the authorization code (access
-   grant).
+   access token.
 
-   In cases where the client is incapable of maintaining its client
-   credentials secret (such as native applications or an application
-   implemented as a user-agent script), the authorization server issues
-   an access token directly to the client in step (C), instead of
-   issuing an authorization code.
-
-   Obtaining an authorization code is described in Section 4.
-
-1.4.2.  Resource Owner Password Credentials
+1.3.3.  Resource Owner Password Credentials
 
    The resource owner password credentials (e.g. a username and
-   password) can be used directly as an access grant to obtain an access
-   token.  The credentials should only be used when there is a high
-   degree of trust between the resource owner and the client (e.g. its
-   computer operating system or a highly privileged application), and
-   when other access grant types are not available (such as an
-   authorization code).
+   password) can be used directly as an authorization grant to obtain an
+   access token.  The credentials should only be used when there is a
+   high degree of trust between the resource owner and the client (e.g.
+   its computer operating system or a highly privileged application),
+   and when other authorization grant types are not available (such as
+   an authorization code).
 
    Even though this grant type requires direct client access to the
-   resource owner's credentials, the resource owner's credentials are
-   used for a single request and are exchanged for an access token.
-   Unlike the HTTP Basic authentication scheme defined in [RFC2617],
-   this grant type eliminates the need for the client to store the
-   resource-owner's credentials for future use.
+   resource owner credentials, the resource owner credentials are used
+   for a single request and are exchanged for an access token.  Unlike
+   the HTTP Basic authentication scheme defined in [RFC2617], this grant
+   type eliminates the need for the client to store the resource-owner
+   credentials for future use.
 
-   In Figure 3, the client requests authorization from the resource
-   owner directly.  When the resource owner is an end-user, the client
-   typically prompts the end-user for the username and password.
+1.3.4.  Client Credentials
 
-
-     +--------+                               +----------+
-     |        |--(A)- Authorization Request ->| Resource |
-     | Client |                               |   Owner  |
-     |        |<-(B)-- Username & Password ---|          |
-     +--------+                               +----------+
-
-
-          Figure 3: Obtaining Resource Owner Password Credentials
-
-1.4.3.  Client Credentials
-
-   The client credentials can be used as an access grant when the
+   The client credentials can be used as an authorization grant when the
    authorization scope is limited to the protected resources under the
-   control of the client, or other protected resources previously
-   arranged with the authorization server.  Client credentials are used
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 10]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   as an access grant typically when the client is acting on its own
+   control of the client, or to protected resources previously arranged
+   with the authorization server.  Client credentials are used as an
+   authorization grant typically when the client is acting on its own
    behalf (the client is also the resource owner).
 
-1.4.4.  Refresh Token
+1.3.5.  Extensions
 
-   Access tokens usually have a shorter lifetime than authorized by the
-   resource owner.  When issuing an access token, the authorization
-   server can include a refresh token which is used by the client to
-   obtain a new access token when the current access token expires.
-   When requesting a new access token, the refresh token acts as an
-   access grant.  Using a refresh token removes the need to interact
-   with the resource owner again, or to store the original access grant
-   used to obtain the access token and refresh token.
+   Additional grant types may be defined to provide a bridge between
+   OAuth and other trust frameworks.  For example,
+   [I-D.ietf-oauth-saml2-bearer] defines a SAML 2.0
+   [OASIS.saml-core-2.0-os] bearer assertion grant type, which can be
+   used to obtain an access token.
 
+1.4.  Refresh Token
 
-     +--------+          Access Grant &      +---------------+
-     |        |--(A)-- Client Credentials -->| Authorization |
-     |        |                              |     Server    |
-     |        |<-(B)---- Access Token -------|               |
-     |        |         & Refresh Token      +---------------+
-     |        |
-     |        |                              +---------------+
-     |        |--(C)----- Access Token ----->|               |
-     |        |                              |               |
-     |        |<-(D)-- Protected Resource ---|    Resource   |
-     | Client |                              |     Server    |
-     |        |--(E)----- Access Token ----->|               |
-     |        |                              |               |
-     |        |<-(F)-- Invalid Token Error --|               |
-     |        |                              +---------------+
-     |        |
-     |        |          Refresh Token &     +---------------+
-     |        |--(G)-- Client Credentials -->| Authorization |
-     |        |                              |     Server    |
-     |        |<-(H)----- Access Token ------|               |
-     +--------+     & Optional Refresh Token +---------------+
+   A refresh token is optionally issued by the authorization server to
+   the client together with an access token.  The client can use the
+   refresh token to request another access token based on the same
+   authorization, without having to involve the resource owner again, or
+   having to retain the original authorization grant used to obtain the
+   initial access token.
+
+   A refresh token is a string representing the authorization granted to
+   the client by the resource owner.  The string is usually opaque to
+   the client.  The token may denote an identifier used to retrieve the
 
 
-                   Figure 4: Refreshing an Access Token
 
-   The refresh token flow illustrated in Figure 4 includes the following
-   steps:
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 7]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   authorization information, or self-contain the authorization
+   information in a verifiable manner.
+
+   The refresh token can be used to obtain a new access token when the
+   current access token expires (access tokens may have a shorter
+   lifetime than authorized by the resource owner), or to obtain
+   additional access tokens with identical or narrower scope.
+
+
+  +--------+                Access Grant &             +---------------+
+  |        |--(A)-------- Client Credentials --------->|               |
+  |        |                                           |               |
+  |        |<-(B)----------- Access Token -------------|               |
+  |        |               & Refresh Token             |               |
+  |        |                                           |               |
+  |        |                            +----------+   |               |
+  |        |--(C)---- Access Token ---->|          |   |               |
+  |        |                            |          |   |               |
+  |        |<-(D)- Protected Resource --| Resource |   | Authorization |
+  | Client |                            |  Server  |   |     Server    |
+  |        |--(E)---- Access Token ---->|          |   |               |
+  |        |                            |          |   |               |
+  |        |<-(F)- Invalid Token Error -|          |   |               |
+  |        |                            +----------+   |               |
+  |        |                                           |               |
+  |        |                Refresh Token &            |               |
+  |        |--(G)-------- Client Credentials --------->|               |
+  |        |                                           |               |
+  |        |<-(H)----------- Access Token -------------|               |
+  +--------+           & Optional Refresh Token        +---------------+
+
+
+               Figure 2: Refreshing an Expired Access Token
+
+   The flow illustrated in Figure 2 includes the following steps:
 
    (A)  The client requests an access token by authenticating with the
         authorization server using its client credentials, and
-        presenting an access grant.
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 11]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
+        presenting an authorization grant.
    (B)  The authorization server validates the client credentials and
-        the access grant, and if valid issues an access token and a
-        refresh token.
-
+        the authorization grant, and if valid issues an access token and
+        a refresh token.
    (C)  The client makes a protected resource requests to the resource
         server by presenting the access token.
 
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 8]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
    (D)  The resource server validates the access token, and if valid,
         serves the request.
-
    (E)  Steps (C) and (D) repeat until the access token expires.  If the
-        client does not know the access token expired, it makes another
-        protected resource request.  Otherwise, it skips to step (G).
-
+        client knows the access token expired, it skips to step (G),
+        otherwise it makes another protected resource request.
    (F)  Since the access token is invalid (expired), the resource server
         returns an invalid token error.
-
    (G)  The client requests a new access token by authenticating with
         the authorization server using its client credentials, and
-        presenting the refresh token (as the access grant).
-
+        presenting the refresh token.
    (H)  The authorization server validates the client credentials and
         the refresh token, and if valid issues a new access token (and
         optionally, a new refresh token).
 
-1.4.5.  Assertion
+1.5.  Notational Conventions
 
-   Assertions provide a bridge between OAuth and other trust frameworks.
-   They enable the client to utilize existing trust relationships in
-   order to obtain an access token.  The access grant represented by an
-   assertion depends on the assertion type, its content, and how it was
-   issued, which are beyond the scope of this specification.
+   The key words 'MUST', 'MUST NOT', 'REQUIRED', 'SHALL', 'SHALL NOT',
+   'SHOULD', 'SHOULD NOT', 'RECOMMENDED', 'MAY', and 'OPTIONAL' in this
+   specification are to be interpreted as described in [RFC2119].
 
-   Assertions are used as part of the protocol extensibility model,
-   providing a way for authorization servers to support additional
-   access grant types.
+   This specification uses the Augmented Backus-Naur Form (ABNF)
+   notation of [I-D.ietf-httpbis-p1-messaging].  Additionally, the
+   following rules are included from [RFC3986]: URI-reference; and from
+   [I-D.ietf-httpbis-p1-messaging]: OWS, RWS, and quoted-string.
 
+   Unless otherwise noted, all the protocol parameter names and values
+   are case sensitive.
 
-2.  Client Profiles
 
-   [[ add intro and find new names for the profiles. this section will
-   have normative language in future drafts, similar to -05 and earlier.
-   ]]
+2.  Client Authentication
 
-2.1.  Web Server
+   Client credentials are used to identify and authenticate the client.
+   The client credentials include a client identified - a unique string
+   issued to the client to identify itself to the authorization server.
+   The methods through which the client obtains its client credentials
+   are beyond the scope of this specification.
 
-   The web server profile is suitable for clients capable of interacting
-   with the end-user's user-agent (typically a web browser) and capable
+   Due to the nature of some clients, the authorization server SHOULD
+   NOT make assumptions about the confidentiality of client credentials
+   without establishing trust with the client.  The authorization server
+   SHOULD NOT issue client credentials to clients incapable of keeping
+   their secrets confidential.
 
+2.1.  Client Password Authentication
 
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 12]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   of receiving incoming requests (via redirection) from the
-   authorization server (capable of acting as an HTTP server).
-
-
-     +----------+          Client Identifier      +---------------+
-     |         -+----(A)--- & Redirect URI ------>|               |
-     | End-user |                                 | Authorization |
-     |    at    |<---(B)-- User authenticates --->|     Server    |
-     | Browser  |                                 |               |
-     |         -+----(C)-- Authorization Code ---<|               |
-     +-|----|---+                                 +---------------+
-       |    |                                         ^      v
-      (A)  (C)                                        |      |
-       |    |                                         |      |
-       ^    v                                         |      |
-     +---------+                                      |      |
-     |         |>---(D)-- Client Credentials, --------'      |
-     |  Server |          Authorization Code,                |
-     |  -Based |            & Redirect URI                   |
-     |  Client |                                             |
-     |         |<---(E)----- Access Token -------------------'
-     +---------+       (w/ Optional Refresh Token)
-
-
-                         Figure 5: Web Server Flow
-
-   The web server flow illustrated in Figure 5 includes the following
-   steps:
-
-   (A)  The web client initiates the flow by redirecting the end-user's
-        user-agent to the end-user authorization endpoint as described
-        in Section 4.  The client includes its client identifier,
-        requested scope, local state, and a redirect URI to which the
-        authorization server will send the end-user back once access is
-        granted (or denied).
-
-   (B)  The authorization server authenticates the end-user (via the
-        user-agent) and establishes whether the end-user grants or
-        denies the client's access request.
-
-   (C)  Assuming the end-user granted access, the authorization server
-        redirects the user-agent back to the client to the redirection
-        URI provided earlier.  The authorization includes an
-        authorization code for the client to use to obtain an access
-        token.
-
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 13]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   (D)  The client requests an access token from the authorization
-        server by authenticating and including the authorization code
-        received in the previous step as described in Section 5.
-
-   (E)  The authorization server validates the client credentials and
-        the authorization code and responds back with the access token.
-
-2.2.  User-Agent
-
-   The user-agent profile is suitable for client applications residing
-   in a user-agent, typically implemented in a browser using a scripting
-   language such as JavaScript.  These clients cannot keep client
-   secrets confidential and the authentication of the client is based on
-   the user-agent's same-origin policy.
-
-   Unlike other profiles in which the client makes separate requests for
-   end-user authorization and access token, the client receives the
-   access token as a result of the end-user authorization request in the
-   form of an HTTP redirection.  The client requests the authorization
-   server to redirect the user-agent to another web server or local
-   resource accessible to the user-agent which is capable of extracting
-   the access token from the response and passing it to the client.
-
-   This user-agent profile does not utilize the client secret since the
-   client executables reside on the end-user's computer or device which
-   makes the client secret accessible and exploitable.  Because the
-   access token is encoded into the redirection URI, it may be exposed
-   to the end-user and other applications residing on the computer or
-   device.
-
-
-          +----------+          Client Identifier     +----------------+
-          |          |>---(A)-- & Redirection URI --->|                |
-          |          |                                |                |
-   End <--+  -  -  - +----(B)-- User authenticates -->|  Authorization |
-   User   |          |                                |     Server     |
-          |          |<---(C)--- Redirect URI -------<|                |
-          |  Client  |         with Access Token      |                |
-          |    in    |            in Fragment         +----------------+
-          |  Browser |
-          |          |                                +----------------+
-          |          |>---(D)--- Redirect URI ------->|                |
-          |          |         without Fragment       |   Web Server   |
-          |          |                                |   with Client  |
-          |    (F)   |<---(E)--- Web Page with ------<|    Resource    |
-          |  Access  |              Script            |                |
-          |   Token  |                                +----------------+
-          +----------+
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 14]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-                         Figure 6: User-Agent Flow
-
-   The user-agent flow illustrated in Figure 6 includes the following
-   steps:
-
-   (A)  The client sends the user-agent to the end-user authorization
-        endpoint as described in Section 4.  The client includes its
-        client identifier, requested scope, local state, and a redirect
-        URI to which the authorization server will send the end-user
-        back once authorization is granted (or denied).
-
-   (B)  The authorization server authenticates the end-user (via the
-        user-agent) and establishes whether the end-user grants or
-        denies the client's access request.
-
-   (C)  If the end-user granted access, the authorization server
-        redirects the user-agent to the redirection URI provided
-        earlier.  The redirection URI includes the access token in the
-        URI fragment.
-
-   (D)  The user-agent follows the redirection instructions by making a
-        request to the web server which does not include the fragment.
-        The user-agent retains the fragment information locally.
-
-   (E)  The web server returns a web page (typically an HTML page with
-        an embedded script) capable of accessing the full redirection
-        URI including the fragment retained by the user-agent, and
-        extracting the access token (and other parameters) contained in
-        the fragment.
-
-   (F)  The user-agent executes the script provided by the web server
-        locally, which extracts the access token and passes it to the
-        client.
-
-2.3.  Native Application
-
-   Native applications are clients running as native code on the end-
-   user's computer or device (i.e. executing outside a user-agent or as
-   a desktop program).  These clients are often capable of interacting
-   with (or embedding) the end-user's user-agent but are limited in how
-   such interaction affects their end-user experience.  In many cases,
-   native applications are incapable of receiving direct callback
-   requests from the server (e.g. firewall, operating system
-   restrictions).
-
-   Native application clients can be implemented in different ways based
-   on their requirements and desired end-user experience.  Native
-   application clients can:
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 15]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   o  Utilize the end-user authorization endpoint as described in
-      Section 4 by launching an external user-agent.  The client can
-      capture the response by providing a redirection URI with a custom
-      URI scheme (registered with the operating system to invoke the
-      client application), or by providing a redirection URI pointing to
-      a server-hosted resource under the client's control which makes
-      the response available to the client (e.g. using the window title
-      or other locations accessible from outside the user-agent).
-
-   o  Utilize the end-user authorization endpoint as described in
-      Section 4 by using an embedded user-agent.  The client obtains the
-      response by directly communicating with the embedded user-agent.
-
-   o  Prompt end-users for their password and use them directly to
-      obtain an access token.  This is generally discouraged, as it
-      hands the end-user's password directly to the third-party client
-      which in turn has to store it in clear-text.  It also requires the
-      server to support password-based authentication.
-
-   When choosing between launching an external browser and an embedded
-   user-agent, developers should consider the following:
-
-   o  External user-agents may improve completion rate as the end-user
-      may already be logged-in and not have to re-authenticate.
-
-   o  Embedded user-agents often offer a better end-user flow, as they
-      remove the need to switch context and open new windows.
-
-   o  Embedded user-agents pose a security challenge because users are
-      authenticating in an unidentified window without access to the
-      visual protections offered by many user-agents.
-
-2.4.  Autonomous
-
-   Autonomous clients utilize an existing trust relationship or
-   framework to establish authorization.  Autonomous clients can be
-   implemented in different ways based on their requirements and the
-   existing trust framework they rely upon.  Autonomous clients can:
-
-   o  Obtain an access token by authenticating with the authorization
-      server using their client credentials.  The scope of the access
-      token is limited to the protected resources under the control of
-      the client, or that of another resource owner previously arranged
-      with the authorization server.
-
-   o  Use an existing access grant expressed as an assertion using an
-      assertion format supported by the authorization server.  Using
-      assertions requires the client to obtain an assertion (such as a
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 16]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-      SAML [OASIS.saml-core-2.0-os] assertion) from an assertion issuer
-      or to self-issue an assertion.  The assertion format, the process
-      by which the assertion is obtained, and the method of validating
-      the assertion are defined by the assertion issuer and the
-      authorization server, and are beyond the scope of this
-      specification.
-
-
-3.  Client Credentials
-
-   When interacting with the authorization server, the client identifies
-   itself using a set of client credentials which include a client
-   identifier and other properties for client authentication.  The means
-   through which the client obtains its credentials are beyond the scope
-   of this specification, but typically involve registration with the
-   authorization server.
-
-   Due to the nature of some clients, authorization servers SHOULD NOT
-   make assumptions about the confidentiality of client secrets without
-   establishing trust with the client.  Authorization servers SHOULD NOT
-   issue client secrets to clients incapable of keeping their secrets
-   confidential.
-
-   The authorization server MAY authenticate the client using any
-   appropriate set of credentials and authentication schemes.  The
-   client MUST NOT include more than one set of credentials or
-   authentication mechanism with each request.
-
-3.1.  Client Password Credentials
-
-   The client password credentials use a shared symmetric secret to
+   The client password authentication uses a shared symmetric secret to
    authenticate the client.  The client identifier and password are
-   included in the request using the HTTP Basic authentication scheme as
-   defined in [RFC2617] by including the client identifier as the
-   username and client password as the password.
-
-   For example (line breaks are for display purposes only):
-
-
-     POST /token HTTP/1.1
-     Host: server.example.com
-     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
-     Content-Type: application/x-www-form-urlencoded
-
-     grant_type=authorization_code&code=i1WsRn1uB1&
-     redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
+   included in the request using the following parameters:
 
 
 
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 17]
+Hammer-Lahav, et al.      Expires July 25, 2011                 [Page 9]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
-
-   Alternatively, the client MAY include the password in the request
-   body using the following parameters:
 
    client_id
          REQUIRED.  The client identifier.
-
-   client_secret  REQUIRED.  The client password.
+   client_secret
+         REQUIRED.  The client password.
 
    For example (line breaks are for display purposes only):
 
@@ -973,188 +522,311 @@ Internet-Draft                  OAuth 2.0                  December 2010
      redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
 
 
-   The authorization server MUST accept the client credentials using
-   both the request parameter, and the HTTP Basic authentication scheme.
-   The authorization server MAY support additional authentication
-   schemes suitable for the transmission of password credentials.
+2.2.  Other Client Authentication Methods
 
-3.2.  Client Assertion Credentials
+   In cases where client password authentication is not suitable or
+   sufficient, the authorization server MAY support other existing HTTP
+   authentication schemes or define new methods.  In addition, the
+   authorization server MAY allow unauthenticated access token requests
+   when the client identity does not matter (e.g. anonymous client) or
+   when the client identity is established via other means.
 
-   The client assertion credentials are used in cases where a password
-   (clear-text shared symmetric secret) is unsuitable or does not
-   provide sufficient security for client authentication.  In such cases
-   it is common to use other mechanisms such as HMAC or digital
-   signatures that do not require sending clear-text secrets.  The
-   client assertion credentials provide an extensible mechanism to use
-   an assertion format supported by the authorization server for
-   authentication the client.
-
-   Using assertions requires the client to obtain an assertion (such as
-   a SAML [OASIS.saml-core-2.0-os] assertion) from an assertion issuer
-   or to self-issue an assertion.  The assertion format, the process by
-   which the assertion is obtained, and the method of validating the
-   assertion are defined by the assertion issuer and the authorization
-   server, and are beyond the scope of this specification.
-
-   When using a client assertion, the client includes the following
-   parameters:
-
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 18]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   client_assertion_type  REQUIRED.  The format of the assertion as
-         defined by the authorization server.  The value MUST be an
-         absolute URI.
-
-   client_assertion  REQUIRED.  The client assertion.
-
-   For example, the client sends the following access token request
-   using a SAML 2.0 assertion to authenticate itself (line breaks are
-   for display purposes only):
+   For example, the authorization server MAY support using the HTTP
+   Basic authentication scheme as defined in [RFC2617] to include the
+   client identifier as the username and client password as the password
+   (line breaks are for display purposes only):
 
 
      POST /token HTTP/1.1
      Host: server.example.com
+     Authorization: Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
      Content-Type: application/x-www-form-urlencoded
 
      grant_type=authorization_code&code=i1WsRn1uB1&
-     client_assertion=PHNhbWxwOl[...omitted for brevity...]ZT4%3D&
-     client_assertion_type=
-     urn%3Aoasis%3Anames%sAtc%3ASAML%3A2.0%3Aassertion&
      redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb
 
 
-   When obtaining an access token using a client assertion together with
-   an authorization code (as described in Section 5.1.1), a mechanism is
-   needed to map between the value of "client_id" parameter used to
-   obtain the authorization code, and the client assertion.  Such
-   mechanism is beyond the out of scope for this specification, but MUST
-   be specified for any client assertion type used in combination with
-   an authorization code.
-
-   The authorization server MUST reject access token requests using
-   client assertion credentials that do not contain HMAC or signed
-   values that:
-
-   o  State the assertion was specifically issued to be consumed by the
-      receiving endpoint (typically via an audience or recipient value
-      containing the receiving endpoint's identifier).
-
-   o  Identify the entity that issued the assertion (typically via an
-      issuer value).
-
-   o  Identify when the assertion expires as an absolute time (typically
-      via an expiration value containing a UTC date/time value).  The
-      authorization server MUST reject expired assertions.
+   When using a method other than client password authentication to
+   exchange an authorization code grant type, the authorization server
+   MUST define a method for mapping the client credentials to the client
+   identifier used to obtain the authorization code.
 
 
 
 
 
 
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 19]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 10]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-4.  Obtaining End-User Authorization
+3.  Protocol Endpoints
 
-   Before the client can access a protect resource, it MUST first obtain
-   authorization from the end-user.  To obtain an end-user
-   authorization, the client sends the end-user to the end-user
-   authorization endpoint.  Once obtained, the end-user access grant is
-   expressed as an authorization code which the client uses to obtain an
-   access token.
+   The authorization process utilizes two endpoints:
 
-   At the end-user authorization endpoint, the end-user first
-   authenticates with the authorization server, and then grants or
-   denies the access request.  The way in which the authorization server
-   authenticates the end-user (e.g. username and password login, OpenID,
-   session cookies) and in which the authorization server obtains the
-   end-user's authorization, including whether it uses a secure channel
-   such as TLS, is beyond the scope of this specification.  However, the
-   authorization server MUST first verify the identity of the end-user.
+   o  Authorization endpoint - used to obtain authorization from the
+      resource owner via user-agent redirection.
+   o  Token endpoint - used to exchange an authorization grant for an
+      access token, typically with client authentication.
 
-   The location of the end-user authorization endpoint can be found in
-   the service documentation.  The end-user authorization endpoint URI
-   MAY include a query component as defined by [RFC3986] section 3,
-   which must be retained when adding additional query parameters.
+   Not every authorization grant flow utilizes both endpoints.
+   Extension grant types MAY define additional endpoints as needed.
 
-   Since requests to the end-user authorization endpoint result in user
-   authentication and the transmission of sensitive information, the
-   authorization server SHOULD require the use of a transport-layer
-   security mechanism such as TLS when sending requests to the end-user
-   authorization endpoint.
+3.1.  Authorization Endpoint
 
-4.1.  Authorization Request
+   The authorization endpoint is used to interact with the resource
+   owner and obtain authorization which is expressed explicitly as an
+   authorization code (exchanged for an access token), or implicitly by
+   direct issuance of an access token.
 
-   In order to direct the end-user's user-agent to the authorization
-   server, the client constructs the request URI by adding the following
-   parameters to the end-user authorization endpoint URI query component
+   The authorization server MUST first verify the identity of the
+   resource owner.  The way in which the authorization server
+   authenticates the resource owner (e.g. username and password login,
+   session cookies) is beyond the scope of this specification.
+
+   The location of the authorization endpoint can be found in the
+   service documentation.  The endpoint URI MAY include a query
+   component as defined by [RFC3986] section 3, which MUST be retained
+   when adding additional query parameters.
+
+   Requests to the authorization endpoint result in user authentication
+   and the transmission of sensitive information.  If the response
+   includes an access token, the authorization server MUST require TLS
+   1.2 as defined in [RFC5246] and MAY support additional transport-
+   layer mechanisms meeting its security requirements.  If the response
+   does not include an access token, the authorization server SHOULD
+   require TLS 1.2 and any additional transport-layer mechanism meeting
+   its security requirements.
+
+   The authorization server MUST support the use of the HTTP "GET"
+   method for the authorization endpoint, and MAY support the use of the
+   "POST" method as well.
+
+   Parameters sent without a value MUST be treated as if they were
+   omitted from the request.  The authorization server SHOULD ignore
+   unrecognized request parameters.
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 11]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+3.1.1.  Redirection URI
+
+   The client directs the resource owner's user-agent to the
+   authorization endpoint and includes a redirection URI to which the
+   authorization server will redirect the user-agent back once
+   authorization has been obtained (or denied).  The client MAY omit the
+   redirection URI if one has been established between the client and
+   authorization server via other means, such as during the client
+   registration process.
+
+   The redirection URI MUST be an absolute URI and MAY include a query
+   component, which MUST be retained by the authorization server when
+   adding additional query parameters.
+
+   The authorization server SHOULD require the client to pre-register
+   their redirection URI or at least certain components such as the
+   scheme, host, port and path.  If a redirection URI was registered,
+   the authorization server MUST compare any redirection URI received at
+   the authorization endpoint with the registered URI.
+
+   The authorization server SHOULD NOT redirect the user-agent to
+   unregistered or untrusted URIs to prevent the endpoint from being
+   used as an open redirector.  If no valid redirection URI is
+   available, the authorization server SHOULD inform the resource owner
+   directly of the error.
+
+3.2.  Token Endpoint
+
+   The token endpoint is used by the client to obtain an access token by
+   authenticating with the authorization server and presenting its
+   authorization grant.  The token endpoint is used with every
+   authorization grant except for the implicit grant type (since an
+   access token is issued directly).
+
+   The location of the token endpoint can be found in the service
+   documentation.  The endpoint URI MAY include a query component, which
+   MUST be retained when adding additional query parameters.
+
+   Since requests to the token endpoint result in the transmission of
+   clear-text credentials (in the HTTP request and response), the
+   authorization server MUST require the use of a transport-layer
+   security mechanism when sending requests to the token endpoints.  The
+   authorization server MUST support TLS 1.2 as defined in [RFC5246],
+   and MAY support additional transport-layer mechanisms meeting its
+   security requirements.
+
+   The token endpoint requires client authentication as described in
+   Section 2 .  The authorization server MAY accept any form of client
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 12]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   authentication meeting its security requirements.  The client MUST
+   NOT use more than one authentication method in each request.
+
+   The client MUST use the HTTP "POST" method when making access token
+   requests.
+
+   Parameters sent without a value MUST be treated as if they were
+   omitted from the request.  The authorization server SHOULD ignore
+   unrecognized request parameters.
+
+
+4.  Requesting an Access Token
+
+   The client obtains an access token by requesting authorization from
+   the resource owner.  The authorization is expressed in the form of an
+   authorization grant which the client exchanges for an access token.
+   OAuth defines four grant types: authorization code, implicit,
+   resource owner password credentials, and client credentials, as well
+   as an extension mechanism for defining additional grant types.
+
+4.1.  Authorization Code
+
+   The authorization code flow is suitable for clients capable of
+   maintaining their client credentials confidential (for authenticating
+   with the authorization server) such as a client implemented on a
+   secure server.  As a redirection-based profile, the client must be
+   capable of interacting with the resource owner's user-agent
+   (typically a web browser) and capable of receiving incoming requests
+   (via redirection) from the authorization server.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 13]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+     +----------+
+     | resource |
+     |   owner  |
+     |          |
+     +----------+
+          ^
+          |
+         (B)
+     +----|-----+          Client Identifier      +---------------+
+     |         -+----(A)--- & Redirect URI ------>|               |
+     |  User-   |                                 | Authorization |
+     |  Agent  -+----(B)-- User authenticates --->|     Server    |
+     |          |                                 |               |
+     |         -+----(C)-- Authorization Code ---<|               |
+     +-|----|---+                                 +---------------+
+       |    |                                         ^      v
+      (A)  (C)                                        |      |
+       |    |                                         |      |
+       ^    v                                         |      |
+     +---------+                                      |      |
+     |         |>---(D)-- Client Credentials, --------'      |
+     |         |          Authorization Code,                |
+     | Client  |            & Redirect URI                   |
+     |         |                                             |
+     |         |<---(E)----- Access Token -------------------'
+     +---------+       (w/ Optional Refresh Token)
+
+
+                     Figure 3: Authorization Code Flow
+
+   The flow illustrated in Figure 3 includes the following steps:
+
+   (A)  The client initiates the flow by directing the resource owner's
+        user-agent to the authorization endpoint.  The client includes
+        its client identifier, requested scope, local state, and a
+        redirection URI to which the authorization server will send the
+        user-agent back once access is granted (or denied).
+   (B)  The authorization server authenticates the resource owner (via
+        the user-agent) and establishes whether the resource owner
+        grants or denies the client's access request.
+   (C)  Assuming the resource owner grants access, the authorization
+        server redirects the user-agent back to the client using the
+        redirection URI provided earlier.  The redirection URI includes
+        an authorization code.
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 14]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   (D)  The client requests an access token from the authorization
+        server's token endpoint by authenticating using its client
+        credentials, and includes the authorization code received in the
+        previous step.
+   (E)  The authorization server validates the client credentials and
+        the authorization code and if valid, responds back with an
+        access token.
+
+4.1.1.  Authorization Request
+
+   The client constructs the request URI by adding the following
+   parameters to the query component of the authorization endpoint URI
    using the "application/x-www-form-urlencoded" format as defined by
    [W3C.REC-html401-19991224]:
 
    response_type
-         REQUIRED.  The requested response: an access token, an
-         authorization code, or both.  The parameter value MUST be set
-         to "token" for requesting an access token, "code" for
-         requesting an authorization code, or "code_and_token" to
-         request both.  The authorization server MAY decline to provide
-         one or more of these response types.
-
-
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 20]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
+         REQUIRED.  Value MUST be set to "code".
    client_id
-         REQUIRED.  The client identifier as described in Section 3.
-
+         REQUIRED.  The client identifier as described in Section 2.
    redirect_uri
          REQUIRED, unless a redirection URI has been established between
-         the client and authorization server via other means.  An
-         absolute URI to which the authorization server will redirect
-         the user-agent to when the end-user authorization step is
-         completed.  The authorization server SHOULD require the client
-         to pre-register their redirection URI.
-
+         the client and authorization server via other means.  Described
+         in Section 3.1.1.
    scope
          OPTIONAL.  The scope of the access request expressed as a list
-         of space-delimited strings.  The value of the "scope" parameter
-         is defined by the authorization server.  If the value contains
-         multiple space-delimited strings, their order does not matter,
-         and each string adds an additional access range to the
-         requested scope.
-
+         of space-delimited strings.  The value is defined by the
+         authorization server.  If the value contains multiple space-
+         delimited strings, their order does not matter, and each string
+         adds an additional access range to the requested scope.
    state
          OPTIONAL.  An opaque value used by the client to maintain state
          between the request and callback.  The authorization server
          includes this value when redirecting the user-agent back to the
          client.
 
-   The client directs the end-user to the constructed URI using an HTTP
-   redirection response, or by other means available to it via the end-
-   user's user-agent.  The authorization server MUST support the use of
-   the HTTP "GET" method for the end-user authorization endpoint, and
-   MAY support the use of the "POST" method as well.
+   The client directs the resource owner to the constructed URI using an
+   HTTP redirection response, or by other means available to it via the
+   user-agent.
 
-   For example, the client directs the end-user's user-agent to make the
-   following HTTP request using transport-layer security (line breaks
-   are for display purposes only):
+   For example, the client directs the user-agent to make the following
+   HTTP request using transport-layer security (line breaks are for
+   display purposes only):
 
 
      GET /authorize?response_type=code&client_id=s6BhdRkqt3&
@@ -1162,322 +834,153 @@ Internet-Draft                  OAuth 2.0                  December 2010
      Host: server.example.com
 
 
-   If the client has previously registered a redirection URI with the
-   authorization server, the authorization server MUST verify that the
-   redirection URI received matches the registered URI associated with
-   the client identifier.  The authorization server SHOULD NOT redirect
-   the user-agent to unregistered or untrusted URIs to prevent the
-   endpoint from being used as an open redirector.  If no valid
-   redirection URI is available, the authorization server SHOULD inform
 
 
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 21]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 15]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
-
-   the end-user of the error occured. [[ provide guidance on how to
-   perform matching ]]
-
-   Parameters sent without a value MUST be treated as if they were
-   omitted from the request.  The authorization server SHOULD ignore
-   unrecognized request parameters.
 
    The authorization server validates the request to ensure all required
-   parameters are present and valid.  If the request is invalid, the
-   authorization server redirects the user-agent back to the client
-   using the redirection URI provided with the appropriate error code as
-   described in Section 4.3.
+   parameters are present and valid.  If the request is valid, the
+   authorization server authenticates the resource owner and obtains an
+   authorization decision (by asking the resource owner or by
+   establishing approval via other means).
 
-   The authorization server authenticates the end-user and obtains an
-   authorization decision (by asking the end-user or by establishing
-   approval via other means).  When a decision has been established, the
-   authorization server directs the end-user's user-agent to the
-   provided client redirection URI using an HTTP redirection response,
-   or by other means available to it via the end-user's user-agent.
+   When a decision is established, the authorization server directs the
+   user-agent to the provided client redirection URI using an HTTP
+   redirection response, or by other means available to it via the user-
+   agent.
 
-4.2.  Authorization Response
+4.1.2.  Authorization Response
 
-   If the end-user grants the access request, the authorization server
-   issues an access token, an authorization code, or both, and delivers
-   them to the client by adding the following parameters to the
-   redirection URI (as described below):
+   If the resource owner grants the access request, the authorization
+   server issues an authorization code and delivers it to the client by
+   adding the following parameters to the query component of the
+   redirection URI using the "application/x-www-form-urlencoded" format:
 
    code
-         REQUIRED if the response type is "code" or "code_and_token",
-         otherwise MUST NOT be included.  The authorization code
-         generated by the authorization server.  The authorization code
-         SHOULD expire shortly after it is issued to minimize the risk
-         of leaks.  The client MUST NOT reuse the authorization code.
-         If an authorization code is used more than once, the
-         authorization server MAY revoke all tokens previously issued
-         based on that authorization code.  The authorization code is
-         bound to the client identifier and redirection URI.
-
-   access_token
-         REQUIRED if the response type is "token" or "code_and_token",
-         otherwise MUST NOT be included.  The access token issued by the
-         authorization server.
-
-   token_type
-         REQUIRED if the response includes an access token.  The type of
-         the token issued.  The token type informs the client how the
-         access token is to be used when accessing a protected resource
-         as described in Section 6.1.
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 22]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   expires_in
-         OPTIONAL.  The duration in seconds of the access token lifetime
-         if an access token is included.  For example, the value "3600"
-         denotes that the access token will expire in one hour from the
-         time the response was generated by the authorization server.
-
-   scope
-         OPTIONAL.  The scope of the access token as a list of space-
-         delimited strings if an access token is included.  The value of
-         the "scope" parameter is defined by the authorization server.
-         If the value contains multiple space-delimited strings, their
-         order does not matter, and each string adds an additional
-         access range to the requested scope.  The authorization server
-         SHOULD include the parameter if the requested scope is
-         different from the one requested by the client.
-
+         REQUIRED.  The authorization code generated by the
+         authorization server.  The authorization code SHOULD expire
+         shortly after it is issued to minimize the risk of leaks.  The
+         client MUST NOT reuse the authorization code.  If an
+         authorization code is used more than once, the authorization
+         server MAY revoke all tokens previously issued based on that
+         authorization code.  The authorization code is bound to the
+         client identifier and redirection URI.
    state
          REQUIRED if the "state" parameter was present in the client
          authorization request.  Set to the exact value received from
          the client.
 
-   The method in which the authorization server adds the parameter to
-   the redirection URI is determined by the response type requested by
-   the client in the authorization request using the "response_type"
-   parameter.
-
-   If the response type is "code", the authorization server adds the
-   parameters to the redirection URI query component using the
-   "application/x-www-form-urlencoded" format as defined by
-   [W3C.REC-html401-19991224].
-
-   For example, the authorization server redirects the end-user's user-
-   agent by sending the following HTTP response:
+   For example, the authorization server redirects the user-agent by
+   sending the following HTTP response:
 
 
      HTTP/1.1 302 Found
      Location: https://client.example.com/cb?code=i1WsRn1uB1
 
 
-   If the response type is "token" or "code_and_token", the
-   authorization server adds the parameters to the redirection URI
-   fragment component using the "application/x-www-form-urlencoded"
-   format as defined by [W3C.REC-html401-19991224].
+   The client SHOULD ignore unrecognized response parameters.  The
+   authorization code string size is left undefined by this
+   specification.  The clients should avoid making assumptions about
+   code value sizes.  The authorization server should document the size
+   of any value is issues.
 
 
 
 
 
 
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 23]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 16]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-   For example, the authorization server redirects the end-user's user-
-   agent by sending the following HTTP response (URI line breaks are for
-   display purposes only):
+4.1.2.1.  Error Response
 
+   If the request fails due to a missing, invalid, or mismatching
+   redirection URI, the authorization server SHOULD inform the resource
+   owner of the error, and MUST NOT redirect the user-agent to the
+   invalid redirection URI.
 
-     HTTP/1.1 302 Found
-     Location: http://example.com/rd#access_token=FJQbwq9&
-               token_type=example&expires_in=3600
-
-
-   Clients SHOULD ignore unrecognized response parameters.  The sizes of
-   tokens and other values received from the authorization server, are
-   left undefined by this specification.  Clients should avoid making
-   assumptions about value sizes.  Servers should document the expected
-   size of any value they issue.
-
-4.3.  Error Response
-
-   If the end-user denies the access request or if the request fails for
-   reasons other than a missing or invalid redirection URI, the
-   authorization server informs the client by adding the following
-   parameters to the redirection URI query component using the
-   "application/x-www-form-urlencoded" format as defined by
-   [W3C.REC-html401-19991224]:
+   If the resource owner denies the access request or if the request
+   fails for reasons other than a missing or invalid redirection URI,
+   the authorization server informs the client by adding the following
+   parameters to the query component of the redirection URI using the
+   "application/x-www-form-urlencoded" format:
 
    error
-         REQUIRED.  A single error code as described in Section 4.3.1.
-
-   error_description  OPTIONAL.  A human-readable text providing
-         additional information, used to assist in the understanding and
-         resolution of the error occurred.
-
-   error_uri  OPTIONAL.  A URI identifying a human-readable web page
-         with information about the error, used to provide the end-user
+         REQUIRED.  A single error code from the following:
+         invalid_request
+               The request is missing a required parameter, includes an
+               unsupported parameter or parameter value, or is otherwise
+               malformed.
+         invalid_client
+               The client identifier provided is invalid.
+         unauthorized_client
+               The client is not authorized to request an authorization
+               code using this method.
+         access_denied
+               The resource owner or authorization server denied the
+               request.
+         unsupported_response_type
+               The authorization server does not support obtaining an
+               authorization code using this method.
+         invalid_scope
+               The requested scope is invalid, unknown, or malformed.
+   error_description
+         OPTIONAL.  A human-readable text providing additional
+         information, used to assist in the understanding and resolution
+         of the error occurred.
+   error_uri
+         OPTIONAL.  A URI identifying a human-readable web page with
+         information about the error, used to provide the resource owner
          with additional information about the error.
-
    state
          REQUIRED if the "state" parameter was present in the client
          authorization request.  Set to the exact value received from
          the client.
 
-   For example, the authorization server redirects the end-user's user-
-   agent by sending the following HTTP response:
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 17]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   For example, the authorization server redirects the user-agent by
+   sending the following HTTP response:
 
 
      HTTP/1.1 302 Found
      Location: https://client.example.com/cb?error=access_denied
 
 
+4.1.3.  Access Token Request
 
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 24]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   If the request fails due to a missing or invalid redirection URI, the
-   authorization server SHOULD inform the end-user of the error, and
-   MUST NOT redirect the end-user's user-agent to the invalid
-   redirection URI.
-
-4.3.1.  Error Codes
-
-   The authorization server includes one of the following error codes
-   with the error response:
-
-   invalid_request
-         The request is missing a required parameter, includes an
-         unsupported parameter or parameter value, or is otherwise
-         malformed.
-
-   invalid_client
-         The client identifier provided is invalid.
-
-   unauthorized_client
-         The client is not authorized to use the requested response
-         type.
-
-   redirect_uri_mismatch
-         The redirection URI provided does not match a pre-registered
-         value.
-
-   access_denied
-         The end-user or authorization server denied the request.
-
-   unsupported_response_type
-         The requested response type is not supported by the
-         authorization server.
-
-   invalid_scope
-         The requested scope is invalid, unknown, or malformed.
-
-   [[ Add mechanism for extending error codes ]]
-
-
-5.  Obtaining an Access Token
-
-   The client obtains an access token by authenticating with the
-   authorization server and presenting its access grant (in the form of
-   an authorization code, resource owner credentials, an assertion, or a
-   refresh token).
-
-   Since requests to the token endpoint result in the transmission of
-   clear-text credentials in the HTTP request and response, the
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 25]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-   authorization server MUST require the use of a transport-layer
-   security mechanism when sending requests to the token endpoints.
-   Servers MUST support TLS 1.2 as defined in [RFC5246], and MAY support
-   additional transport-layer security mechanisms.
-
-   The client requests an access token by making an HTTP "POST" request
-   to the token endpoint.  The location of the token endpoint can be
-   found in the service documentation.  The token endpoint URI MAY
-   include a query component.
-
-   The client authenticates with the authorization server by adding its
-   client credentials to the request as described in Section 3.  The
-   authorization server MAY allow unauthenticated access token requests
-   when the client identity does not matter (e.g. anonymous client) or
-   when the client identity is established via other means (e.g. using
-   an assertion access grant).
-
-   The client constructs the request by including the following
-   parameters using the "application/x-www-form-urlencoded" format in
-   the HTTP request entity-body:
+   The client makes a request to the token endpoint by adding the
+   following parameter using the "application/x-www-form-urlencoded"
+   format in the HTTP request entity-body:
 
    grant_type
-         REQUIRED.  The access grant type included in the request.
-         Value MUST be one of "authorization_code", "password",
-         "refresh_token", "client_credentials", or an absolute URI
-         identifying an assertion format supported by the authorization
-         server.
-
-   scope
-         OPTIONAL.  The scope of the access request expressed as a list
-         of space-delimited strings.  The value of the "scope" parameter
-         is defined by the authorization server.  If the value contains
-         multiple space-delimited strings, their order does not matter,
-         and each string adds an additional access range to the
-         requested scope.  If the access grant being used already
-         represents an approved scope (e.g. authorization code,
-         assertion), the requested scope MUST be equal or lesser than
-         the scope previously granted, and if omitted is treated as
-         equal to the previously approved scope.
-
-   In addition, the client MUST include the appropriate parameters
-   listed for the selected access grant type as described in
-   Section 5.1.
-
-   Parameters sent without a value MUST be treated as if they were
-   omitted from the request.  The authorization server SHOULD ignore
-   unrecognized request parameters.
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 26]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-5.1.  Access Grant Types
-
-   The client requests an access token using an authorization code,
-   resource owner password credentials, client credentials, refresh
-   token, or assertion.
-
-5.1.1.  Authorization Code
-
-   The client includes the authorization code using the
-   "authorization_code" access grant type and the following parameters:
-
+         REQUIRED.  Value MUST be set to "authorization_code".
    code
          REQUIRED.  The authorization code received from the
          authorization server.
-
    redirect_uri
          REQUIRED.  The redirection URI used in the initial request.
 
+   The client includes its authentication credentials as described in
+   Section 2
+
    For example, the client makes the following HTTP request by including
-   its client credentials via the "client_secret" parameter described in
-   Section 3 and using transport-layer security (line breaks are for
+   its client credentials via the "client_id" and "client_secret"
+   parameters, and using transport-layer security (line breaks are for
    display purposes only):
 
 
@@ -1492,38 +995,430 @@ Internet-Draft                  OAuth 2.0                  December 2010
 
    The authorization server MUST:
 
-   o  Validate the client credentials (if present) and ensure they match
-      the authorization code.
+   o  Validate the client credentials and ensure they match the
+      authorization code.
+   o  Verify that the authorization code and redirection URI are valid
+      and match its stored association.
 
-   o  Verify that the authorization code and redirection URI are all
-      valid and match its stored association.
-
-   If the request is valid, the authorization server issues a successful
-   response as described in Section 5.2.
-
-5.1.2.  Resource Owner Password Credentials
-
-   The client includes the resource owner credentials using the
-   "password" access grant type and the following parameters: [[ add
+   If the request is valid and authorized, the authorization server
 
 
 
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 27]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 18]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-   internationalization consideration for username and password ]]
+   issues an access token and optional refresh token, and responds as
+   described in Section 5.
 
+4.2.  Implicit Grant
+
+   The implicit grant flow is suitable for clients incapable of
+   maintaining their client credentials confidential (for authenticating
+   with the authorization server) such as client applications residing
+   in a user-agent, typically implemented in a browser using a scripting
+   language such as JavaScript, or native applications.  These clients
+   cannot keep client secrets confidential and the authentication of the
+   client is based on the user-agent's same-origin policy.
+
+   As a redirection-based profile, the client must be capable of
+   interacting with the resource owner's user-agent (typically a web
+   browser) and capable of receiving incoming requests (via redirection)
+   from the authorization server.
+
+   Unlike the authorization code flow in which the client makes separate
+   requests for authorization and access token, the client receives the
+   access token as the result of the authorization request.
+
+   The implicit grant flow does not utilize the client credentials since
+   the client is unable to maintain their confidentiality (the client
+   resides on the resource owner's computer or device which makes the
+   client credentials accessible and exploitable).  Because the access
+   token is encoded into the redirection URI, it may be exposed to the
+   resource owner and other applications residing on its computer or
+   device.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 19]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+     +----------+
+     | Resource |
+     |  Owner   |
+     |          |
+     +----------+
+          ^
+          |
+         (B)
+     +----|-----+          Client Identifier     +---------------+
+     |         -+----(A)--- & Redirect URI ----->|               |
+     |  User-   |                                | Authorization |
+     |  Agent  -|----(B)-- User authenticates -->|     Server    |
+     |          |                                |               |
+     |          |<---(C)---- Redirect URI ------<|               |
+     |          |          with Access Token     +---------------+
+     |          |            in Fragment
+     |          |                                +---------------+
+     |          |----(D)---- Redirect URI ------>|   Web Server  |
+     |          |          without Fragment      |  with Client  |
+     |          |                                |   Resource    |
+     |     (F)  |<---(E)------- Script ---------<|               |
+     |          |                                +---------------+
+     +-|--------+
+       |    |
+      (A)  (G) Access Token
+       |    |
+       ^    v
+     +---------+
+     |         |
+     |  Client |
+     |         |
+     +---------+
+
+
+                       Figure 4: Implicit Grant Flow
+
+   The flow illustrated in Figure 4 includes the following steps:
+
+   (A)  The client initiates the flow by directing the resource owner's
+        user-agent to the authorization endpoint.  The client includes
+        its client identifier, requested scope, local state, and a
+        redirection URI to which the authorization server will send the
+        user-agent back once access is granted (or denied).
+   (B)  The authorization server authenticates the resource owner (via
+        the user-agent) and establishes whether the resource owner
+        grants or denies the client's access request.
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 20]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   (C)  Assuming the resource owner grants access, the authorization
+        server redirects the user-agent back to the client using the
+        redirection URI provided earlier.  The redirection URI includes
+        the access token in the URI fragment.
+   (D)  The user-agent follows the redirection instructions by making a
+        request to the web server (does not include the fragment).  The
+        user-agent retains the fragment information locally.
+   (E)  The web server returns a web page (typically an HTML document
+        with an embedded script) capable of accessing the full
+        redirection URI including the fragment retained by the user-
+        agent, and extracting the access token (and other parameters)
+        contained in the fragment.
+   (F)  The user-agent executes the script provided by the web server
+        locally, which extracts the access token and passes it to the
+        client.
+
+4.2.1.  Authorization Request
+
+   The client constructs the request URI by adding the following
+   parameters to the query component of the authorization endpoint URI
+   using the "application/x-www-form-urlencoded" format:
+
+   response_type
+         REQUIRED.  Value MUST be set to "token".
+   client_id
+         REQUIRED.  The client identifier as described in Section 2.
+         Due to lack of client authentication, the client identifier
+         alone MUST NOT be relied upon for client identification.
+   redirect_uri
+         REQUIRED, unless a redirection URI has been established between
+         the client and authorization server via other means.  Described
+         in Section 3.1.1.
+   scope
+         OPTIONAL.  The scope of the access request expressed as a list
+         of space-delimited strings.  The value is defined by the
+         authorization server.  If the value contains multiple space-
+         delimited strings, their order does not matter, and each string
+         adds an additional access range to the requested scope.
+   state
+         OPTIONAL.  An opaque value used by the client to maintain state
+         between the request and callback.  The authorization server
+         includes this value when redirecting the user-agent back to the
+         client.
+
+   The client directs the resource owner to the constructed URI using an
+   HTTP redirection response, or by other means available to it via the
+   user-agent.
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 21]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   For example, the client directs the user-agent to make the following
+   HTTP request using transport-layer security (line breaks are for
+   display purposes only):
+
+
+     GET /authorize?response_type=token&client_id=s6BhdRkqt3&
+         redirect_uri=https%3A%2F%2Fclient%2Eexample%2Ecom%2Fcb HTTP/1.1
+     Host: server.example.com
+
+
+   The authorization server validates the request to ensure all required
+   parameters are present and valid.  If the request is valid, the
+   authorization server authenticates the resource owner and obtains an
+   authorization decision (by asking the resource owner or by
+   establishing approval via other means).
+
+   When a decision is established, the authorization server directs the
+   user-agent to the provided client redirection URI using an HTTP
+   redirection response, or by other means available to it via the user-
+   agent.
+
+4.2.2.  Access Token Response
+
+   If the resource owner grants the access request, the authorization
+   server issues an access token and delivers it to the client by adding
+   the following parameters to the fragment component of the redirection
+   URI using the "application/x-www-form-urlencoded" format:
+
+   access_token
+         REQUIRED.  The access token issued by the authorization server.
+   token_type
+         REQUIRED.  The type of the token issued as described in
+         Section 7.1.  Value is case insensitive.
+   expires_in
+         OPTIONAL.  The duration in seconds of the access token
+         lifetime.  For example, the value "3600" denotes that the
+         access token will expire in one hour from the time the response
+         was generated.
+   scope
+         OPTIONAL.  The scope of the access request expressed as a list
+         of space-delimited strings.  The value is defined by the
+         authorization server.  If the value contains multiple space-
+         delimited strings, their order does not matter, and each string
+         adds an additional access range to the requested scope.  The
+         authorization server SHOULD include the parameter if the
+         requested scope is different from the one requested by the
+         client.
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 22]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   state
+         REQUIRED if the "state" parameter was present in the client
+         authorization request.  Set to the exact value received from
+         the client.
+
+   For example, the authorization server redirects the user-agent by
+   sending the following HTTP response (URI line breaks are for display
+   purposes only):
+
+
+     HTTP/1.1 302 Found
+     Location: http://example.com/rd#access_token=FJQbwq9&
+               token_type=example&expires_in=3600
+
+
+   The client SHOULD ignore unrecognized response parameters.  The
+   access token string size is left undefined by this specification.
+   The client should avoid making assumptions about value sizes.  The
+   authorization server should document the size of any value it issues.
+
+4.2.2.1.  Error Response
+
+   If the request fails due to a missing, invalid, or mismatching
+   redirection URI, the authorization server SHOULD inform the resource
+   owner of the error, and MUST NOT redirect the user-agent to the
+   invalid redirection URI.
+
+   If the resource owner denies the access request or if the request
+   fails for reasons other than a missing or invalid redirection URI,
+   the authorization server informs the client by adding the following
+   parameters to the fragment component of the redirection URI using the
+   "application/x-www-form-urlencoded" format:
+
+   error
+         REQUIRED.  A single error code from the following:
+         invalid_request
+               The request is missing a required parameter, includes an
+               unsupported parameter or parameter value, or is otherwise
+               malformed.
+         invalid_client
+               The client identifier provided is invalid.
+         unauthorized_client
+               The client is not authorized to request an access token
+               using this method.
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 23]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+         access_denied
+               The resource owner or authorization server denied the
+               request.
+         unsupported_response_type
+               The authorization server does not support obtaining an
+               access token using this method.
+         invalid_scope
+               The requested scope is invalid, unknown, or malformed.
+   error_description
+         OPTIONAL.  A human-readable text providing additional
+         information, used to assist in the understanding and resolution
+         of the error occurred.
+   error_uri
+         OPTIONAL.  A URI identifying a human-readable web page with
+         information about the error, used to provide the resource owner
+         with additional information about the error.
+   state
+         REQUIRED if the "state" parameter was present in the client
+         authorization request.  Set to the exact value received from
+         the client.
+
+   For example, the authorization server redirects the user-agent by
+   sending the following HTTP response:
+
+
+     HTTP/1.1 302 Found
+     Location: https://client.example.com/cb#error=access_denied
+
+
+4.3.  Resource Owner Password Credentials
+
+   The resource owner password credentials flow is suitable in cases
+   where the resource owner has a trust relationship with the client,
+   such as its computer operating system or a highly privileged
+   application.  The authorization server should take special care when
+   enabling the flow, and only when other flows are not viable.
+
+   The flow is suitable for clients capable of obtaining the resource
+   owner credentials (username and password, typically using an
+   interactive form).  It is also used to migrate existing clients using
+   direct authentication schemes such as HTTP Basic or Digest
+   authentication to OAuth by converting the stored credentials with an
+   access token.
+
+   The method through which the client obtains the resource owner
+   credentials is beyond the scope of this specification.  The client
+   MUST discard the credentials once an access token has been obtained.
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 24]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+     +----------+
+     | Resource |
+     |  Owner   |
+     |          |
+     +----------+
+          v
+          |
+         (A) Password Credentials
+          |
+          v
+     +---------+                                  +---------------+
+     |         |          Client Credentials      |               |
+     |         |>--(B)---- & Resource Owner ----->|               |
+     | Client  |         Password Credentials     | Authorization |
+     |         |                                  |     Server    |
+     |         |<--(C)---- Access Token ---------<|               |
+     |         |    (w/ Optional Refresh Token)   |               |
+     +---------+                                  +---------------+
+
+
+            Figure 5: Resource Owner Password Credentials Flow
+
+   The flow illustrated in Figure 5 includes the following steps:
+
+   (A)  The resource owner provides the client with its username and
+        password.
+   (B)  The client requests an access token from the authorization
+        server's token endpoint by authenticating using its client
+        credentials, and includes the credentials received from the
+        resource owner.
+   (C)  The authorization server validates the resource owner
+        credentials and the client credentials and issues an access
+        token.
+
+4.3.1.  Access Token Request
+
+   The client makes a request to the token endpoint by adding the
+   following parameter using the "application/x-www-form-urlencoded"
+   format in the HTTP request entity-body:
+
+   grant_type
+         REQUIRED.  Value MUST be set to "password".
    username
-         REQUIRED.  The resource owner's username.
+         REQUIRED.  The resource owner username.
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 25]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
 
    password
-         REQUIRED.  The resource owner's password.
+         REQUIRED.  The resource owner password.
+   scope
+         OPTIONAL.  The scope of the access request expressed as a list
+         of space-delimited strings.  The value is defined by the
+         authorization server.  If the value contains multiple space-
+         delimited strings, their order does not matter, and each string
+         adds an additional access range to the requested scope.
+
+   The client includes its authentication credentials as described in
+   Section 2
+
+   [[ add internationalization consideration for username and password
+   ]]
 
    For example, the client makes the following HTTP request by including
-   its client credentials via the "client_secret" parameter described in
-   Section 3 and using transport-layer security (line breaks are for
+   its client credentials via the "client_id" and "client_secret"
+   parameters, and using transport-layer security (line breaks are for
    display purposes only):
 
 
@@ -1535,43 +1430,72 @@ Internet-Draft                  OAuth 2.0                  December 2010
      client_secret=47HDu8s&username=johndoe&password=A3ddj3w
 
 
-   The authorization server MUST validate the client credentials (if
-   present) and end-user credentials and if valid issue an access token
-   response as described in Section 5.2.
+   The authorization server MUST:
 
-5.1.3.  Client Credentials
+   o  Validate the client credentials.
+   o  Validate the resource owner password credentials.
+
+   If the request is valid and authorized, the authorization server
+   issues an access token and optional refresh token, and responds as
+   described in Section 5.
+
+4.4.  Client Credentials
 
    The client can request an access token using only its client
-   credentials using the "client_credentials" access grant type.  When
-   omitting an explicit access grant, the client is requesting access to
-   the protected resources under its control, or those of another
-   resource owner which has been previously arranged with the
-   authorization server (the method of which is beyond the scope of this
-   specification).
-
-5.1.4.  Refresh Token
-
-   The client includes the refresh token using the "refresh_token"
-   access grant type and the following parameter:
-
-   refresh_token
-         REQUIRED.  The refresh token associated with the access token
-         to be refreshed.
+   credentials when the client is requesting access to the protected
+   resources under its control, or those of another resource owner which
+   has been previously arranged with the authorization server (the
+   method of which is beyond the scope of this specification).
 
 
 
 
 
 
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 28]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 26]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
+
+     +---------+                                  +---------------+
+     |         |                                  |               |
+     |         |>--(A)--- Client Credentials ---->| Authorization |
+     | Client  |                                  |     Server    |
+     |         |<--(B)---- Access Token ---------<|               |
+     |         |    (w/ Optional Refresh Token)   |               |
+     +---------+                                  +---------------+
+
+
+                     Figure 6: Client Credentials Flow
+
+   The flow illustrated in Figure 6 includes the following steps:
+
+   (A)  The client requests an access token from the token endpoint by
+        authenticating using its client credentials.
+   (B)  The authorization server validates the client credentials and
+        issues an access token.
+
+4.4.1.  Access Token Request
+
+   The client makes a request to the token endpoint by adding the
+   following parameter using the "application/x-www-form-urlencoded"
+   format in the HTTP request entity-body:
+
+   grant_type
+         REQUIRED.  Value MUST be set to "client_credentials".
+   scope
+         OPTIONAL.  The scope of the access request expressed as a list
+         of space-delimited strings.  The value is defined by the
+         authorization server.  If the value contains multiple space-
+         delimited strings, their order does not matter, and each string
+         adds an additional access range to the requested scope.
+
+   The client includes its authentication credentials as described in
+   Section 2
 
    For example, the client makes the following HTTP request by including
-   its client credentials via the "client_secret" parameter described in
-   Section 3 and using transport-layer security (line breaks are for
+   its client credentials via the "client_id" and "client_secret"
+   parameters, and using transport-layer security (line breaks are for
    display purposes only):
 
 
@@ -1579,107 +1503,95 @@ Internet-Draft                  OAuth 2.0                  December 2010
      Host: server.example.com
      Content-Type: application/x-www-form-urlencoded
 
-     grant_type=refresh_token&client_id=s6BhdRkqt3&
-     client_secret=8eSEIpnqmM&refresh_token=n4E9O119d
+     grant_type=client_credentials&client_id=s6BhdRkqt3&
+     client_secret=47HDu8s
 
 
-   The authorization server MUST verify the client credentials (if
-   present), the validity of the refresh token, and that the resource
-   owner's authorization is still valid.  If the request is valid, the
-   authorization server issues an access token response as described in
-   Section 5.2.  The authorization server MAY issue a new refresh token,
-   in which case, the client MUST discard the old refresh token and
-   replace it with the new refresh token.
 
-5.1.5.  Assertion
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 27]
+
+Internet-Draft                  OAuth 2.0                   January 2011
 
-   The client includes an assertion by specifying the assertion format
-   using an absolute URI (as defined by the authorization server) as the
-   value of the "grant_type" parameter and by adding the following
-   parameter:
 
-   assertion
-         REQUIRED.  The assertion.
+   The authorization server MUST validate the client credentials.
 
-   For example, the client makes the following HTTP request using
-   transport-layer security, and client authentication is achieved via
-   the assertion (line breaks are for display purposes only):
+   If the request is valid and authorized, the authorization server
+   issues an access token and optional refresh token, and responds as
+   described in Section 5.
+
+4.5.  Extensions
+
+   The client uses an extension grant type by specifying the grant type
+   using an absolute URI (defined by the authorization server) as the
+   value of the "grant_type" parameter of the token endpoint, and by
+   adding any additional parameters necessary.
+
+   For example, to request an access token using a SAML 2.0 assertion
+   grant type, the client makes the following HTTP request using
+   transport-layer security (line breaks are for display purposes only):
 
 
      POST /token HTTP/1.1
      Host: server.example.com
      Content-Type: application/x-www-form-urlencoded
 
-     grant_type=urn%3Aoasis%3Anames%3Atc%3ASAML%3A2.0%3Aassertion&
-     assertion=PHNhbWxwOl[...omitted for brevity...]ZT4%3D
+     grant_type=http%3A%2F%2Foauth.net%2Fgrant_type%2Fassertion%2F
+     saml%2F2.0%2Fbearer&assertion=PEFzc2VydGlvbiBJc3N1ZUluc3RhbnQ
+     [...omitted for brevity...]V0aG5TdGF0ZW1lbnQ-PC9Bc3NlcnRpb24-
 
 
-   The authorization server MUST validate the client credentials (if
-   present) and the assertion and if valid issues an access token
-   response as described in Section 5.2.  The authorization server
+   Client authentication and the scope of the grant are obtained via the
+   assertion as defined by [I-D.ietf-oauth-saml2-bearer].
+
+
+5.  Issuing an Access Token
+
+   If the access token request is valid and authorized, the
+   authorization server issues an access token and optional refresh
+   token as described in Section 5.1.  If the request failed client
+   authentication or is invalid, the authorization server return an
+   error response as described in Section 5.2.
+
+5.1.  Successful Response
+
+   The authorization server issues an access token and optional refresh
+   token, and constructs the response by adding the following parameters
+   to the entity body of the HTTP response with a 200 (OK) status code:
 
 
 
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 29]
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 28]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
-
-   SHOULD NOT issue a refresh token (instead, it should require the
-   client to use the same or new assertion).
-
-   Authorization servers SHOULD issue access tokens with a limited
-   lifetime and require clients to refresh them by requesting a new
-   access token using the same assertion if it is still valid.
-   Otherwise the client MUST obtain a new valid assertion.
-
-5.2.  Access Token Response
-
-   After receiving and verifying a valid and authorized access token
-   request from the client, the authorization server issues the access
-   token and optional refresh token, and constructs the response by
-   adding the following parameters to the entity body of the HTTP
-   response with a 200 (OK) status code:
-
-   The token response contains the following parameters:
 
    access_token
          REQUIRED.  The access token issued by the authorization server.
-
    token_type
-         REQUIRED.  The type of the token issued.  The token type
-         informs the client how the access token is to be used when
-         accessing a protected resource as described in Section 6.1.
-
+         REQUIRED.  The type of the token issued as described in
+         Section 7.1.  Value is case insensitive.
    expires_in
          OPTIONAL.  The duration in seconds of the access token
          lifetime.  For example, the value "3600" denotes that the
          access token will expire in one hour from the time the response
-         was generated by the authorization server.
-
+         was generated.
    refresh_token
-         OPTIONAL.  The refresh token used to obtain new access tokens
-         using the same end-user access grant as described in
-         Section 5.1.4.  The authorization server SHOULD NOT issue a
-         refresh token when the access grant type is an assertion or a
-         set of client credentials.
-
+         OPTIONAL.  The refresh token which can be used to obtain new
+         access tokens using the same authorization grant as described
+         in Section 6.
    scope
-         OPTIONAL.  The scope of the access token as a list of space-
-         delimited strings.  The value of the "scope" parameter is
-         defined by the authorization server.  If the value contains
-         multiple space-delimited strings, their order does not matter,
-         and each string adds an additional access range to the
-         requested scope.  The authorization server SHOULD include the
-         parameter if the requested scope is different from the one
-         requested by the client.
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 30]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
+         OPTIONAL.  The scope of the access request expressed as a list
+         of space-delimited strings.  The value is defined by the
+         authorization server.  If the value contains multiple space-
+         delimited strings, their order does not matter, and each string
+         adds an additional access range to the requested scope.  The
+         authorization server SHOULD include the parameter if the
+         requested scope is different from the one requested by the
+         client.
 
    The parameters are including in the entity body of the HTTP response
    using the "application/json" media type as defined by [RFC4627].  The
@@ -1703,43 +1615,90 @@ Internet-Draft                  OAuth 2.0                  December 2010
        "access_token":"SlAV32hkKG",
        "token_type":"example",
        "expires_in":3600,
-       "refresh_token":"8xLOxBtZp8"
+       "refresh_token":"8xLOxBtZp8",
+       "example_parameter":"example-value"
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 29]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
      }
 
 
-   Clients SHOULD ignore unrecognized response parameters.  The sizes of
-   tokens and other values received from the authorization server, are
-   left undefined by this specification.  Clients should avoid making
-   assumptions about value sizes.  Servers should document the expected
-   size of any value they issue.
+   The client SHOULD ignore unrecognized response parameters.  The sizes
+   of tokens and other values received from the authorization server are
+   left undefined.  The client should avoid making assumptions about
+   value sizes.  The authorization server should document the size of
+   any value it issues.
 
-5.3.  Error Response
+5.2.  Error Response
 
-   If the token request is invalid or unauthorized, the authorization
-   server constructs the response by adding the following parameter to
-   the entity body of the HTTP response using the "application/json"
-   media type:
+   If the client provided invalid credentials using an HTTP
+   authentication scheme via the "Authorization" request header field,
+   the authorization server MUST respond with a HTTP 401 (Unauthorized)
+   status code, and include the "WWW-Authenticate" response header field
+   matching the authentication scheme used by the client.  Otherwise,
+   the authorization server MUST respond with the HTTP 400 (Bad Request)
+   status code.
+
+   The authorization server constructs the response by adding the
+   following parameter to the response:
 
    error
-         REQUIRED.  A single error code as described in Section 5.3.1.
+         REQUIRED.  A single error code from the following:
+         invalid_request
+               The request is missing a required parameter, includes an
+               unsupported parameter or parameter value, repeats a
+               parameter, includes multiple credentials, utilizes more
+               than one mechanism for authenticating the client, or is
+               otherwise malformed.
+         invalid_client
+               Client authentication failed (e.g. unknown client, no
+               client credentials included, multiple client credentials
+               included, or unsupported credentials type).
+         invalid_grant
+               The provided authorization grant is invalid, expired,
+               revoked, or does not match the redirection URI used in
+               the authorization request.
+         unauthorized_client
+               The authenticated client is not authorized to use this
+               authorization grant type.
+         unsupported_grant_type
+               The authorization grant type is not supported by the
+               authorization server.
 
-   error_description  OPTIONAL.  A human-readable text providing
-         additional information, used to assist in the understanding and
-         resolution of the error occurred.
 
 
 
 
 
 
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 31]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 30]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-   error_uri  OPTIONAL.  A URI identifying a human-readable web page
-         with information about the error, used to provide the end-user
+         invalid_scope
+               The requested scope is invalid, unknown, malformed, or
+               exceeds the previously granted scope.
+   error_description
+         OPTIONAL.  A human-readable text providing additional
+         information, used to assist in the understanding and resolution
+         of the error occurred.
+   error_uri
+         OPTIONAL.  A URI identifying a human-readable web page with
+         information about the error, used to provide the resource owner
          with additional information about the error.
+
+   The parameters are including in the entity body of the HTTP response
+   using the "application/json" media type as defined by [RFC4627].  The
+   parameters are serialized into a JSON structure by adding each
+   parameter at the highest structure level.  Parameter names and string
+   values are included as JSON strings.  Numerical values are included
+   as JSON numbers.
 
    For example:
 
@@ -1753,231 +1712,162 @@ Internet-Draft                  OAuth 2.0                  December 2010
      }
 
 
-   If the client provided invalid credentials using an HTTP
-   authentication scheme via the "Authorization" request header field,
-   the authorization server MUST respond with the HTTP 401
-   (Unauthorized) status code.  Otherwise, the authorization server
-   SHALL respond with the HTTP 400 (Bad Request) status code.
 
-5.3.1.  Error Codes
+6.  Refreshing an Access Token
 
-   The authorization server includes one of the following error codes
-   with the error response:
+   The client makes a request to the token endpoint by adding the
+   following parameter using the "application/x-www-form-urlencoded"
+   format in the HTTP request entity-body:
 
-   invalid_request
-         The request is missing a required parameter, includes an
-         unsupported parameter or parameter value, repeats a parameter,
-         includes multiple credentials, utilizes more than one mechanism
-         for authenticating the client, or is otherwise malformed.
-
-   invalid_client
-         The client identifier provided is invalid, the client failed to
-         authenticate, the client did not include its credentials,
-         provided multiple client credentials, or used unsupported
-         credentials type.
-
-   unauthorized_client
-         The authenticated client is not authorized to use the access
-         grant type provided.
-
-   invalid_grant
-         The provided access grant is invalid, expired, or revoked (e.g.
-         invalid assertion, expired authorization token, bad end-user
-         password credentials, or mismatching authorization code and
-         redirection URI).
+   grant_type
+         REQUIRED.  Value MUST be set to "refresh_token".
+   refresh_token
+         REQUIRED.  The refresh token issued along the access token
+         being refreshed.
+   scope
+         OPTIONAL.  The scope of the access request expressed as a list
+         of space-delimited strings.  The value is defined by the
+         authorization server.  If the value contains multiple space-
+         delimited strings, their order does not matter, and each string
 
 
 
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 32]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 31]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-   unsupported_grant_type
-         The access grant included - its type or another attribute - is
-         not supported by the authorization server.
+         adds an additional access range to the requested scope.  The
+         requested scope MUST be equal or lesser than the scope
+         originally granted by the resource owner, and if omitted is
+         treated as equal to the previously approved scope.
 
-   invalid_scope
-         The requested scope is invalid, unknown, malformed, or exceeds
-         the previously granted scope.
+   The client includes its authentication credentials as described in
+   Section 2
 
-   [[ Add mechanism for extending error codes ]]
+   For example, the client makes the following HTTP request by including
+   its client credentials via the "client_id" and "client_secret"
+   parameters, and using transport-layer security (line breaks are for
+   display purposes only):
 
 
-6.  Accessing a Protected Resource
+     POST /token HTTP/1.1
+     Host: server.example.com
+     Content-Type: application/x-www-form-urlencoded
 
-   Clients access protected resources by presenting an access token to
-   the resource server.  The resource server MUST validate the access
-   token and ensure it has not expired and that its scope covers the
-   requested resource.  The methods used by the resource server to
+     grant_type=refresh_token&client_id=s6BhdRkqt3&
+     client_secret=8eSEIpnqmM&refresh_token=n4E9O119d
+
+
+   The authorization server MUST validate the client credentials, the
+   refresh token, and verify that the resource owner's authorization is
+   still valid.  If valid, the authorization server issues an access
+   token response as described in Section 5.
+
+   The authorization server MAY issue a new refresh token, in which
+   case, the client MUST discard the old refresh token and replace it
+   with the new refresh token.
+
+
+7.  Accessing Protected Resources
+
+   The client accesses protected resources by presenting the access
+   token to the resource server.  The resource server MUST validate the
+   access token and ensure it has not expired and that its scope covers
+   the requested resource.  The methods used by the resource server to
    validate the access token are beyond the scope of this specification,
    but generally involve an interaction or coordination between the
-   resource server and authorization server.
+   resource server and the authorization server.
 
    The method in which the client utilized the access token to
    authenticate with the resource server depends on the type of access
-   token issued by the authorization server.
-
-6.1.  Access Token Types
-
-   [[ add token type explanation, maybe with links to other token specs
-   ]]
-
-6.2.  The WWW-Authenticate Response Header Field
-
-   If the protected resource request does not include authentication
-   credentials, contains an invalid access token, or is malformed, the
-   resource server MUST include the HTTP "WWW-Authenticate" response
-   header field.  The "WWW-Authenticate" header field uses the framework
-   defined by [RFC2617] as follows:
+   token issued by the authorization server.  Typically, it involves
+   using the HTTP "Authorization" request header field with an
+   authentication scheme defined by the access token type specification.
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 33]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 32]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-     challenge       = "OAuth2" [ RWS 1#param ]
+7.1.  Access Token Types
 
-     param           = scope /
-                       error / error-desc / error-uri /
-                       ( token "=" ( token / quoted-string ) )
+   The access token type provides the client with the information
+   required to successfully utilize the access token to make a protected
+   resource request (along with type-specific attributes).
 
-     scope           = "scope" "=" <"> scope-v *( SP scope-v ) <">
-     scope-v         = 1*quoted-char
-
-     quoted-char     = ALPHA / DIGIT /
-                       "!" / "#" / "$" / "%" / "&" / "'" / "(" / ")" /
-                       "*" / "+" / "-" / "." / "/" / ":" / "<" / "=" /
-                       ">" / "?" / "@" / "[" / "]" / "^" / "_" / "`" /
-                       "{" / "|" / "}" / "~" / "\" / "," / ";"
-
-     error           = "error" "=" quoted-string
-     error-desc      = "error_description" "=" quoted-string
-     error-uri       = "error_uri" = <"> URI-reference <">
+   For example, the "bearer" token type defined in
+   [I-D.ietf-oauth-v2-bearer] is utilized by simply including the access
+   token string in the request:
 
 
-   The "scope" attribute is a space-delimited list of scope values
-   indicating the required scope of the access token for accessing the
-   requested resource.  The "scope" attribute MUST NOT appear more than
-   once.
-
-   If the protected resource request included an access token and failed
-   authentication, the resource server SHOULD include the "error"
-   attribute to provide the client with the reason why the access
-   request was declined.  The parameter value is described in
-   Section 6.2.1.  In addition, the resource server MAY include the
-   "error_description" attribute to provide a human-readable
-   explanation, and the "error-uri" attribute with an absolute URI
-   identifying a human-readable web page explaining the error.  The
-   "error", "error_description", and "error_uri" attribute MUST NOT
-   appear more than once.
-
-   For example, in response to a protected resource request without
-   authentication:
+     GET /resource/1 HTTP/1.1
+     Host: example.com
+     Authorization: BEARER h480djs93hd8
 
 
-     HTTP/1.1 401 Unauthorized
-     WWW-Authenticate: OAuth2
+   while the "mac" token type defined in [I-D.hammer-oauth-v2-mac-token]
+   is utilized by issuing a token secret together with the access token
+   which is used to sign certain components of the HTTP requests:
+
+
+     GET /resource/1 HTTP/1.1
+     Host: example.com
+     Authorization: MAC token="h480djs93hd8",
+                        timestamp="137131200",
+                        nonce="dj83hs9s",
+                        signature="kDZvddkndxvhGRXZhvuDjEWhGeE="
+
+
+   Each access token type definition specifies the additional attributes
+   (if any) sent to the client together with the "access_token" response
+   parameter.  It also defines the HTTP authentication method used to
+   include the access token when making a protected resource request.
+
+
+8.  Extensibility
+
+8.1.  Defining Access Token Types
+
+   Access token types can be defined in one of two ways: registered in
+   the access token type registry (following the procedures in
+   Section 10.1), or use the "x_" type name prefix.
+
+   Types utilizing the "x_" name prefix MUST be limited to vendor-
+   specific implementations that are not commonly applicable, and are
+   specific to the implementation details of the resource server where
+   they are used.  If a vendor-specific type requires additional vendor-
+   specific token response parameters, they MUST also use the "x_" name
 
 
 
-
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 34]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 33]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-   And in response to a protected resource request with an
-   authentication attempt using an expired access token:
+   prefix.
+
+   All other types MUST be registered, and MUST NOT use the "x_" type
+   name prefix.  Type names MUST conform to the type-name ABNF.  If the
+   type definition includes a new HTTP authentication scheme, the type
+   name SHOULD be identical to the authentication scheme name (as
+   defined by [RFC2617]).
 
 
-     HTTP/1.1 401 Unauthorized
-     WWW-Authenticate: OAuth2
-                       error="invalid_token",
-                       error_description="The access token expired"
+     type-name  = 1*name-char
+     name-char   = "-" / "." / "_" / DIGIT / ALPHA
 
 
-6.2.1.  Error Codes
+8.2.  Defining New Endpoint Parameters
 
-   When a request fails, the resource server responds using the
-   appropriate HTTP status code (typically, 400, 401, or 403), and
-   includes one of the following error codes in the response:
-
-   invalid_request
-         The request is missing a required parameter, includes an
-         unsupported parameter or parameter value, repeats the same
-         parameter, uses more than one method for including an access
-         token, or is otherwise malformed.  The resource server SHOULD
-         respond with the HTTP 400 (Bad Request) status code.
-
-   invalid_token
-         The access token provided is expired, revoked, malformed, or
-         invalid for other reasons.  The resource SHOULD respond with
-         the HTTP 401 (Unauthorized) status code.  The client MAY
-         request a new access token and retry the protected resource
-         request.
-
-   insufficient_scope
-         The request requires higher privileges than provided by the
-         access token.  The resource server SHOULD respond with the HTTP
-         403 (Forbidden) status code and MAY include the "scope"
-         attribute with the scope necessary to access the protected
-         resource.
-
-   [[ Add mechanism for extending error codes ]]
-
-   If the request lacks any authentication information (i.e. the client
-   was unaware authentication is necessary or attempted using an
-   unsupported authentication method), the resource server SHOULD not
-   include an error code or other error information.
-
-   For example:
-
-
-     HTTP/1.1 401 Unauthorized
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 35]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-     WWW-Authenticate: OAuth2
-
-
-
-7.  Extensibility
-
-7.1.  Defining New Client Credentials Types
-
-   [[ TBD ]]
-
-7.2.  Defining New Endpoint Parameters
-
-   Applications that wish to define new request or response parameters
-   for use with the end-user authorization endpoint or the token
-   endpoint SHALL do so in one of two ways: register them in the
-   parameters registry (following the procedures in Section 9.1), or use
-   the "x_" parameter name prefix.
+   New request or response parameters for use with the authorization
+   endpoint or the token endpoint can be added in one of two ways:
+   registered in the parameters registry (following the procedures in
+   Section 10.2), or use the "x_" parameter name prefix.
 
    Parameters utilizing the "x_" parameter name prefix MUST be limited
    to vendor-specific extensions that are not commonly applicable, and
@@ -1994,57 +1884,101 @@ Internet-Draft                  OAuth 2.0                  December 2010
      name-char   = "-" / "." / "_" / DIGIT / ALPHA
 
 
-7.3.  Defining New Header Field Parameters
+8.3.  Defining New Authorization Grant Types
 
-   Applications that wish to define new parameters for use in the OAuth
-   "WWW-Authenticate" header field MUST register them in the parameters
-   registry, following the procedures in Section 9.1.
-
-   Parameter names MUST conform to the param-name ABNF and MUST NOT
-   begin with "x_".  Parameter values MUST conform to the param-value
-   ABNF and their syntax MUST be well-defined (e.g., using ABNF, or a
-   reference to the syntax of an existing parameter).
+   New authorization grant types can be defined by assigning them a
+   unique URI for use with the "grant_type" parameter.  If the extension
+   grant type requires additional token endpoint parameters, they MUST
+   be registered in the OAuth parameters registry as described by
+   Section 10.2.
 
 
-     param-value  = quoted-value | quoted-string
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 36]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
-7.4.  Defining New Access Grant Types
-
-   The assertion access grant type allows the authorization server to
-   accept additional access grants not specified.  Applications that
-   wish to define additional access grant types can do so by utilizing a
-   new or existing assertion type and format.
-
-
-8.  Security Considerations
+9.  Security Considerations
 
    [[ TBD ]]
 
 
-9.  IANA Considerations
 
-9.1.  The OAuth Parameters Registry
 
-   This document establishes the OAuth parameters registry.
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 34]
+
+Internet-Draft                  OAuth 2.0                   January 2011
 
-   Additional parameters to be use in the end-user authorization
-   endpoint request, the end-user authorization endpoint response, the
-   token endpoint request, the token endpoint response, or the
-   "WWW-Authenticate" header field, are registered on the advice of one
-   or more Designated Experts (appointed by the IESG or their delegate),
-   with a Specification Required (using terminology from [RFC5226]).
-   However, to allow for the allocation of values prior to publication,
-   the Designated Expert(s) may approve registration once they are
-   satisfied that such a specification will be published.
+
+10.  IANA Considerations
+
+10.1.  The OAuth Access Token Type Registry
+
+   This specification establishes the OAuth access token type registry.
+
+   Access token types are registered on the advice of one or more
+   Designated Experts (appointed by the IESG or their delegate), with a
+   Specification Required (using terminology from [RFC5226]).  However,
+   to allow for the allocation of values prior to publication, the
+   Designated Expert(s) may approve registration once they are satisfied
+   that such a specification will be published.
+
+   Registration requests should be sent to the [TBD]@ietf.org mailing
+   list for review and comment, with an appropriate subject (e.g.,
+   "Request for access toke type: example"). [[ Note to RFC-EDITOR: The
+   name of the mailing list should be determined in consultation with
+   the IESG and IANA.  Suggested name: oauth-ext-review. ]]
+
+   Before a period of 14 days has passed, the Designated Expert(s) will
+   either approve or deny the registration request, communicating this
+   decision both to the review list and to IANA.  Denials should include
+   an explanation and, if applicable, suggestions as to how to make the
+   request successful.  Registration requests that are undetermined for
+   a period longer than 21 days can be brought to the IESG's attention
+   (using the iesg@iesg.org mailing list) for resolution.
+
+10.1.1.  Registration Template
+
+   Type name:
+      The name requested (e.g., "example").
+   Additional Token Endpoint Response Parameters:
+      Additional response parameters returned together with the
+      "access_token" parameter.  New parameters MUST be separately
+      registered in the OAuth parameters registry as described by
+      Section 10.2.
+   HTTP Authentication Scheme(s):
+      The HTTP authentication scheme name(s), if any, used to
+      authenticate protected resources requests using access token of
+      this type.
+   Change controller:
+      For standards-track RFCs, state "IETF".  For others, give the name
+      of the responsible party.  Other details (e.g., postal address,
+      e-mail address, home page URI) may also be included.
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 35]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   Specification document(s):
+      Reference to document that specifies the parameter, preferably
+      including a URI that can be used to retrieve a copy of the
+      document.  An indication of the relevant sections may also be
+      included, but is not required.
+
+10.2.  The OAuth Parameters Registry
+
+   This specification establishes the OAuth parameters registry.
+
+   Additional parameters for inclusion in the authorization endpoint
+   request, the authorization endpoint response, the token endpoint
+   request, or the token endpoint response, are registered on the advice
+   of one or more Designated Experts (appointed by the IESG or their
+   delegate), with a Specification Required (using terminology from
+   [RFC5226]).  However, to allow for the allocation of values prior to
+   publication, the Designated Expert(s) may approve registration once
+   they are satisfied that such a specification will be published.
 
    Registration requests should be sent to the [TBD]@ietf.org mailing
    list for review and comment, with an appropriate subject (e.g.,
@@ -2060,57 +1994,139 @@ Internet-Draft                  OAuth 2.0                  December 2010
    a period longer than 21 days can be brought to the IESG's attention
    (using the iesg@iesg.org mailing list) for resolution.
 
-9.1.1.  Registration Template
+10.2.1.  Registration Template
+
+   Parameter name:
+      The name requested (e.g., "example").
+   Parameter usage location:
+      The location(s) where parameter can be used.  The possible
+      locations are: authorization request, authorization response,
+      token request, or token response.
+   Change controller:
+      For standards-track RFCs, state "IETF".  For others, give the name
+      of the responsible party.  Other details (e.g., postal address,
+      e-mail address, home page URI) may also be included.
 
 
 
 
 
 
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 37]
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 36]
 
-Internet-Draft                  OAuth 2.0                  December 2010
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
-   Parameter name:  The name requested (e.g., "example").
+   Specification document(s):
+      Reference to document that specifies the parameter, preferably
+      including a URI that can be used to retrieve a copy of the
+      document.  An indication of the relevant sections may also be
+      included, but is not required.
 
-   Parameter usage location:  The location(s) where parameter can be
-      used.  The possible locations are: the end-user authorization
-      endpoint request, the end-user authorization endpoint response,
-      the token endpoint request, the token endpoint response, the or
-      the "WWW-Authenticate" header field.
+10.2.2.  Initial Registry Contents
 
-   Change controller:  For standards-track RFCs, state "IETF".  For
-      others, give the name of the responsible party.  Other details
-      (e.g., postal address, e-mail address, home page URI) may also be
-      included.
+   The OAuth Parameters Registry's initial contents are:
 
-   Specification document(s):  Reference to document that specifies the
-      parameter, preferably including a URI that can be used to retrieve
-      a copy of the document.  An indication of the relevant sections
-      may also be included, but is not required.
+   o  Parameter name: client_id
+   o  Parameter usage location: authorization request, token request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
 
-   Related information:  Optionally, citations to additional documents
-      containing further relevant information.
+   o  Parameter name: client_secret
+   o  Parameter usage location: token request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
 
-9.1.2.  Example
+   o  Parameter name: response_type
+   o  Parameter usage location: authorization request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
 
-   The following is the parameter registration request for the "scope"
-   parameter as defined in this specification:
+   o  Parameter name: redirect_uri
+   o  Parameter usage location: authorization request, token request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
 
-   Parameter name:  scope
+   o  Parameter name: scope
+   o  Parameter usage location: authorization request, authorization
+      response, token request, token response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
 
-   Parameter usage location:  The end-user authorization endpoint
-      request, the end-user authorization endpoint response, the token
-      endpoint request, the token endpoint response, and the
-      "WWW-Authenticate" header field.
+   o  Parameter name: state
+   o  Parameter usage location: authorization request, authorization
+      response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
 
-   Change controller:  IETF
+   o  Parameter name: code
+   o  Parameter usage location: authorization response, token request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
 
-   Specification document(s):  [[ this document ]]
 
-   Related information:  None
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 37]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   o  Parameter name: error_description
+   o  Parameter usage location: authorization response, token response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: error_uri
+   o  Parameter usage location: authorization response, token response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: grant_type
+   o  Parameter usage location: token request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: access_token
+   o  Parameter usage location: authorization response, token response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: token_type
+   o  Parameter usage location: authorization response, token response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: expires_in
+   o  Parameter usage location: authorization response, token response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: username
+   o  Parameter usage location: token request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: password
+   o  Parameter usage location: token request
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+   o  Parameter name: refresh_token
+   o  Parameter usage location: token request, token response
+   o  Change controller: IETF
+   o  Specification document(s): [[ this document ]]
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 38]
+
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
 Appendix A.  Examples
@@ -2121,14 +2137,6 @@ Appendix A.  Examples
 Appendix B.  Contributors
 
    The following people contributed to preliminary versions of this
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 38]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
    document: Blaine Cook (BT), Brian Eaton (Google), Yaron Goland
    (Microsoft), Brent Goldman (Facebook), Raffi Krikorian (Twitter),
    Luke Shepard (Facebook), and Allen Tom (Yahoo!).  The content and
@@ -2136,18 +2144,16 @@ Internet-Draft                  OAuth 2.0                  December 2010
    and the OAuth Working Group.
 
    The OAuth Working Group has dozens of very active contributors who
-   proposed ideas and wording for this document, including: [[ If your
-   name is missing or you think someone should be added here, please
-   send Eran a note - don't be shy ]]
+   proposed ideas and wording for this document, including:
 
    Michael Adams, Andrew Arnott, Dirk Balfanz, Brian Campbell, Leah
    Culver, Bill de hOra, Brian Ellin, Igor Faynberg, George Fletcher,
-   Tim Freeman, Evan Gilbert, Kristoffer Gronowski, Justin Hart, Mike
-   Jones, John Kemp, Chasen Le Hara, Torsten Lodderstedt, Alastair Mair,
-   Eve Maler, James Manger, Laurence Miao, Chuck Mortimore, Justin
-   Richer, Peter Saint-Andre, Nat Sakimura, Rob Sayre, Marius Scurtescu,
-   Naitik Shah, Justin Smith, Jeremy Suriel, Christian Stuebner, Paul
-   Tarjan, Franklin Tse, and Nick Walker.
+   Tim Freeman, Evan Gilbert, Kristoffer Gronowski, Justin Hart, Phil
+   Hunt, Mike Jones, John Kemp, Chasen Le Hara, Torsten Lodderstedt,
+   Alastair Mair, Eve Maler, James Manger, Laurence Miao, Chuck
+   Mortimore, Justin Richer, Peter Saint-Andre, Nat Sakimura, Rob Sayre,
+   Marius Scurtescu, Naitik Shah, Justin Smith, Jeremy Suriel, Christian
+   Stuebner, Paul Tarjan, Franklin Tse, and Nick Walker.
 
 
 Appendix C.  Acknowledgements
@@ -2159,53 +2165,62 @@ Appendix D.  Document History
 
    [[ to be removed by RFC editor before publication as an RFC ]]
 
+   -12
+
+   o  Complete restructure with lots of new prose.
+   o  Removed terminology and expanded terms in overview.
+   o  Changed assertions to extensions and added informative reference
+      to the SAML 2.0 extension.
+   o  Renamed access grant to authorization grant.
+   o  Clarified 'token_type' as case insensitive.
+   o  Authorization endpoint requires TLS when an access token is
+      issued.
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 39]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   o  Removed client assertion credentials, mandatory HTTP Basic
+      authentication support for client credentials, WWW-Authenticate
+      header, and the OAuth2 authentication scheme.
+   o  Changed implicit grant (aka user-agent flow) error response from
+      query to fragment.
+   o  Removed the 'redirect_uri_mismatch' error code since in such a
+      case, the authorization server must not send the error back to the
+      client.
+   o  Added parameter registration for all parameters in this
+      specification.
+   o  Defined access token type registry.
+
    -11
 
    o  Many editorial changes.  Fixed user authorization section
       structure.  Removed unused normative references.  Adjusted
       language regarding single use of authorization codes.
-
    o  Fixed header ABNF.
-
    o  Change access token description from shared symmetric secret to
       password.
-
    o  Moved access grant 'none' to a separate section, renamed to
       'client_credentials'.
-
    o  Demoted the HTTP status code requirement from MUST to SHOULD in
       protected resource response error.
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 39]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
    o  Removed 'expired_token' error code.
-
    o  Moved all the 'code_and_token' parameter to the fragment (from
       code being in the query).
-
    o  Removed 'assertion_type' parameter (moved to 'grant_type').
-
    o  Added note about redirecting to invalid redirection URIs (open
       redirectors).
-
    o  Removed bearer token section, added new required 'token_type'
       parameter with extensibility.
-
    o  'error-uri' parameter value changed to absolute URI.
-
    o  OAuth 2.0 HTTP authentication scheme name changed to 'OAuth2'.
-
    o  Dropped the 'WWW-Authenticate' header field 'realm' parameter.
-
    o  Removed definition of access token characters.
-
    o  Added instructions for dealing with error and an invalid
       redirection URI.
 
@@ -2213,219 +2228,157 @@ Internet-Draft                  OAuth 2.0                  December 2010
 
    o  Fixed typos.  Many editorial changes.  Rewrote introduction.
       removed terminology grouping.
-
-   o  Allowed POST for end-user authorization endpoint.
-
+   o  Allowed POST for resource owner authorization endpoint.
    o  Fixed token endpoint to not require client authentication.
-
    o  Made URI query and POST body 'oauth_token' parameter optional.
 
-   o  Moved all parameter names and values to use underscores.
 
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 40]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   o  Moved all parameter names and values to use underscores.
    o  Changed 'basic_credentials' to 'password',
       'invalid_client_credentials' and 'invalid_client_id' to
       'invalid_client'.
-
    o  Added note that access token requests without an access grant
       should not include a refresh token.
-
    o  Changed scheme name from 'Token' to 'OAuth', simplified request
       format to simple string for token instead of key=value pair (still
       supported for extensions).
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 40]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
    o  Defined permitted access token string characters (suitable for
       inclusion in an HTTP header).
-
    o  Added a note about conflicts with previous versions.
-
    o  Moved 'client_id' definition from client authentication to access
       token endpoint.
-
    o  Added definition for 'access grant'.
 
    -09
 
    o  Fixed typos, editorial changes.
-
    o  Added token expiration example.
-
-   o  Added scope parameter to end-user authorization endpoint response.
-
+   o  Added scope parameter to resource owner authorization endpoint
+      response.
    o  Added note about parameters with empty values (same as omitted).
-
    o  Changed parameter values to use '-' instead of '_'.  Parameter
       names still use '_'.
-
    o  Changed authorization endpoint client type to response type with
       values: code, token, and both.
-
    o  Complete cleanup of error codes.  Added support for error
       description and URI.
-
    o  Add initial extensibility support.
 
    -08
 
    o  Renamed verification code to authorization code.
-
    o  Revised terminology, structured section, added new terms.
-
    o  Changed flows to profiles and moved to introduction.
-
    o  Added support for access token rescoping.
-
    o  Cleaned up client credentials section.
-
    o  New introduction overview.
-
    o  Added error code for invalid username and password, and renamed
       error code to be more consistent.
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 41]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
    o  Added access grant type parameter to token endpoint.
 
    -07
 
    o  Major rewrite of entire document structure.
 
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 41]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
    o  Removed device profile.
-
    o  Added verification code support to user-agent flow.
-
    o  Removed multiple formats support, leaving JSON as the only format.
-
    o  Changed assertion "assertion_format" parameter to
       "assertion_type".
-
    o  Removed "type" parameter from token endpoint.
 
    -06
 
    o  Editorial changes, corrections, clarifications, etc.
-
    o  Removed conformance section.
-
    o  Moved authors section to contributors appendix.
-
    o  Added section on native applications.
-
    o  Changed error response to use the requested format.  Added support
       for HTTP "Accept" header.
-
    o  Flipped the order of the web server and user-agent flows.
-
    o  Renamed assertion flow "format" parameter name to
       "assertion_format" to resolve conflict.
-
    o  Removed the term identifier from token definitions.  Added a
       cryptographic token definition.
-
    o  Added figure titles.
-
    o  Added server response 401 when client tried to authenticate using
       multiple credentials.
-
    o  Clarified support for TLS alternatives, and added requirement for
       TLS 1.2 support for token endpoint.
-
    o  Removed all signature and cryptography.
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 42]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
    o  Removed all discovery.
-
    o  Updated HTML4 reference.
 
    -05
 
    o  Corrected device example.
-
    o  Added client credentials parameters to the assertion flow as
       OPTIONAL.
-
    o  Added the ability to send client credentials using an HTTP
       authentication scheme.
-
    o  Initial text for the "WWW-Authenticate" header (also added scope
       support).
-
-   o  Change authorization endpoint to end-user endpoint.
-
+   o  Change authorization endpoint to resource owner endpoint.
    o  In the device flow, change the "user_uri" parameter to
-      "verification_uri" to avoid confusion with the end-user endpoint.
-
+      "verification_uri" to avoid confusion with the resource owner
+      endpoint.
    o  Add "format" request parameter and support for XML and form-
       encoded responses.
 
    -04
 
-   o  Changed all token endpoints to use "POST"
 
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 42]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
+   o  Changed all token endpoints to use "POST"
    o  Clarified the authorization server's ability to issue a new
       refresh token when refreshing a token.
-
    o  Changed the flow categories to clarify the autonomous group.
-
    o  Changed client credentials language not to always be server-
       issued.
-
    o  Added a "scope" response parameter.
-
    o  Fixed typos.
-
    o  Fixed broken document structure.
 
    -03
 
    o  Fixed typo in JSON error examples.
-
-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 43]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
    o  Fixed general typos.
-
    o  Moved all flows sections up one level.
 
    -02
 
    o  Removed restriction on "redirect_uri" including a query.
-
    o  Added "scope" parameter.
-
    o  Initial proposal for a JSON-based token response format.
 
    -01
 
    o  Editorial changes based on feedback from Brian Eaton, Bill Keenan,
       and Chuck Mortimore.
-
    o  Changed device flow "type" parameter values and switch to use only
       the token endpoint.
 
@@ -2434,9 +2387,9 @@ Internet-Draft                  OAuth 2.0                  December 2010
    o  Initial draft based on a combination of WRAP and OAuth 1.0a.
 
 
-10.  References
+11.  References
 
-10.1.  Normative References
+11.1.  Normative References
 
    [I-D.ietf-httpbis-p1-messaging]
               Fielding, R., Gettys, J., Mogul, J., Nielsen, H.,
@@ -2449,6 +2402,13 @@ Internet-Draft                  OAuth 2.0                  December 2010
               Extensions (MIME) Part One: Format of Internet Message
               Bodies", RFC 2045, November 1996.
 
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 43]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
@@ -2457,14 +2417,6 @@ Internet-Draft                  OAuth 2.0                  December 2010
               Transfer Protocol -- HTTP/1.1", RFC 2616, June 1999.
 
    [RFC2617]  Franks, J., Hallam-Baker, P., Hostetler, J., Lawrence, S.,
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 44]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
               Leach, P., Luotonen, A., and L. Stewart, "HTTP
               Authentication: Basic and Digest Access Authentication",
               RFC 2617, June 1999.
@@ -2502,25 +2454,41 @@ Internet-Draft                  OAuth 2.0                  December 2010
               April 2010.
 
    [W3C.REC-html401-19991224]
-              Raggett, D., Hors, A., and I. Jacobs, "HTML 4.01
+              Hors, A., Raggett, D., and I. Jacobs, "HTML 4.01
               Specification", World Wide Web Consortium
               Recommendation REC-html401-19991224, December 1999,
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 44]
+
+Internet-Draft                  OAuth 2.0                   January 2011
+
+
               <http://www.w3.org/TR/1999/REC-html401-19991224>.
 
-10.2.  Informative References
+11.2.  Informative References
+
+   [I-D.hammer-oauth-v2-mac-token]
+              Hammer-Lahav, E., "HTTP Authentication: MAC
+              Authentication", draft-hammer-oauth-v2-mac-token-01 (work
+              in progress), January 2011.
+
+   [I-D.ietf-oauth-saml2-bearer]
+              Campbell, B. and C. Mortimore, "SAML 2.0 Bearer Assertion
+              Grant Type Profile for OAuth 2.0",
+              draft-ietf-oauth-saml2-bearer-00 (work in progress),
+              December 2010.
+
+   [I-D.ietf-oauth-v2-bearer]
+              Jones, M., Hardt, D., and D. Recordon, "The OAuth 2.0
+              Protocol: Bearer Tokens", draft-ietf-oauth-v2-bearer-01
+              (work in progress), December 2010.
 
    [OASIS.saml-core-2.0-os]
               Cantor, S., Kemp, J., Philpott, R., and E. Maler,
               "Assertions and Protocol for the OASIS Security Assertion
               Markup Language (SAML) V2.0", OASIS Standard saml-core-
-
-
-
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 45]
-
-Internet-Draft                  OAuth 2.0                  December 2010
-
-
               2.0-os, March 2005.
 
 
@@ -2536,8 +2504,21 @@ Authors' Addresses
    David Recordon
    Facebook
 
-   Email: davidrecordon@facebook.com
+   Email: dr@fb.com
    URI:   http://www.davidrecordon.com/
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 45]
+
+Internet-Draft                  OAuth 2.0                   January 2011
 
 
    Dick Hardt
@@ -2572,6 +2553,25 @@ Authors' Addresses
 
 
 
-Hammer-Lahav, et al.      Expires June 4, 2011                 [Page 46]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hammer-Lahav, et al.      Expires July 25, 2011                [Page 46]
 
 
