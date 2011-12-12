@@ -11,7 +11,7 @@ Expires: January 26, 2012                                       D. Hardt
 
 
                   The OAuth 2.0 Authorization Protocol
-                         draft-ietf-oauth-v2-19
+                         draft-ietf-oauth-v2-20
 
 Abstract
 
@@ -623,7 +623,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
    authenticate securely with the authorization server (i.e. ability to
    maintain the confidentiality of their client credentials):
 
-   private
+   confidential
       Clients capable of maintaining the confidentiality of their
       credentials (e.g. client implemented on a secure server with
       restricted access to the client credentials), or capable of secure
@@ -643,10 +643,10 @@ Internet-Draft                  OAuth 2.0                      July 2011
    profiles:
 
    web application
-      A web application is a private client running on a web server.
-      Resource owners access the client via an HTML user interface
-      rendered in a user-agent on the resource owner's device.  The
-      client credentials as well as any access token issued to the
+      A web application is a confidential client running on a web
+      server.  Resource owners access the client via an HTML user
+      interface rendered in a user-agent on the resource owner's device.
+      The client credentials as well as any access token issued to the
       client are stored on the web server and are not exposed to or
       accessible by the resource owner.
    user-agent-based application
@@ -698,15 +698,15 @@ Internet-Draft                  OAuth 2.0                      July 2011
 
 2.4.  Client Authentication
 
-   If the client type is private, the client and authorization server
-   establish a client authentication method suitable for the security
-   requirements of the authorization server.  The authorization server
-   MAY accept any form of client authentication meeting its security
-   requirements.
+   If the client type is confidential, the client and authorization
+   server establish a client authentication method suitable for the
+   security requirements of the authorization server.  The authorization
+   server MAY accept any form of client authentication meeting its
+   security requirements.
 
-   Private clients are typically issued (or establish) a set of client
-   credentials used for authenticating with the authorization server
-   (e.g. password, public/private key pair).
+   Confidential clients are typically issued (or establish) a set of
+   client credentials used for authenticating with the authorization
+   server (e.g. password, public/private key pair).
 
    The authorization server SHOULD NOT make assumptions about the client
    type or accept the type information provided without establishing
@@ -900,7 +900,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
    retained by the authorization server when adding additional query
    parameters, and MUST NOT include a fragment component.
 
-3.1.2.1.  Endpoint Confidentiality
+3.1.2.1.  Endpoint Request Confidentiality
 
    If a redirection request will result in the transmission of an
    authorization code or access token over an open network (between the
@@ -975,16 +975,16 @@ Internet-Draft                  OAuth 2.0                      July 2011
    any script included in the HTML document will execute with full
    access to the redirection URI and the credentials it contains.
 
-   The client SHOULD NOT include any third-party scripts in the
-   redirection endpoint response.  Instead, it should extract the
-   credentials from the URI and redirect the user-agent again to another
-   endpoint without the credentials in the URI.
-
    The client MUST NOT include any untrusted third-party scripts in the
    redirection endpoint response (e.g. third-party analytics, social
    plug-ins, ad networks) without first ensuring that its own scripts
    used to extract and remove the credentials from the URI will execute
    first.
+
+   The client SHOULD NOT include any third-party scripts in the
+   redirection endpoint response.  Instead, it should extract the
+   credentials from the URI and redirect the user-agent again to another
+   endpoint without the credentials in the URI.
 
 3.2.  Token Endpoint
 
@@ -1025,7 +1025,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
 
 3.2.1.  Client Authentication
 
-   Private clients, clients issued client credentials, or clients
+   Confidential clients, clients issued client credentials, or clients
    assigned other authentication requirements, MUST authenticate with
    the authorization server as described in Section 2.4 when making
    requests to the token endpoint.  Client authentication is used for:
@@ -1071,11 +1071,11 @@ Internet-Draft                  OAuth 2.0                      July 2011
 4.1.  Authorization Code
 
    The authorization code grant type is used to obtain both access
-   tokens and refresh tokens and is optimized for private clients.  As a
-   redirection-based flow, the client must be capable of interacting
-   with the resource owner's user-agent (typically a web browser) and
-   capable of receiving incoming requests (via redirection) from the
-   authorization server.
+   tokens and refresh tokens and is optimized for confidential clients.
+   As a redirection-based flow, the client must be capable of
+   interacting with the resource owner's user-agent (typically a web
+   browser) and capable of receiving incoming requests (via redirection)
+   from the authorization server.
 
 
      +----------+
@@ -1353,8 +1353,8 @@ Internet-Draft                  OAuth 2.0                      July 2011
          authorization request described in Section 4.1.1, and their
          values MUST be identical.
 
-   If the client type is private or was issued client credentials (or
-   assigned other authentication requirements), the client MUST
+   If the client type is confidential or was issued client credentials
+   (or assigned other authentication requirements), the client MUST
    authenticate with the authorization server as described in
    Section 3.2.1.
 
@@ -1373,7 +1373,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
 
    The authorization server MUST:
 
-   o  require client authentication for private clients or for any
+   o  require client authentication for confidential clients or for any
       client issued client credentials (or with other authentication
       requirements),
    o  authenticate the client if client authentication is included and
@@ -1815,8 +1815,8 @@ Internet-Draft                  OAuth 2.0                      July 2011
          and each string adds an additional access range to the
          requested scope.
 
-   If the client type is private or was issued client credentials (or
-   assigned other authentication requirements), the client MUST
+   If the client type is confidential or was issued client credentials
+   (or assigned other authentication requirements), the client MUST
    authenticate with the authorization server as described in
    Section 3.2.1.
 
@@ -1835,7 +1835,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
 
    The authorization server MUST:
 
-   o  require client authentication for private clients or for any
+   o  require client authentication for confidential clients or for any
       client issued client credentials (or with other authentication
       requirements),
    o  authenticate the client if client authentication is included, and
@@ -1889,7 +1889,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
    arranged with the authorization server (the method of which is beyond
    the scope of this specification).
 
-   The client credentials grant type MUST only be used by private
+   The client credentials grant type MUST only be used by confidential
    clients.
 
 
@@ -2243,10 +2243,10 @@ Internet-Draft                  OAuth 2.0                      July 2011
 
    Because refresh tokens are typically long-lasting credentials used to
    request additional access tokens, the refresh token is bound to the
-   client it was issued.  If the client type is private or was issued
-   client credentials (or assigned other authentication requirements),
-   the client MUST authenticate with the authorization server as
-   described in Section 3.2.1.
+   client it was issued.  If the client type is confidential or was
+   issued client credentials (or assigned other authentication
+   requirements), the client MUST authenticate with the authorization
+   server as described in Section 3.2.1.
 
    For example, the client makes the following HTTP request using
    transport-layer security (extra line breaks are for display purposes
@@ -2263,7 +2263,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
 
    The authorization server MUST:
 
-   o  require client authentication for private clients or for any
+   o  require client authentication for confidential clients or for any
       client issued client credentials (or with other authentication
       requirements),
    o  authenticate the client if client authentication is included and
@@ -2830,25 +2830,25 @@ Internet-Draft                  OAuth 2.0                      July 2011
    value, and the client MUST keep it in a location accessible only by
    the client or the user-agent (i.e., protected by same-origin policy).
 
-   For example, using a DOM variable (protected by JavaScript or other
-   DOM-binding language's enforcement of SOP [[ add reference ]]), HTTP
-   cookie, or HTML5 client-side storage.  The authorization server
-   includes the value of the "state" parameter when redirecting the
-   user-agent back to the client which MUST then ensure the received
-   value matches the stored value.
+   For example, using a DOM variable, HTTP cookie, or HTML5 client-side
+   storage.  The authorization server includes the value of the "state"
+   parameter when redirecting the user-agent back to the client which
+   MUST then ensure the received value matches the stored value.
 
 10.13.  Clickjacking
 
-   [[ Rework to use specification terminology ]]
+   In a clickjacking attack, an attacker registers a legitimate client
+   and then constructs a malicious site in which it loads the
+   authorization server's authorization endpoint web page in a
+   transparent iframe overlaid on top of a set of dummy buttons which
+   are carefully constructed to be placed directly under important
+   buttons on the authorization page.  When an end-user clicks a
+   misleading visible button, the end-user is actually clicking an
+   invisible button on the authorization page (such as an "Authorize"
+   button).  This allows an attacker to trick a resource owner into
+   granting its client access without their knowledge.
 
-   Clickjacking is the process of tricking end-users into revealing
-   confidential information or taking control of their device while
-   clicking on seemingly innocuous web pages.  In more detail, a
-   malicious site loads the target site in a transparent iframe overlaid
-   on top of a set of dummy buttons which are carefully constructed to
-   be placed directly under important buttons on the target site.  When
-   a user clicks a visible button, they are actually clicking a button
-   (such as an "Authorize" button) on the hidden page.
+   To prevent this form of attack, native applications SHOULD use
 
 
 
@@ -2857,13 +2857,12 @@ Hammer-Lahav, et al.    Expires January 26, 2012               [Page 51]
 Internet-Draft                  OAuth 2.0                      July 2011
 
 
-   To prevent clickjacking (and phishing attacks), native applications
-   SHOULD use external browsers instead of embedding browsers in an
-   iframe when requesting end-user authorization.  For newer browsers,
+   external browsers instead of embedding browsers in an iframe when
+   requesting end-user authorization.  For most newer browsers,
    avoidance of iframes can be enforced by the authorization server
-   using the "x-frame-options" header [[ Add reference ]].  This header
-   can have two values, "deny" and "sameorigin", which will block any
-   framing or framing by sites with a different origin, respectively.
+   using the (non-standard) "x-frame-options" header.  This header can
+   have two values, "deny" and "sameorigin", which will block any
+   framing, or framing by sites with a different origin, respectively.
    For older browsers, javascript framebusting techniques can be used
    but may not be effective in all browsers.
 
@@ -2905,6 +2904,7 @@ Internet-Draft                  OAuth 2.0                      July 2011
    decision to the review list and IANA.  Denials should include an
    explanation and, if applicable, suggestions as to how to make the
    request successful.
+
 
 
 
@@ -3398,17 +3398,17 @@ Internet-Draft                  OAuth 2.0                      July 2011
               Web Resource Authorization Profiles", January 2010.
 
    [I-D.ietf-oauth-saml2-bearer]
-              Campbell, B. and C. Mortimore, "SAML 2.0 Bearer Assertion
-              Grant Type Profile for OAuth 2.0",
-              draft-ietf-oauth-saml2-bearer-03 (work in progress),
-              February 2011.
+              Mortimore, C., "SAML 2.0 Bearer Assertion Grant Type
+              Profile for OAuth 2.0", draft-ietf-oauth-saml2-bearer-04
+              (work in progress), May 2011.
 
    [I-D.ietf-oauth-v2-bearer]
               Jones, M., Hardt, D., and D. Recordon, "The OAuth 2.0
-              Protocol: Bearer Tokens", draft-ietf-oauth-v2-bearer-04
-              (work in progress), March 2011.
+              Protocol: Bearer Tokens", draft-ietf-oauth-v2-bearer-06
+              (work in progress), June 2011.
 
    [I-D.ietf-oauth-v2-http-mac]
+              Hammer-Lahav, E., Barth, A., and B. Adida, "HTTP
 
 
 
@@ -3417,7 +3417,6 @@ Hammer-Lahav, et al.    Expires January 26, 2012               [Page 61]
 Internet-Draft                  OAuth 2.0                      July 2011
 
 
-              Hammer-Lahav, E., Barth, A., and B. Adida, "HTTP
               Authentication: MAC Access Authentication",
               draft-ietf-oauth-v2-http-mac-00 (work in progress),
               May 2011.
@@ -3459,6 +3458,7 @@ Authors' Addresses
 
    Email: dick.hardt@gmail.com
    URI:   http://dickhardt.org/
+
 
 
 
