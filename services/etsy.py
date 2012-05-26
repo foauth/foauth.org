@@ -1,7 +1,7 @@
 import foauth.providers
 
 
-class Etsy(foauth.providers.Oauth1):
+class Etsy(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.etsy.com/'
     favicon_url = 'http://www.etsy.com/images/favicon.ico'
@@ -11,13 +11,10 @@ class Etsy(foauth.providers.Oauth1):
     request_token_url = 'http://openapi.etsy.com/v2/oauth/request_token'
     authorize_url = None  # Provided when the request token is granted
     access_token_url = 'http://openapi.etsy.com/v2/oauth/access_token'
-    api_root = 'http://openapi.etsy.com/v2/'
-
-    signature_method = foauth.providers.SIGNATURE_HMAC
-    signature_location = foauth.prodivers.SIGN_HEADER
+    api_domain = 'openapi.etsy.com'
 
     available_permissions = {
-        None: 'read yourprovile information and public listings',
+        None: 'read your profile information and public listings',
         'email_r': 'read your email address',
         'listings_r': 'read your inactive and expired (i.e., non-public) listings',
         'listings_w': 'create and edit your listings',

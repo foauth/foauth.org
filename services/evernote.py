@@ -12,10 +12,7 @@ class Evernote(foauth.providers.OAuth1):
     request_token_url = 'https://www.evernote.com/oauth'
     authorize_url = 'https://www.evernote.com/OAuth.action'
     access_token_url = 'https://www.evernote.com/oauth'
-    api_root = 'https://www.evernote.com/edam/note/'
-
-    signature_method = foauth.providers.SIGNATURE_HMAC
-    signature_location = foauth.prodivers.SIGN_HEADER
+    api_domain = 'www.evernote.com'
 
     def get_access_token(self):
         # Override standard token request to also get the data shard
