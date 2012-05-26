@@ -1,7 +1,7 @@
-import foauth
+import foauth.providers
 
 
-class Dropbox(foauth.providers.Oauth1):
+class Dropbox(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.dropbox.com/'
     favicon_url = 'https://www.dropbox.com/static/20659/images/favicon.ico'
@@ -11,8 +11,9 @@ class Dropbox(foauth.providers.Oauth1):
     request_token_url = 'https://api.dropbox.com/1/oauth/request_token'
     authorize_url = 'https://www.dropbox.com/1/oauth/authorize'
     access_token_url = 'https://api.dropbox.com/1/oauth/access_token'
-    api_root = 'https://api.dropbox.com/1/'
+    api_domains = ['api.dropbox.com', 'api-content.dropbox.com']
 
-    signature_method = foauth.providers.SIGNATURE_HMAC
-    signature_location = foauth.prodivers.SIGN_HEADER
+    available_permissions = [
+        (None, 'read and write to your entire Dropbox'),
+    ]
 

@@ -1,7 +1,7 @@
 import foauth.providers
 
 
-class Digg(foauth.providers.Oauth1):
+class Digg(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://digg.com/'
     favicon_url = 'http://cdn1.diggstatic.com/img/favicon.a015f25c.ico'
@@ -11,8 +11,11 @@ class Digg(foauth.providers.Oauth1):
     request_token_url = 'http://services.digg.com/oauth/request_token'
     authorize_url = 'http://digg.com/oauth/authorize'
     access_token_url = 'http://services.digg.com/oauth/access_token'
-    api_root = 'http://services.digg.com/2.0/'
+    api_domain = 'services.digg.com'
 
-    signature_method = foauth.providers.SIGNATURE_HMAC
-    signature_location = foauth.prodivers.SIGN_HEADER
+    available_permissions = [
+        (None, 'read and write stories and comments'),
+    ]
+
+    https = False
 
