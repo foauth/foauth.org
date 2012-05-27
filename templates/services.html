@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% import 'nav.html' as nav %}
+
+{% block nav %}{{ nav.select('services') }}{% endblock %}
+
+{% block content %}
+			<div class="content">
+				<div class="page-header">
+					<h1>Supported Services</h1>
+				</div>
+				<div class="row">
+{% for column in services|slice(2) %}
+					<div class="span8">
+						<table class="services condensed-table">
+							<col><col>
+							<col width="46">
+							<tbody>
+{% for alias, service in column %}
+								<tr class="inactive" id="{{ alias }}">
+									<th scope="row">
+										<img class="favicon" src="{{ service.favicon_url }}">
+										<a href="{{ service.provider_url }}">{{ service.name }}</a>
+									</th>
+									<td>{% if service.available_permissions|count > 1 %}<abbr title="{% for scope, perm in service.available_permissions %}{{ perm }}
+{% endfor %}">{{ service.available_permissions|count }} permissions</abbr>{% else %}{{ service.available_permissions[0][1] }}{% endif %}</td>
+									<td>
+										{% if current_user.is_authenticated() %}
+										<a href="/services/{{ alias }}/authorize"><img src="http://media.foauth.martyalchin.com/key.png" alt="Authorize" title="Authorize"></a>
+										{% endif %}
+										<a href="{{ service.docs_url }}"><img src="http://media.foauth.martyalchin.com/book.png" alt="Documentation" title="Documentation"></a>
+									</td>
+								</tr>
+{% endfor %}
+							</tbody>
+						</table>
+					</div>
+{% endfor %}
+				</div>
+			</div>
+{% endblock %}

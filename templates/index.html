@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+	<div class="page-header">
+		<h1>foauth.org makes OAuth optional</h1>
+	</div>
+	<div class="row">
+		<div class="span16">
+			<p><a href="http://oauth.net/">OAuth</a> is a great idea for interaction between big sites with lots of users. But, as one of those users, it&rsquo;s a pretty terrible way to get at your own data. That&rsquo;s where foauth.org comes in, giving you access to these services in three easy steps:</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="{% if current_user.is_anonymous() %}span12{% else %}span16{% endif %}">
+			<ol class="steps">
+				<li><strong>Sign up with foauth.org.</strong> This shouldn&rsquo;t be too hard; there&rsquo;s a form over there on the right side of the screen. And yes, that&rsquo;s really the entire form.</li>
+				<li><strong>Activate your services.</strong> This only takes a couple of clicks if you&rsquo;re already logged in with them. Feel free to take a look at the <a href="services.html">services we support</a> before signing up.</li>
+				<li><strong>Access your own data.</strong> Write your own programs to access your data, using HTTP Basic authen&shy;tication, which is much easier to deal with. Most program&shy;ming languages have built-in support for it, and we don&rsquo;t even care which one you use. Sure, <a href="about.html">we love Python</a>, but it&rsquo;s okay if you don&rsquo;t.</li>
+			</ol>
+		</div>
+		{% if current_user.is_anonymous() %}
+		<div class="span4 signup">
+			<form action="/signup/" method="post">
+				{{ signup.csrf }}
+				<fieldset>
+					<legend>Ready to get started?</legend>
+					<p>
+						{% if signup.errors.email %}
+						<strong class="error">{{ signup.errors.email.0|safe }}</strong>
+						{% endif %}
+						<input class="span4" type="text" id="signup_email" name="email" {% if signup.data.email %}value="{{ signup.data.email }}"{% endif %} placeholder="Email address">
+					</p>
+					<p>
+						{% if signup.errors.password %}
+						<strong class="error">{{ signup.errors.password.0|safe }}</strong>
+						{% endif %}
+						<input type="password" id="signup_password" name="password" placeholder="Password">
+						<input type="password" id="signup_retype" name="retype" placeholder="(again)">
+					</p>
+					<p class="consent">
+						{% if signup.errors.consent %}
+						<strong class="error">{{ signup.errors.consent.0|safe }}</strong>
+						{% endif %}
+						<label>
+							<input type="checkbox" name="consent" {% if signup.data.consent %}checked{% endif %}>
+							Accept the <a href="terms.html">terms of service</a>
+						</label>
+					</p>
+					<button type="submit" class="span4 btn primary">Sign up</button>
+				</fieldset>
+			</form>
+		</div>
+		{% endif %}
+	</div>
+	<div class="row">
+		<div class="span16">
+			<pre>>>> import json
+>>> import <a href="https://github.com/kennethreitz/requests">requests</a>
+>>> r = requests.get('https://foauth.org/<a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">api.twitter.com/1/statuses/home_timeline.json</a>', auth=('user', 'pass'))
+>>> timeline = json.loads(r.content)
+>>> timeline[0]['text']
+"Just signed up with http://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a> and <a href="https://twitter.com/kennethreitz">@kennethreitz</a>!"</pre>
+		</div>
+	</div>
+</div>
+{% endblock %}

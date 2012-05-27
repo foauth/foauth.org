@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% import 'nav.html' as nav %}
+
+{% block nav %}{{ nav.select('about') }}{% endblock %}
+
+{% block content %}
+			<div class="terms content">
+				<div class="page-header">
+					<h1>Terms of Service</h1>
+				</div>
+				<div class="row">
+					<div class="span16">
+						<p>We hate complicated terms of service too, so let&rsquo;s keep this simple, shall we? If anything seems out of place, you don&rsquo;t have to sign up, but please tell us what you don&rsquo;t like, because we want to know if you think we&rsquo;re doing something sleazy.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span8">
+						<h2>What foauth.org will do</h2>
+						<ul>
+							<li>Store OAuth tokens for you so you don&rsquo;t have to deal with them.</li>
+							<li>Store your foauth.org user inform&shy;ation, including your password.</li>
+							<li>Link those two items so you can login to your services.</li>
+							<li>Provide an endpoint for you to use for each service.</li>
+							<li>Sign all your API traffic according to the OAuth standards.</li>
+							<li>Dutifully pass all other API traffic through to your services.</li>
+							<li>Be as reliable as its maintainers can manage.</li>
+						</ul>
+					</div>
+					<div class="span8">
+						<h2>What foauth.org won&rsquo;t do</h2>
+						<ul>
+							<li>See your username or password from your favorite services.</li>
+							<li>Share your foauth.org user inform&shy;ation with anyone.</li>
+							<li>Share your OAuth tokens with anyone.</li>
+							<li>Monitor or store any of your API traffic.</li>
+							<li>Monitor or throttle the number of API calls you use.</li>
+							<li>Guarantee any specific amount of uptime or reliability.</li>
+							<li>Ask you to sign up for anything other than foauth.org.</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span8">
+						<h2>What you will do</h2>
+						<ul>
+							<li>Use HTTP Basic authen&shy;tication to access your favorite services.</li>
+							<li>Stay within the API usage limits of those services.</li>
+							<li>Respond promptly to any concerns we raise about your usage.</li>
+						</ul>
+					</div>
+					<div class="span8">
+						<h2>What you won&rsquo;t do</h2>
+						<ul>
+							<li>Share your login inform&shy;ation without anyone.</li>
+							<li>Violate the policies or terms of use for our suppported services.</li>
+							<li>Blame us if using our service harms you or your data in any way.</li>
+						</ul>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span16">
+						<h2>What we hope you&rsquo;ll do</h2>
+						<p>These aren&rsquo;t part of the official terms of service, so you don&rsquo;t have to agree to do anything on this final list. But we&rsquo;re working hard to bring you a service you&rsquo;ll enjoy, and it&rsquo;d be awesome if you like it so much that you&rsquo;d want to do something more.</p>
+						<ul>
+							<li>Tell your friends how much you love foauth.org and encourage them to sign up as well.</li>
+							<li>Share what you&rsquo;ve built on foauth.org, so we and your fellow users can learn from what you&rsquo;ve done.</li>
+							<li>Suggest new services for use with foauth.org. We can&rsquo;t possibly find them all, so feel free to submit your own.</li>
+							<li>Contribute to foauth.org itself. The <a href="http://github.com/kennethreitz/foauth.org">source code</a> is freely available, and even if you can&rsquo;t help with the code, we&rsquo;re open to suggestions.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+{% endblock %}
