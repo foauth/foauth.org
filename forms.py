@@ -1,4 +1,4 @@
-from flaskext.wtf import Form, TextField, PasswordField, BooleanField, validators
+from flask.ext.wtf import Form, TextField, PasswordField, BooleanField, validators
 
 import models
 
