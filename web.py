@@ -117,10 +117,6 @@ def api(domain, path):
                         key = user.keys.filter_by(service_alias=service.alias).first()
                         resp = service.api(key, domain, path)
                         content = resp.raw.read()
-                        print 'CONTENT >>>>>>>>>>>>>>>>'
-                        print type(content)
-                        print len(content)
-                        print content
                         return config.app.make_response((content,
                                                          resp.status_code,
                                                          resp.headers))
