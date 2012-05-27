@@ -29,6 +29,9 @@ class OAuth(object):
         self.client_id = client_id
         self.client_secret = client_secret
 
+    def get_request_token_url(self):
+        return self.request_token_url
+
     def get_redirect_uri(self):
         root = flask.request.url_root
         path = flask.url_for('callback', alias=self.alias)
@@ -73,8 +76,8 @@ class OAuth1(OAuth):
                                     callback_uri=self.get_redirect_uri(),
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
-        resp = requests.post(self.request_token_url, auth=auth,
-                              headers=self.get_headers())
+        resp = requests.post(self.get_request_token_url(), auth=auth,
+                             headers=self.get_headers())
         token, secret = self.parse_token(resp.content)
         flask.session['%s_temp_secret' % self.alias] = secret
         return {'oauth_token': token, 'oauth_callback': self.get_redirect_uri()}
