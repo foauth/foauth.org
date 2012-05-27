@@ -1,0 +1,19 @@
+import foauth.providers
+
+
+class Twitter(foauth.providers.OAuth1):
+    # General info about the provider
+    provider_url = 'https://www.twitter.com/'
+    favicon_url = 'https://twitter.com/phoenix/favicon.ico'
+    docs_url = 'https://dev.twitter.com/docs'
+
+    # URLs to interact with the API
+    request_token_url = 'https://api.twitter.com/oauth/request_token'
+    authorize_url = 'https://api.twitter.com/oauth/authorize'
+    access_token_url = 'https://api.twitter.com/oauth/access_token'
+    api_domain = 'api.twitter.com'
+
+    available_permissions = [
+        (None, 'read and send tweets, including DMs'),
+    ]
+
