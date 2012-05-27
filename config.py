@@ -3,8 +3,8 @@ from flask import Flask
 
 from services import bitbucket
 from services import digg
-from services import etsy
 from services import dropbox
+from services import etsy
 from services import fitbit
 from services import flickr
 from services import twitter
