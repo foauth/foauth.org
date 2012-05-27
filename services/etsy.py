@@ -45,7 +45,6 @@ class Etsy(foauth.providers.OAuth1):
     def parse_token(self, content):
         # Override standard token request to also get the authorization URL
         content = url_decode(content)
-        print content
         if 'login_url' in content:
             self.authorize_url = content['login_url']
         return content['oauth_token'], content['oauth_token_secret']
