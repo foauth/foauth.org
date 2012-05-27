@@ -22,7 +22,7 @@ class Flickr(foauth.providers.OAuth1):
 
     def get_authorize_params(self):
         params = super(Flickr, self).get_authorize_params()
-        params['perms'] = self.available_permissions[0]
+        params['perms'] = self.available_permissions[0][0]
         return params
 
     def get_headers(self):

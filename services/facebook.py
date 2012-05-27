@@ -61,7 +61,7 @@ class Facebook(foauth.providers.OAuth2):
         ('friends_work_history', "access your friends' work history"),
     ]
 
-    def parse_access_token(self, content):
+    def parse_token(self, content):
         data = url_decode(content)
         return data['access_token']
 
