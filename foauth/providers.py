@@ -1,4 +1,5 @@
 from os import urandom
+from urlparse import urljoin
 
 import flask
 import requests
@@ -29,7 +30,9 @@ class OAuth(object):
         self.client_secret = client_secret
 
     def get_redirect_uri(self):
-        return u'http://localhost:5000/services/%s/callback' % self.alias
+        root = flask.request.url_root
+        path = flask.url_for('callback', alias=self.alias)
+        return urljoin(root, path).decode('utf8')
 
     def get_scope_string(self, scopes):
         return ''
