@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% import 'nav.html' as nav %}
+
+{% block nav %}{{ nav.select('about') }}{% endblock %}
+
+{% block content %}
+			<div class="terms content">
+				<div class="page-header">
+					<h1>Frequently Asked Questions</h1>
+				</div>
+				<div class="row">
+					<div class="span16">
+						<dl>
+							<dt>Doesn&rsquo;t this reintroduce the <a href="http://adactio.com/journal/1357/">password anti-pattern</a>?</dt>
+							<dd>
+								<p>This problem occurs when a one site asks for your username and password for another site. That isn&rsquo;t at all what we do here. We only ever ask you for the username and password you used to sign up with us, and all other authen&shy;tication goes through OAuth. We don&rsquo;t even see your username, much less your password; all we get is a token that only means something to the service in question.
+								</p>
+							</dd>
+							<dt>Doesn&rsquo;t <a href="http://developer.apigee.com/">Apigee</a> already do this?</dt>
+							<dd>
+								<p>Sort of. Apigee is focused on services, with their own sets of users, who want to work with other services without bothering with OAuth. So even though their process is simpler than OAuth proper, it&rsquo;s still way more compli&shy;cated than it needs to be for a single user accessing his or her own data.</p>
+							</dd>
+							<dt>How do I revoke access to services I no longer wish foauth.org to use?</dt>
+							<dd>
+								<p>You&rsquo;ll have to figure that out with each of those services themselves. With OAuth, service providers can revoke the token that foauth.org uses to access your data, but that can only be done on their end. Usually, it&rsquo;s somewhere in your account settings.</p>
+								<p>Techcnically, we could offer a feature for that as well, where we simply delete your token, but that would be another anti-pattern we don&rsquo;t want to start. After all, someone less scrupulous could just tell you they deleted your OAuth tokens but still keep them behind the scenes. It&rsquo;s just better for you to manage it with your services directly.</p>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+{% endblock %}

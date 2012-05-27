@@ -1,0 +1,43 @@
+{% import 'nav.html' as nav %}
+
+<!doctype html>
+<html>
+	<head>
+		<title>foauth.org makes OAuth optional</title>
+		<link rel="stylesheet" href="http://media.foauth.martyalchin.com/bootstrap.min.css">
+		<link rel="stylesheet" href="http://media.foauth.martyalchin.com/style.css">
+	</head>
+	<body>
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="http://foauth.martyalchin.com/"><span class="fo">fo</span>auth.org</a>
+					<ul class="nav">
+						{% block nav %}{{ nav.select('index') }}{% endblock %}
+					</ul>
+					{% if current_user.is_authenticated() %}
+					<div class="pull-right"><ul class="nav">
+						<li><a href="/logout/">Sign out of {{ current_user.email }}</a></li>
+					</ul></div>
+					{% else %}
+					<form action="/login/" method="post" class="pull-right">
+						{{ login.csrf }}
+						{% if login.errors.email %}
+						<strong class="error">{{ login.errors.email.0|safe }}</strong>
+						{% elif login.errors.password %}
+						<strong class="error">{{ login.errors.password.0|safe }}</strong>
+						{% endif %}
+						<input name="email" type="text" {% if login.data.email %}value="{{ login.data.email }}"{% endif %} placeholder="Email address">
+						<input name="password" class="input-small" type="password" placeholder="Password">
+						<button class="btn" type="submit">Sign in</button>
+					</form>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			{% block content %}{% endblock %}
+		</div>
+		<p class="footer">Brought to you by <a href="https://github.com/gulopine">Marty Alchin</a> and <a href="https://github.com/kennethreitz">Kenneth Reitz</a>.</p>
+	</body>
+</html>
