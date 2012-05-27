@@ -36,6 +36,9 @@ class User(db.Model):
     def __repr__(self):
         return '<User: %s>' % self.email
 
+    def key_for_service(self, alias):
+        return self.keys.filter_by(service_alias=alias).first()
+
 
 class Key(db.Model):
     id = db.Column(db.Integer, primary_key=True)
