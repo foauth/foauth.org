@@ -16,8 +16,9 @@ def init_services(*services):
     service_list = []
 
     for service in services:
-        key = os.environ.get('%s_KEY' % service.alias, '').decode('utf8')
-        secret = os.environ.get('%s_SECRET' % service.alias, '').decode('utf8')
+        alias = service.alias.upper()
+        key = os.environ.get('%s_KEY' % alias, '').decode('utf8')
+        secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8')
 
         if key and secret: # Only initialize if all the pieces are in place
             service_list.append(service(key, secret))
