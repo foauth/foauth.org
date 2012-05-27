@@ -117,6 +117,9 @@ def api(domain, path):
                         key = user.keys.filter_by(service_alias=service.alias).first()
                         resp = service.api(key, domain, path)
                         content = resp.raw.read()
+                        if resp.headers['Transfer-Encoding'] == 'chunked':
+                            # WSGI doesn't handle chunked encodings
+                            del resp.headers['transfer-encoding']
                         return config.app.make_response((content,
                                                          resp.status_code,
                                                          resp.headers))
