@@ -21,7 +21,7 @@
 					</ul></div>
 					{% else %}
 					<form action="/login/" method="post" class="pull-right">
-						{{ login.csrf }}
+						{{ login.csrf_token }}
 						{% if login.errors.email %}
 						<strong class="error">{{ login.errors.email.0|safe }}</strong>
 						{% elif login.errors.password %}

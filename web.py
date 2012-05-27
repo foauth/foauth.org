@@ -2,7 +2,7 @@ from functools import wraps
 import os
 
 from flask import request, redirect, render_template, abort
-from flaskext.login import current_user, login_user, logout_user, login_required
+from flask.ext.login import current_user, login_user, logout_user, login_required
 
 import config
 import forms

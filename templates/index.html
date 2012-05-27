@@ -21,7 +21,7 @@
 		{% if current_user.is_anonymous() %}
 		<div class="span4 signup">
 			<form action="/signup/" method="post">
-				{{ signup.csrf }}
+				{{ signup.csrf_token }}
 				<fieldset>
 					<legend>Ready to get started?</legend>
 					<p>

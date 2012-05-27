@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.sqlalchemy import SQLAlchemy
-from flaskext import login
+from flask.ext import login
 
 from config import app
 db = SQLAlchemy(app)
