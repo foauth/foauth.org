@@ -1,9 +1,10 @@
 from functools import wraps
 import os
 
-from flask import request, redirect, render_template, abort
+from flask import request, flash, redirect, render_template, abort
 from flask.ext.login import current_user, login_user, logout_user, login_required
 
+from foauth import OAuthDenied, OAuthError
 import config
 import forms
 import models
@@ -84,22 +85,38 @@ def auth_endpoint(func):
 @login_required
 @auth_endpoint
 def authorize(service):
-    return service.authorize()
+    try:
+        return service.authorize()
+    except OAuthError:
+        flash('Error occured while authorizing %s' % service.name)
+        redirect('/services/')
 
 
 @config.app.route('/services/<alias>/callback', methods=['GET'])
 @login_required
 @auth_endpoint
 def callback(service):
-    key, secret = service.callback(request.args)
     user_key = models.Key.query.filter_by(user_id=current_user.id,
                                           service_alias=service.alias).first()
-    if not user_key:
-        user_key = models.Key(user_id=current_user.id,
-                              service_alias=service.alias)
-    user_key.key = key
-    user_key.secret = secret
-    models.db.session.add(user_key)
+    try:
+        key, secret = service.callback(request.args)
+        if not user_key:
+            user_key = models.Key(user_id=current_user.id,
+                                  service_alias=service.alias)
+        user_key.key = key
+        user_key.secret = secret
+        models.db.session.add(user_key)
+        flash('Granted access to %s' % service.name, 'success')
+
+    except OAuthError:
+        flash('Error occurred while authorizing %s' % service.name)
+
+    except OAuthDenied, e:
+        # User denied the authorization request
+        if user_key:
+            models.db.session.delete(user_key)
+        flash(e.args[0])
+
     models.db.session.commit()
     return redirect('/services/')
 

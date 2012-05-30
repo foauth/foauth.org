@@ -6,6 +6,8 @@ import requests
 import requests.auth
 from werkzeug.urls import url_decode
 
+from foauth import OAuthError
+
 
 class OAuthMeta(type):
     def __init__(cls, name, bases, attrs):
@@ -78,7 +80,10 @@ class OAuth1(OAuth):
                                     signature_type=self.signature_type)
         resp = requests.post(self.get_request_token_url(), auth=auth,
                              headers=self.get_headers())
-        token, secret = self.parse_token(resp.content)
+        try:
+            token, secret = self.parse_token(resp.content)
+        except Exception:
+            raise OAuthError('Unable to parse access token')
         flask.session['%s_temp_secret' % self.alias] = secret
         return {'oauth_token': token, 'oauth_callback': self.get_redirect_uri()}
 
@@ -104,10 +109,10 @@ class OAuth1(OAuth):
             params = {'oauth_token': token}
         resp = requests.post(self.access_token_url, params=params, auth=auth,
                              headers=self.get_headers())
-
-
-
-        return self.parse_token(resp.content)
+        try:
+            return self.parse_token(resp.content)
+        except Exception:
+            raise OAuthError('Unable to parse access token')
 
     def api(self, key, domain, path):
         protocol = self.https and 'https' or 'http'
