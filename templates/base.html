@@ -36,6 +36,15 @@
 			</div>
 		</div>
 		<div class="container">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul class="flashes">
+				{% for message in messages %}
+					<li>{{ message }}</li>
+				{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
 			{% block content %}{% endblock %}
 		</div>
 		<p class="footer">Brought to you by <a href="https://github.com/gulopine">Marty Alchin</a> and <a href="https://github.com/kennethreitz">Kenneth Reitz</a>.</p>
