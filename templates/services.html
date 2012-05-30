@@ -14,7 +14,11 @@
 					<col width="27">
 					<tbody>
 {% for alias, service in services %}
-{% set key = current_user.key_for_service(alias) %}
+{% if current_user.is_authenticated() %}
+	{% set key = current_user.key_for_service(alias) %}
+{% else %}
+	{% set key = None %}
+{% endif %}
 						<tr class="{% if key %}active{% else %}inactive{% endif %}" id="{{ alias }}">
 							<th scope="row">
 								<img class="favicon" src="{{ service.favicon_url }}">
