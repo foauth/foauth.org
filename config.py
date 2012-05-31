@@ -7,6 +7,8 @@ from services import dropbox
 from services import etsy
 from services import fitbit
 from services import flickr
+from services import github
+from services import instagram
 from services import twitter
 
 app = Flask(__name__)
@@ -32,4 +34,6 @@ services = init_services(bitbucket.Bitbucket,
                          etsy.Etsy,
                          fitbit.FitBit,
                          flickr.Flickr,
+                         github.GitHub,
+                         instagram.Instagram,
                          twitter.Twitter)
