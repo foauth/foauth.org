@@ -89,7 +89,7 @@ def authorize(service):
         return service.authorize()
     except OAuthError:
         flash('Error occured while authorizing %s' % service.name)
-        redirect('/services/')
+        return redirect('/services/')
 
 
 @config.app.route('/services/<alias>/callback', methods=['GET'])
