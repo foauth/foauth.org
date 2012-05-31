@@ -4,9 +4,36 @@ from urlparse import urljoin
 import flask
 import requests
 import requests.auth
+from oauthlib.oauth2.draft25 import tokens
 from werkzeug.urls import url_decode
 
 from foauth import OAuthError
+
+BEARER = 'BEARER'
+BEARER_HEADER = 'HEADER'
+BEARER_BODY = 'BODY'
+BEARER_URI = 'URI'
+BEARER_TYPES = (BEARER_HEADER, BEARER_BODY, BEARER_URI)
+
+
+class Bearer(object):
+    def __init__(self, token, bearer_type=BEARER_HEADER):
+        self.token = token
+
+        if bearer_type in BEARER_TYPES:
+            self.bearer_type = bearer_type
+        else:
+            raise ValueError('Unknown bearer type %s' % bearer_type)
+
+    def __call__(self, r):
+        if self.bearer_type == BEARER_HEADER:
+            r.headers = tokens.prepare_bearer_headers(self.token, r.headers)
+        elif self.bearer_type == BEARER_BODY:
+            r.data = tokens.prepare_bearer_body(self.token, r.data)
+        elif self.bearer_type == BEARER_URI:
+            r.url = tokens.prepare_bearer_uri(self.token, r.url)
+
+        return r
 
 
 class OAuthMeta(type):
@@ -126,9 +153,12 @@ class OAuth1(OAuth):
 
 
 class OAuth2(OAuth):
+    token_type = BEARER
+    bearer_type = BEARER_HEADER
+
     def parse_token(self, content):
         # Must be specified in a subclass
-        raise Exception(content)
+        raise NotImplementedError("parse_token() must be defined in a subclass")
 
     def get_scope_string(self, scopes):
         return ' '.join(scopes)
@@ -147,7 +177,6 @@ class OAuth2(OAuth):
             scopes = (s for (s, desc) in self.available_permissions if s)
             params['scope'] = self.get_scope_string(scopes)
         return params
-
 
     def authorize(self):
         params = self.get_authorize_params()
@@ -180,7 +209,8 @@ class OAuth2(OAuth):
     def api(self, key, domain, path):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s/%s' % (protocol, domain, path)
-        auth = Bearer(key.key)
+        if self.token_type == BEARER:
+            auth = Bearer(key.key, bearer_type=self.bearer_type)
         return requests.request(flask.request.method, url, auth=auth,
                                 data=flask.request.form or flask.request.data)
 
