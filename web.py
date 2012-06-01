@@ -136,7 +136,7 @@ def api(domain, path):
                         content = resp.raw.read()
                         if resp.headers['Transfer-Encoding'] == 'chunked':
                             # WSGI doesn't handle chunked encodings
-                            del resp.headers['transfer-encoding']
+                            del resp.headers['Transfer-Encoding']
                         return config.app.make_response((content,
                                                          resp.status_code,
                                                          resp.headers))
