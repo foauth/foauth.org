@@ -1,7 +1,15 @@
+import json
 import foauth.providers
 
 
-class DeviantArt(foauth.providers.Oauth2):
+def draft10(service, token, r):
+    headers = r.headers or {}
+    headers[u'Authorization'] = u'OAuth %s' % token
+    r.headers = headers
+    return r
+
+
+class DeviantArt(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://deviantart.com/'
     favicon_url = 'http://i.deviantart.net/icons/favicon.ico'
@@ -10,8 +18,15 @@ class DeviantArt(foauth.providers.Oauth2):
     # URLs to interact with the API
     authorize_url = 'https://www.deviantart.com/oauth2/draft15/authorize'
     access_token_url = 'https://www.deviantart.com/oauth2/draft15/token'
-    api_root = 'https://www.deviantart.com/oauth2/draft15/'
+    api_domain = 'www.deviantart.com'
 
-    signature_method = foauth.providers.SIGNATURE_HMAC
-    signature_location = foauth.prodivers.SIGN_HEADER
+    available_permissions = [
+        (None, 'read and write to your artwork'),
+    ]
+
+    bearer_type = draft10
+
+    def parse_token(self, content):
+        data = json.loads(content)
+        return data['access_token']
 
