@@ -4,6 +4,7 @@ from flask import Flask
 from services import bitbucket
 from services import deviantart
 from services import digg
+from services import disqus
 from services import dropbox
 from services import etsy
 from services import fitbit
@@ -32,6 +33,7 @@ def init_services(*services):
 services = init_services(bitbucket.Bitbucket,
                          deviantart.DeviantArt,
                          digg.Digg,
+                         disqus.Disqus,
                          dropbox.Dropbox,
                          etsy.Etsy,
                          fitbit.FitBit,
