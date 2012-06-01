@@ -7,6 +7,7 @@ from services import digg
 from services import disqus
 from services import dropbox
 from services import etsy
+from services import facebook
 from services import fitbit
 from services import flickr
 from services import github
@@ -36,6 +37,7 @@ services = init_services(bitbucket.Bitbucket,
                          disqus.Disqus,
                          dropbox.Dropbox,
                          etsy.Etsy,
+                         facebook.Facebook,
                          fitbit.FitBit,
                          flickr.Flickr,
                          github.GitHub,
