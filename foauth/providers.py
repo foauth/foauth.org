@@ -20,7 +20,7 @@ class Bearer(object):
     def __init__(self, token, bearer_type=BEARER_HEADER):
         self.token = token
 
-        if bearer_type in BEARER_TYPES:
+        if bearer_type in BEARER_TYPES or callable(bearer_type):
             self.bearer_type = bearer_type
         else:
             raise ValueError('Unknown bearer type %s' % bearer_type)
@@ -32,6 +32,8 @@ class Bearer(object):
             r.data = tokens.prepare_bearer_body(self.token, r.data)
         elif self.bearer_type == BEARER_URI:
             r.url = tokens.prepare_bearer_uri(self.token, r.url)
+        elif callable(self.bearer_type):
+            r = self.bearer_type(self.token, r)
 
         return r
 
