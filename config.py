@@ -15,6 +15,7 @@ from services import github
 from services import google
 from services import instagram
 from services import liveconnect
+from services import netflix
 from services import twitter
 
 app = Flask(__name__)
@@ -48,4 +49,5 @@ services = init_services(bitbucket.Bitbucket,
                          google.Google,
                          instagram.Instagram,
                          liveconnect.LiveConnect,
+                         netflix.Netflix,
                          twitter.Twitter)
