@@ -157,6 +157,7 @@ class OAuth1(OAuth):
 class OAuth2(OAuth):
     token_type = BEARER
     bearer_type = BEARER_HEADER
+    supports_state = True
 
     def parse_token(self, content):
         # Must be specified in a subclass
@@ -168,7 +169,9 @@ class OAuth2(OAuth):
     def get_authorize_params(self):
         state = ''.join('%02x' % ord(x) for x in urandom(16))
         flask.session['%s_state' % self.alias] = state
-        redirect_uri = self.get_redirect_uri() + ('?state=%s' % state)
+        redirect_uri = self.get_redirect_uri()
+        if not self.supports_state:
+            redirect_uri += ('?state=%s' % state)
         params = {
             'client_id': self.client_id,
             'response_type': 'code',
@@ -190,7 +193,9 @@ class OAuth2(OAuth):
         if state != data['state']:
             abort(403)
         del flask.session['%s_state' % self.alias]
-        redirect_uri = self.get_redirect_uri() + ('?state=%s' % state)
+        redirect_uri = self.get_redirect_uri()
+        if not self.supports_state:
+            redirect_uri += ('?state=%s' % state)
         resp = requests.post(self.access_token_url, {
             'client_id': self.client_id,
             'client_secret': self.client_secret,
