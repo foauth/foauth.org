@@ -21,6 +21,8 @@ class GitHub(foauth.providers.OAuth2):
         ('gist', 'write to your gists'),
     ]
 
+    supports_state = False
+
     def get_scope_string(self, scopes):
         # GitHub doesn't follow the spec on this point
         return ','.join(scopes)
