@@ -12,6 +12,7 @@ from services import fitbit
 from services import flickr
 from services import foursquare
 from services import github
+from services import google
 from services import instagram
 from services import twitter
 
@@ -43,5 +44,6 @@ services = init_services(bitbucket.Bitbucket,
                          flickr.Flickr,
                          foursquare.Foursquare,
                          github.GitHub,
+                         google.Google,
                          instagram.Instagram,
                          twitter.Twitter)
