@@ -1,7 +1,7 @@
 from functools import wraps
 import os
 
-from flask import request, flash, redirect, render_template, abort
+from flask import request, flash, redirect, render_template, abort, url_for
 from flask.ext.login import current_user, login_user, logout_user, login_required
 
 from foauth import OAuthDenied, OAuthError
@@ -39,7 +39,7 @@ def login():
             abort(404)
         if user.check_password(form.password.data):
             login_user(user)
-            return redirect('/services/')
+            return redirect(url_for('services'))
         return redirect('/')
     else:
         return render_template('index.html', login=form, signup=forms.Signup())
@@ -59,7 +59,7 @@ def signup():
         models.db.session.add(user)
         models.db.session.commit()
         login_user(user)
-        return redirect('/services/')
+        return redirect(url_for('services'))
     else:
         return render_template('index.html', login=forms.Login(), signup=form)
 
@@ -89,7 +89,7 @@ def authorize(service):
         return service.authorize()
     except OAuthError:
         flash('Error occured while authorizing %s' % service.name)
-        return redirect('/services/')
+        return redirect(url_for('services'))
 
 
 @config.app.route('/services/<alias>/callback', methods=['GET'])
@@ -119,7 +119,7 @@ def callback(service):
         flash(e.args[0])
 
     models.db.session.commit()
-    return redirect('/services/')
+    return redirect(url_for('services'))
 
 
 @config.app.route('/<domain>/<path:path>', methods=['GET', 'POST'])
