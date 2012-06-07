@@ -46,6 +46,7 @@ class Key(db.Model):
     service_alias = db.Column(db.String(255))
     key = db.Column(db.String(255))
     secret = db.Column(db.String(255))
+    expires = db.Column(db.DateTime)
 
     user = db.relationship('User', backref=db.backref('keys', lazy='dynamic'))
 

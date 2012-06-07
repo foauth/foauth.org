@@ -1,3 +1,4 @@
+import datetime
 import json
 import foauth.providers
 
@@ -62,4 +63,7 @@ class Google(foauth.providers.OAuth2):
 
     def parse_token(self, content):
         data = json.loads(content)
-        return data['access_token']
+        expires = data.get('expires_in', None)
+        if expires:
+            expires = datetime.datetime.now() + datetime.timedelta(seconds=int(expires))
+        return data['access_token'], expires

@@ -99,12 +99,13 @@ def callback(service):
     user_key = models.Key.query.filter_by(user_id=current_user.id,
                                           service_alias=service.alias).first()
     try:
-        key, secret = service.callback(request.args)
+        key, secret, expires = service.callback(request.args)
         if not user_key:
             user_key = models.Key(user_id=current_user.id,
                                   service_alias=service.alias)
         user_key.key = key
         user_key.secret = secret
+        user_key.expires = expires
         models.db.session.add(user_key)
         flash('Granted access to %s' % service.name, 'success')
 

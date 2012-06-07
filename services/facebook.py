@@ -1,3 +1,4 @@
+import datetime
 from werkzeug.urls import url_decode
 import foauth.providers
 
@@ -63,5 +64,8 @@ class Facebook(foauth.providers.OAuth2):
 
     def parse_token(self, content):
         data = url_decode(content)
-        return data['access_token']
+        expires = data.get('expires', None)
+        if expires:
+            expires = datetime.datetime.now() + datetime.timedelta(seconds=int(expires))
+        return data['access_token'], expires
 

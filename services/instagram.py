@@ -25,4 +25,4 @@ class Instagram(foauth.providers.OAuth2):
 
     def parse_token(self, content):
         data = json.loads(content)
-        return data['access_token']
+        return data['access_token'], None
