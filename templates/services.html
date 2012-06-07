@@ -9,7 +9,7 @@
 					<h1>Supported Services</h1>
 				</div>
 				<table class="services condensed-table">
-					<col><col>
+					<col><col><col>
 					<col width="27">
 					<col width="27">
 					<tbody>
@@ -26,8 +26,12 @@
 							</th>
 							<td>{% if service.available_permissions|count > 1 %}<abbr title="{% for scope, perm in service.available_permissions %}{{ perm }}
 {% endfor %}">{{ service.available_permissions|count }} permissions</abbr>{% else %}{{ service.available_permissions[0][1] }}{% endif %}</td>
-							{% if current_user.is_authenticated() %}
 							<td>
+							{% if key and key.expires %}
+								Expires {{ key.expires.strftime("%Y-%m-%d") }}
+							{% endif %}
+							<td>
+							{% if current_user.is_authenticated() %}
 								{% if key %}
 									{% set icon = 'arrow_refresh.png' %}
 									{% set title = 'Re-authorize' %}
@@ -36,8 +40,8 @@
 									{% set title = 'Authorize' %}
 								{% endif %}
 								<a href="/services/{{ alias }}/authorize"><img src="http://media.foauth.martyalchin.com/{{ icon }}" alt="{{ title }}" title="{{ title }}"></a>
-							</td>
 							{% endif %}
+							</td>
 							<td>
 								<a href="{{ service.docs_url }}"><img src="http://media.foauth.martyalchin.com/book.png" alt="Documentation" title="Documentation"></a>
 							</td>

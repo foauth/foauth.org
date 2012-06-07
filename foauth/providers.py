@@ -99,7 +99,7 @@ class OAuth(object):
 class OAuth1(OAuth):
     def parse_token(self, content):
         content = url_decode(content)
-        return content['oauth_token'], content['oauth_token_secret']
+        return content['oauth_token'], content['oauth_token_secret'], None
 
     def get_authorize_params(self):
         auth = requests.auth.OAuth1(client_key=self.client_id,
@@ -110,7 +110,7 @@ class OAuth1(OAuth):
         resp = requests.post(self.get_request_token_url(), auth=auth,
                              headers=self.get_headers())
         try:
-            token, secret = self.parse_token(resp.content)
+            token, secret, expires = self.parse_token(resp.content)
         except Exception:
             raise OAuthError('Unable to parse access token')
         flask.session['%s_temp_secret' % self.alias] = secret
@@ -205,7 +205,8 @@ class OAuth2(OAuth):
         })
 
         # No secret is supplied for OAuth 2
-        return self.parse_token(resp.content), ''
+        token, expires = self.parse_token(resp.content)
+        return token, '', expires
 
     def api(self, key, domain, path):
         protocol = self.https and 'https' or 'http'
