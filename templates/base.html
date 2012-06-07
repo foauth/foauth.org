@@ -12,16 +12,16 @@
 		<div class="topbar">
 			<div class="fill">
 				<div class="container">
-					<a class="brand" href="http://foauth.martyalchin.com/"><span class="fo">fo</span>auth.org</a>
+					<a class="brand" href="{{ url_for('index') }}"><span class="fo">fo</span>auth.org</a>
 					<ul class="nav">
 						{% block nav %}{{ nav.select('index') }}{% endblock %}
 					</ul>
 					{% if current_user.is_authenticated() %}
 					<div class="pull-right"><ul class="nav">
-						<li><a href="/logout/">Sign out of {{ current_user.email }}</a></li>
+						<li><a href="{{ url_for('logout') }}">Sign out of {{ current_user.email }}</a></li>
 					</ul></div>
 					{% else %}
-					<form action="/login/" method="post" class="pull-right">
+					<form action="{{ url_for('login') }}" method="post" class="pull-right">
 						{{ login.csrf_token }}
 						{% if login.errors.email %}
 						<strong class="error">{{ login.errors.email.0|safe }}</strong>
