@@ -210,12 +210,6 @@ class OAuth2(OAuth):
     def api(self, key, domain, path):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s/%s' % (protocol, domain, path)
-        return requests.request(flask.request.method, url, data=flask.request.data)
-#        raise Exception(key, domain, path)
-
-    def api(self, key, domain, path):
-        protocol = self.https and 'https' or 'http'
-        url = '%s://%s/%s' % (protocol, domain, path)
         if self.token_type == BEARER:
             auth = Bearer(key.key, bearer_type=self.bearer_type)
         return requests.request(flask.request.method, url, auth=auth,
