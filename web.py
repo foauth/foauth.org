@@ -74,10 +74,11 @@ def auth_endpoint(func):
     services = config.services
     @wraps(func)
     def wrapper(alias, *args, **kwargs):
-        for service in services:
-            if service.alias == alias:
-                return func(service, *args, **kwargs)
-        abort(404)
+        try:
+            service = config.alias_map[alias]
+        except KeyError:
+            abort(404)
+        return func(service, *args, **kwargs)
     return wrapper
 
 
@@ -129,18 +130,23 @@ def api(domain, path):
     if auth:
         user = models.User.query.filter_by(email=auth.username).first()
         if user and user.check_password(auth.password):
-            for service in config.services:
-                for api_domain in service.api_domains:
-                    if domain == api_domain:
-                        key = user.keys.filter_by(service_alias=service.alias).first()
-                        resp = service.api(key, domain, path)
-                        content = resp.raw.read()
-                        if resp.headers['Transfer-Encoding'] == 'chunked':
-                            # WSGI doesn't handle chunked encodings
-                            del resp.headers['Transfer-Encoding']
-                        return config.app.make_response((content,
-                                                         resp.status_code,
-                                                         resp.headers))
+            try:
+                service = config.domain_map.get(domain, None)
+            except KeyError:
+                abort(404)
+
+            key = user.keys.filter_by(service_alias=service.alias).first()
+            resp = service.api(key, domain, path)
+            content = resp.raw.read()
+
+            if 'Transfer-Encoding' in resp.headers and \
+               resp.headers['Transfer-Encoding'].lower() == 'chunked':
+                # WSGI doesn't handle chunked encodings
+                del resp.headers['Transfer-Encoding']
+
+            return config.app.make_response((content,
+                                             resp.status_code,
+                                             resp.headers))
     abort(403)
 
 

@@ -51,3 +51,13 @@ services = init_services(bitbucket.Bitbucket,
                          liveconnect.LiveConnect,
                          netflix.Netflix,
                          twitter.Twitter)
+
+alias_map = {}
+for service in services:
+    alias_map[service.alias] = service
+
+domain_map = {}
+for service in services:
+    for domain in service.api_domains:
+        domain_map[domain] = service
+
