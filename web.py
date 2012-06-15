@@ -131,7 +131,7 @@ def api(domain, path):
         user = models.User.query.filter_by(email=auth.username).first()
         if user and user.check_password(auth.password):
             try:
-                service = config.domain_map.get(domain, None)
+                service = config.domain_map[domain]
             except KeyError:
                 abort(404)
 
