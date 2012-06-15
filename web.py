@@ -143,6 +143,10 @@ def api(domain, path):
                resp.headers['Transfer-Encoding'].lower() == 'chunked':
                 # WSGI doesn't handle chunked encodings
                 del resp.headers['Transfer-Encoding']
+            if 'Connection' in resp.headers and \
+               resp.headers['Connection'].lower() == 'keep-alive':
+                # WSGI doesn't handle keep-alive
+                del resp.headers['Connection']
 
             return config.app.make_response((content,
                                              resp.status_code,
