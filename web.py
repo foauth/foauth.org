@@ -136,6 +136,8 @@ def api(domain, path):
                 abort(404)
 
             key = user.keys.filter_by(service_alias=service.alias).first()
+            if not key:
+                abort(403)
             resp = service.api(key, domain, path)
             content = resp.raw.read()
 
