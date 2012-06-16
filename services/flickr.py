@@ -25,6 +25,3 @@ class Flickr(foauth.providers.OAuth1):
         params['perms'] = self.available_permissions[0][0]
         return params
 
-    def get_headers(self):
-        return {'Content-Length': '0'}
-
