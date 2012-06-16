@@ -14,6 +14,7 @@ BEARER_HEADER = 'HEADER'
 BEARER_BODY = 'BODY'
 BEARER_URI = 'URI'
 BEARER_TYPES = (BEARER_HEADER, BEARER_BODY, BEARER_URI)
+from oauthlib.oauth1.rfc5849 import SIGNATURE_TYPE_BODY
 
 
 class Bearer(object):
@@ -131,12 +132,10 @@ class OAuth1(OAuth):
                                     resource_owner_key=token,
                                     resource_owner_secret=secret,
                                     verifier=verifier,
+                                    signature_method=self.signature_method,
+                                    signature_type=SIGNATURE_TYPE_BODY
         )
-        if verifier:
-            params = {'oauth_verifier': verifier}
-        else:
-            params = {'oauth_token': token}
-        resp = requests.post(self.access_token_url, params=params, auth=auth,
+        resp = requests.post(self.access_token_url, auth=auth,
                              headers=self.get_headers())
         try:
             return self.parse_token(resp.content)
