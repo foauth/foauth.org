@@ -16,6 +16,7 @@ from services import google
 from services import instagram
 from services import linkedin
 from services import liveconnect
+from services import meetup
 from services import netflix
 from services import rdio
 from services import twitter
@@ -52,6 +53,7 @@ services = init_services(bitbucket.Bitbucket,
                          instagram.Instagram,
                          linkedin.LinkedIn,
                          liveconnect.LiveConnect,
+                         meetup.Meetup,
                          netflix.Netflix,
                          rdio.Rdio,
                          twitter.Twitter)
