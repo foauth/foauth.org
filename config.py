@@ -14,8 +14,10 @@ from services import foursquare
 from services import github
 from services import google
 from services import instagram
+from services import linkedin
 from services import liveconnect
 from services import netflix
+from services import rdio
 from services import twitter
 
 app = Flask(__name__)
@@ -48,8 +50,10 @@ services = init_services(bitbucket.Bitbucket,
                          github.GitHub,
                          google.Google,
                          instagram.Instagram,
+                         linkedin.LinkedIn,
                          liveconnect.LiveConnect,
                          netflix.Netflix,
+                         rdio.Rdio,
                          twitter.Twitter)
 
 alias_map = {}
