@@ -72,9 +72,6 @@ class OAuth(object):
     def get_scope_string(self, scopes):
         return ''
 
-    def get_headers(self):
-        return {}
-
     # The remainder of the API must be implemented for each flavor of OAuth
 
     def authorize(self):
@@ -109,7 +106,7 @@ class OAuth1(OAuth):
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
         resp = requests.post(self.get_request_token_url(), auth=auth,
-                             headers=self.get_headers())
+                             headers={'Content-Length': '0'})
         try:
             token, secret, expires = self.parse_token(resp.content)
         except Exception:
@@ -135,8 +132,7 @@ class OAuth1(OAuth):
                                     signature_method=self.signature_method,
                                     signature_type=SIGNATURE_TYPE_BODY
         )
-        resp = requests.post(self.access_token_url, auth=auth,
-                             headers=self.get_headers())
+        resp = requests.post(self.access_token_url, auth=auth)
         try:
             return self.parse_token(resp.content)
         except Exception:
