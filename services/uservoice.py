@@ -3,7 +3,6 @@ import foauth.providers
 
 class UserVoice(foauth.providers.OAuth1):
     # General info about the provider
-    name = 'UserVoice'
     provider_url = 'http://uservoice.com/'
     favicon_url = 'http://uservoice.com/favicon.ico'
     docs_url = 'http://developer.uservoice.com/docs/api/reference/'
