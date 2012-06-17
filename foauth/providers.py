@@ -146,6 +146,7 @@ class OAuth1(OAuth):
                                     resource_owner_key=key.key,
                                     resource_owner_secret=key.secret)
         return requests.request(flask.request.method, url, auth=auth,
+                                params=flask.request.args,
                                 data=flask.request.form or flask.request.data)
 
 
@@ -209,6 +210,7 @@ class OAuth2(OAuth):
         if self.token_type == BEARER:
             auth = Bearer(key.key, bearer_type=self.bearer_type)
         return requests.request(flask.request.method, url, auth=auth,
+                                params=flask.request.args,
                                 data=flask.request.form or flask.request.data)
 
 
