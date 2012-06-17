@@ -21,6 +21,7 @@ from services import myspace
 from services import netflix
 from services import rdio
 from services import twitter
+from services import vimeo
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
@@ -58,7 +59,8 @@ services = init_services(bitbucket.Bitbucket,
                          myspace.MySpace,
                          netflix.Netflix,
                          rdio.Rdio,
-                         twitter.Twitter)
+                         twitter.Twitter,
+                         vimeo.Vimeo)
 
 alias_map = {}
 for service in services:
