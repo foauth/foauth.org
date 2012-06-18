@@ -144,7 +144,9 @@ class OAuth1(OAuth):
         auth = requests.auth.OAuth1(client_key=self.client_id,
                                     client_secret=self.client_secret,
                                     resource_owner_key=key.key,
-                                    resource_owner_secret=key.secret)
+                                    resource_owner_secret=key.secret,
+                                    signature_method=self.signature_method,
+                                    signature_type=self.signature_type)
         return requests.request(flask.request.method, url, auth=auth,
                                 params=flask.request.args,
                                 data=flask.request.form or flask.request.data)
