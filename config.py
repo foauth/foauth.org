@@ -23,6 +23,7 @@ from services import rdio
 from services import twitter
 from services import vimeo
 from services import wordpress
+from services import yammer
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
@@ -63,6 +64,7 @@ services = init_services(bitbucket.Bitbucket,
                          twitter.Twitter,
                          vimeo.Vimeo,
                          wordpress.Wordpress,
+                         yammer.Yammer,
 )
 
 alias_map = {}
