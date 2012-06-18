@@ -1,6 +1,6 @@
 import json
 
-import foauth
+import foauth.providers
 
 
 class Wordpress(foauth.providers.OAuth2):
