@@ -188,8 +188,8 @@ class OAuth2(OAuth):
 
     def callback(self, data):
         state = flask.session['%s_state' % self.alias]
-        if state != data['state']:
-            abort(403)
+        if 'state' in data and state != data['state']:
+            flask.abort(403)
         del flask.session['%s_state' % self.alias]
         redirect_uri = self.get_redirect_uri()
         if not self.supports_state:
