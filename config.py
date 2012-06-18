@@ -20,6 +20,7 @@ from services import meetup
 from services import myspace
 from services import netflix
 from services import rdio
+from services import tumblr
 from services import twitter
 from services import vimeo
 from services import wordpress
@@ -61,6 +62,7 @@ services = init_services(bitbucket.Bitbucket,
                          myspace.MySpace,
                          netflix.Netflix,
                          rdio.Rdio,
+                         tumblr.Tumblr,
                          twitter.Twitter,
                          vimeo.Vimeo,
                          wordpress.Wordpress,
