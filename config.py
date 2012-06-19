@@ -18,7 +18,6 @@ from services import linkedin
 from services import liveconnect
 from services import meetup
 from services import myspace
-from services import netflix
 from services import rdio
 from services import tripit
 from services import tumblr
@@ -61,7 +60,6 @@ services = init_services(bitbucket.Bitbucket,
                          liveconnect.LiveConnect,
                          meetup.Meetup,
                          myspace.MySpace,
-                         netflix.Netflix,
                          rdio.Rdio,
                          tripit.TripIt,
                          tumblr.Tumblr,
