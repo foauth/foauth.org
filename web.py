@@ -35,12 +35,12 @@ def login():
     form = forms.Login(request.form)
     if form.validate():
         user = models.User.query.filter_by(email=form.email.data).first()
-        if not user:
-            abort(404)
-        if user.check_password(form.password.data):
+        if user and user.check_password(form.password.data):
             login_user(user)
             return redirect(url_for('services'))
-        return redirect('/')
+        else:
+            flash('Incorrect login', 'error')
+            return redirect('/')
     else:
         return render_template('index.html', login=form, signup=forms.Signup())
 
