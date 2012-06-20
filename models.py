@@ -52,13 +52,12 @@ class Key(db.Model):
 
     @property
     def service(self):
-        if self.service_alias:
-            for service in config.services:
-                if self.service_alias == service.alias:
-                    return service
-        else:
+        if not self.service_alias:
             raise AttributeError('No service specified.')
-        raise AttributeError('%r is not a valid service.' % self.service_alias)
+        try:
+            return config.services[self.service_alias]
+        except KeyError:
+            raise AttributeError('%r is not a valid service.' % self.service_alias)
 
 
 login_manager = login.LoginManager()
