@@ -37,11 +37,11 @@
 			</div>
 		</div>
 		<div class="container">
-		{% with messages = get_flashed_messages() %}
+		{% with messages = get_flashed_messages(with_categories=True) %}
 			{% if messages %}
-				<ul class="flashes">
-				{% for message in messages %}
-					<li>{{ message }}</li>
+				<ul class="flashes span16">
+				{% for category, message in messages %}
+					<li class="{{ category|safe }}">{{ message|safe }}</li>
 				{% endfor %}
 				</ul>
 			{% endif %}
