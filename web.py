@@ -89,7 +89,7 @@ def authorize(service):
     try:
         return service.authorize()
     except OAuthError:
-        flash('Error occured while authorizing %s' % service.name)
+        flash('Error occured while authorizing %s' % service.name, 'error')
         return redirect(url_for('services'))
 
 
@@ -111,13 +111,13 @@ def callback(service):
         flash('Granted access to %s' % service.name, 'success')
 
     except OAuthError:
-        flash('Error occurred while authorizing %s' % service.name)
+        flash('Error occurred while authorizing %s' % service.name, 'error')
 
     except OAuthDenied, e:
         # User denied the authorization request
         if user_key:
             models.db.session.delete(user_key)
-        flash(e.args[0])
+        flash(e.args[0], 'error')
 
     models.db.session.commit()
     return redirect(url_for('services'))
