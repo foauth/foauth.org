@@ -2,8 +2,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext import login
 
-from config import app
-db = SQLAlchemy(app)
+import config
+db = SQLAlchemy(config.app)
 
 
 class User(db.Model):
@@ -62,7 +62,7 @@ class Key(db.Model):
 
 
 login_manager = login.LoginManager()
-login_manager.setup_app(app)
+login_manager.setup_app(config.app)
 
 @login_manager.user_loader
 def load_user(user_id):
