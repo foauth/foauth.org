@@ -143,7 +143,7 @@ class OAuth1(OAuth):
         url = '%s://%s/%s' % (protocol, domain, path)
         auth = requests.auth.OAuth1(client_key=self.client_id,
                                     client_secret=self.client_secret,
-                                    resource_owner_key=key.key,
+                                    resource_owner_key=key.access_token,
                                     resource_owner_secret=key.secret,
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
@@ -210,7 +210,7 @@ class OAuth2(OAuth):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s/%s' % (protocol, domain, path)
         if self.token_type == BEARER:
-            auth = Bearer(key.key, bearer_type=self.bearer_type)
+            auth = Bearer(key.access_token, bearer_type=self.bearer_type)
         return requests.request(flask.request.method, url, auth=auth,
                                 params=flask.request.args,
                                 data=flask.request.form or flask.request.data)
