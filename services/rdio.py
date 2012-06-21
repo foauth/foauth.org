@@ -20,14 +20,10 @@ class Rdio(foauth.providers.OAuth1):
         (None, 'access and manage your music'),
     ]
 
-#    signature_type = SIGNATURE_TYPE_BODY
-
     def parse_token(self, content):
-        print 'Parsing token!'
         # Override standard token request to also get the authorization URL
         data = url_decode(content)
-        print data
         if 'login_url' in data:
             self.authorize_url = data['login_url']
-        return data['oauth_token'], data['oauth_token_secret'], None
+        return super(Rdio, self).parse_token(content)
 

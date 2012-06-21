@@ -1,5 +1,3 @@
-import datetime
-import json
 from oauthlib.oauth2.draft25 import utils
 import foauth.providers
 
@@ -32,11 +30,4 @@ class Disqus(foauth.providers.OAuth2):
     def get_scope_string(self, scopes):
         # Disqus doesn't follow the spec on this point
         return ','.join(scopes)
-
-    def parse_token(self, content):
-        data = json.loads(content)
-        expires = data.get('expires_in', None)
-        if expires:
-            expires = datetime.datetime.now() + datetime.timedelta(seconds=expires)
-        return data['access_token'], expires
 

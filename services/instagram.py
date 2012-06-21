@@ -1,4 +1,3 @@
-import json
 import foauth.providers
 
 
@@ -23,6 +22,3 @@ class Instagram(foauth.providers.OAuth2):
     bearer_type = foauth.providers.BEARER_URI
     supports_state = False
 
-    def parse_token(self, content):
-        data = json.loads(content)
-        return data['access_token'], None

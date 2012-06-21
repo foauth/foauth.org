@@ -47,5 +47,5 @@ class Etsy(foauth.providers.OAuth1):
         data = url_decode(content)
         if 'login_url' in data:
             self.authorize_url = data['login_url']
-        return data['oauth_token'], data['oauth_token_secret'], None
+        return super(Etsy, self).parse_token(content)
 

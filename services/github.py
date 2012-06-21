@@ -28,6 +28,5 @@ class GitHub(foauth.providers.OAuth2):
         return ','.join(scopes)
 
     def parse_token(self, content):
-        data = url_decode(content)
-        return data['access_token'], None
+        return url_decode(content)
 

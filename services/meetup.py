@@ -1,7 +1,4 @@
-import datetime
-import json
-
-import foauth
+import foauth.providers
 
 
 class Meetup(foauth.providers.OAuth2):
@@ -21,9 +18,3 @@ class Meetup(foauth.providers.OAuth2):
         ('ageless', 'keep the authorization active for two weeks'),
     ]
 
-    def parse_token(self, content):
-        data = json.loads(content)
-        expires = data.get('expires_in', None)
-        if expires:
-            expires = datetime.datetime.now() + datetime.timedelta(seconds=expires)
-        return data['access_token'], expires

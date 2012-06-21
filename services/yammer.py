@@ -1,5 +1,3 @@
-import json
-
 import foauth.providers
 
 
@@ -19,6 +17,7 @@ class Yammer(foauth.providers.OAuth2):
     ]
 
     def parse_token(self, content):
-        data = json.loads(content)
-        return data['access_token']['token'], None
+        data = super(Yammer, self).parse_token(content)
+        data['access_token'] = data['access_token']['token']
+        return data
 

@@ -1,5 +1,3 @@
-import json
-
 import foauth.providers
 
 
@@ -17,8 +15,4 @@ class Wordpress(foauth.providers.OAuth2):
     available_permissions = [
         (None, 'read and post to your blog'),
     ]
-
-    def parse_token(self, content):
-        data = json.loads(content)
-        return data['access_token'], None
 

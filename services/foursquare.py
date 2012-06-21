@@ -1,4 +1,3 @@
-import json
 from oauthlib.oauth2.draft25 import utils
 import foauth.providers
 
@@ -22,6 +21,3 @@ class Foursquare(foauth.providers.OAuth2):
         r.url =  utils.add_params_to_uri(r.url, [((u'oauth_token', token))])
         return r
 
-    def parse_token(self, content):
-        data = json.loads(content)
-        return data['access_token'], None
