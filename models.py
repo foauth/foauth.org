@@ -44,7 +44,7 @@ class Key(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     service_alias = db.Column(db.String)
-    key = db.Column(db.String)
+    access_token = db.Column(db.String)
     secret = db.Column(db.String)
     expires = db.Column(db.DateTime)
 
