@@ -1,5 +1,3 @@
-import datetime
-import json
 import foauth.providers
 
 
@@ -26,11 +24,4 @@ class DeviantArt(foauth.providers.OAuth2):
     ]
 
     bearer_type = draft10
-
-    def parse_token(self, content):
-        data = json.loads(content)
-        expires = data.get('expires_in', None)
-        if expires:
-            expires = datetime.datetime.now() + datetime.timedelta(seconds=expires)
-        return data['access_token'], expires
 

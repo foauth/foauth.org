@@ -1,5 +1,3 @@
-import datetime
-import json
 import foauth.providers
 
 
@@ -61,9 +59,8 @@ class Google(foauth.providers.OAuth2):
         # TODO: Find more and add them here
     ]
 
-    def parse_token(self, content):
-        data = json.loads(content)
-        expires = data.get('expires_in', None)
-        if expires:
-            expires = datetime.datetime.now() + datetime.timedelta(seconds=int(expires))
-        return data['access_token'], expires
+    def get_authorize_params(self):
+        params = super(Google, self).get_authorize_params()
+        params['access_type'] = 'offline'
+        return params
+

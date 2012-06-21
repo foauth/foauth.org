@@ -1,3 +1,4 @@
+import json
 from os import urandom
 from urlparse import urljoin
 
@@ -97,7 +98,10 @@ class OAuth(object):
 class OAuth1(OAuth):
     def parse_token(self, content):
         content = url_decode(content)
-        return content['oauth_token'], content['oauth_token_secret'], None
+        return {
+            'access_token': content['oauth_token'],
+            'secret': content['oauth_token_secret'],
+        }
 
     def get_authorize_params(self):
         auth = requests.auth.OAuth1(client_key=self.client_id,
@@ -108,11 +112,14 @@ class OAuth1(OAuth):
         resp = requests.post(self.get_request_token_url(), auth=auth,
                              headers={'Content-Length': '0'})
         try:
-            token, secret, expires = self.parse_token(resp.content)
+            data = self.parse_token(resp.content)
         except Exception:
             raise OAuthError('Unable to parse access token')
-        flask.session['%s_temp_secret' % self.alias] = secret
-        return {'oauth_token': token, 'oauth_callback': self.get_redirect_uri()}
+        flask.session['%s_temp_secret' % self.alias] = data['secret']
+        return {
+            'oauth_token': data['access_token'],
+            'oauth_callback': self.get_redirect_uri(),
+        }
 
     def authorize(self):
         params = self.get_authorize_params()
@@ -158,8 +165,7 @@ class OAuth2(OAuth):
     supports_state = True
 
     def parse_token(self, content):
-        # Must be specified in a subclass
-        raise NotImplementedError("parse_token() must be defined in a subclass")
+        return json.loads(content)
 
     def get_scope_string(self, scopes):
         return ' '.join(scopes)
@@ -202,9 +208,7 @@ class OAuth2(OAuth):
             'redirect_uri': redirect_uri
         })
 
-        # No secret is supplied for OAuth 2
-        token, expires = self.parse_token(resp.content)
-        return token, '', expires
+        return self.parse_token(resp.content)
 
     def api(self, key, domain, path):
         protocol = self.https and 'https' or 'http'
