@@ -47,6 +47,7 @@ class Key(db.Model):
     access_token = db.Column(db.String)
     secret = db.Column(db.String)
     expires = db.Column(db.DateTime)
+    refresh_token = db.Column(db.String)
 
     user = db.relationship('User', backref=db.backref('keys', lazy='dynamic'))
 

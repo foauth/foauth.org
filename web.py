@@ -112,6 +112,7 @@ def callback(service):
             # Convert to a real datetime
             expires = datetime.datetime.now() + datetime.timedelta(seconds=int(expires))
         user_key.expires = expires
+        user_key.refresh_token = data.get('refresh_token', None)
         models.db.session.add(user_key)
         flash('Granted access to %s' % service.name, 'success')
 
