@@ -1,3 +1,4 @@
+gunicorn==0.14.3
 Werkzeug==0.8.3
 Flask==0.8
 psycopg2==2.4.5
