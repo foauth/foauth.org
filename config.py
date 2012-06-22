@@ -30,6 +30,7 @@ from services import yammer
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['DEBUG'] = 'DEBUG' in os.environ
 
 def init_services(*services):
     service_list = []
