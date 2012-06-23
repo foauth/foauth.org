@@ -1,3 +1,4 @@
+import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext import login
@@ -59,6 +60,20 @@ class Key(db.Model):
             return config.services[self.service_alias]
         except KeyError:
             raise AttributeError('%r is not a valid service.' % self.service_alias)
+
+    def update(self, data):
+        self.access_token = data['access_token']
+        self.secret = data.get('secret', None)
+        if 'expires_in' in data:
+            # Convert to a real datetime
+            expires_in = datetime.timedelta(seconds=int(data['expires_in']))
+            self.expires = datetime.datetime.now() + expires_in
+        else:
+            self.expires = None
+        self.refresh_token = data.get('refresh_token', None)
+
+    def is_expired(self):
+        return self.expires and self.expires < datetime.datetime.now()
 
 
 login_manager = login.LoginManager()
