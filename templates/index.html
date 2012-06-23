@@ -10,57 +10,78 @@
 			<p><a href="http://oauth.net/">OAuth</a> is a great idea for interaction between big sites with lots of users. But, as one of those users, it&rsquo;s a pretty terrible way to get at your own data. That&rsquo;s where foauth.org comes in, giving you access to these services in three easy steps:</p>
 		</div>
 	</div>
-	<div class="row">
-		<div class="{% if current_user.is_anonymous() %}span12{% else %}span16{% endif %}">
-			<ol class="steps">
-				<li><strong>Sign up with foauth.org.</strong> This shouldn&rsquo;t be too hard; there&rsquo;s a form over there on the right side of the screen. And yes, that&rsquo;s really the entire form.</li>
-				<li><strong>Activate your services.</strong> This only takes a couple of clicks if you&rsquo;re already logged in with them. Feel free to take a look at the <a href="services.html">services we support</a> before signing up.</li>
-				<li><strong>Access your own data.</strong> Write your own programs to access your data, using HTTP Basic authen&shy;tication, which is much easier to deal with. Most program&shy;ming languages have built-in support for it, and we don&rsquo;t even care which one you use. Sure, <a href="about.html">we love Python</a>, but it&rsquo;s okay if you don&rsquo;t.</li>
-			</ol>
-		</div>
-		{% if current_user.is_anonymous() %}
-		<div class="span4 signup">
-			<form action="/signup/" method="post">
+	<ol class="row">
+		<li class="span8 signup">
+			<h2>Sign up with foauth.org.</h2>
+			<p>This is seriously the entire form.</p>
+			<form action="{{ url_for('signup') }}" method="post" class="row">
 				{{ signup.csrf_token }}
-				<fieldset>
-					<legend>Ready to get started?</legend>
-					<p>
-						{% if signup.errors.email %}
-						<strong class="error">{{ signup.errors.email.0|safe }}</strong>
-						{% endif %}
-						<input class="span4" type="text" id="signup_email" name="email" {% if signup.data.email %}value="{{ signup.data.email }}"{% endif %} placeholder="Email address">
-					</p>
-					<p>
-						{% if signup.errors.password %}
-						<strong class="error">{{ signup.errors.password.0|safe }}</strong>
-						{% endif %}
-						<input type="password" id="signup_password" name="password" placeholder="Password">
-						<input type="password" id="signup_retype" name="retype" placeholder="(again)">
-					</p>
-					<p class="consent">
-						{% if signup.errors.consent %}
-						<strong class="error">{{ signup.errors.consent.0|safe }}</strong>
-						{% endif %}
-						<label>
-							<input type="checkbox" name="consent" {% if signup.data.consent %}checked{% endif %}>
-							Accept the <a href="terms.html">terms of service</a>
-						</label>
-					</p>
-					<button type="submit" class="span4 btn primary">Sign up</button>
-				</fieldset>
+				<p class="span8">
+					{% if signup.errors.email %}
+					<strong class="error">{{ signup.errors.email.0|safe }}</strong>
+					{% endif %}
+					<input class="span8" type="text" id="signup_email" name="email" {% if signup.data.email %}value="{{ signup.data.email }}"{% endif %} placeholder="Email address">
+				</p>
+				<p class="span4">
+					<input class="span4" type="password" id="signup_password" name="password" placeholder="Password">
+				</p>
+				<p class="span4">
+					{% if signup.errors.password %}
+					<strong class="error">{{ signup.errors.password.0|safe }}</strong>
+					{% endif %}
+					<input class="span4" type="password" id="signup_retype" name="retype" placeholder="Password (again)">
+				</p>
+				<p class="span8 consent">
+					{% if signup.errors.consent %}
+					<strong class="error">{{ signup.errors.consent.0|safe }}</strong>
+					{% endif %}
+					<label>
+						<input type="checkbox" name="consent" {% if signup.data.consent %}checked{% endif %}>
+						Accept the <a href="{{ url_for('terms') }}">terms of service</a>.
+					</label>
+					Don&rsquo;t worry, they&rsquo;re really simple.
+				</p>
+				<button type="submit" class="span8 btn primary">Sign up</button>
 			</form>
-		</div>
-		{% endif %}
-	</div>
-	<div class="row">
-		<div class="span16">
+		</li>
+		<li class="span8">
+			<h2>Activate your services.</h2>
+			<p>This only takes a couple clicks if you&rsquo;re already logged in with them. Here&rsquo;s just a few of the <a href="{{ url_for('services') }}">services we support</a>.</p>
+			<table class="services condensed-table">
+				<tr>
+					<td><img class="favicon" src="https://twitter.com/phoenix/favicon.ico">Twitter</td>
+					<td><img class="favicon" src="https://s-static.ak.facebook.com/rsrc.php/yi/r/q9U99v3_saj.ico">Facebook</td>
+					<td><img class="favicon" src="http://www.meetup.com/favicon.ico">Meetup</td>
+				</tr>
+				<tr>
+					<td><img class="favicon" src="http://l.yimg.com/g/favicon.ico">Flickr</td>
+					<td><img class="favicon" src="http://instagram.com/static/images/favicon.ico">Instagram</td>
+					<td><img class="favicon" src="http://vimeo.com/favicon.ico">Vimeo</td>
+				</tr>
+				<tr>
+					<td><img class="favicon" src="https://github.com/favicon.ico">GitHub</td>
+					<td><img class="favicon" src="https://dwz7u9t8u8usb.cloudfront.net/m/36a0d507acd2/img/logo_new.png">Bitbucket</td>
+					<td><img class="favicon" src="https://www.dropbox.com/static/20659/images/favicon.ico">Dropbox</td>
+				</tr>
+				<tr>
+					<td><img class="favicon" src="http://www.google.com/favicon.ico">Google</td>
+					<td><img class="favicon" src="https://secure.shared.live.com/~Live.SiteContent.ID/~16.2.8/~/~/~/~/images/favicon.ico">LiveConnect</td>
+					<td><img class="favicon" src="http://www.yahoo.com/favicon.ico">Yahoo!</td>
+				</tr>
+			</table>
+		</li>
+		<li class="span16">
+			<h2>Access your own data.</h2>
+			<p>Write your own programs to access your data, using HTTP Basic authen&shy;tication, which is much easier to deal with. Most program&shy;ming languages have built-in support for it, and we don&rsquo;t even care which one you use. Sure, <a href="{{ url_for('about') }}">we love Python</a>, but it&rsquo;s okay if you don&rsquo;t.</p>
 			<pre>>>> import json
 >>> import <a href="https://github.com/kennethreitz/requests">requests</a>
->>> r = requests.get('https://foauth.org/<a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">api.twitter.com/1/statuses/home_timeline.json</a>', auth=('user', 'pass'))
->>> timeline = json.loads(r.content)
->>> timeline[0]['text']
-"Just signed up with http://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a> and <a href="https://twitter.com/kennethreitz">@kennethreitz</a>!"</pre>
-		</div>
-	</div>
+>>> auth = 'email@example.com', 'password'
+>>> data = {'status': "Just signed up with http://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"}
+>>> requests.post('http://foauth.org/<a href="https://dev.twitter.com/docs/api/1/post/statuses/update">api.twitter.com/1/statuses/update.json</a>', data=data, auth=auth)
+>>> r = requests.get('http://foauth.org/<a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">api.twitter.com/1/statuses/home_timeline.json</a>', auth=auth)
+>>> json.loads(r.content)[0]['text']
+"Just signed up with http://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"</pre>
+		</li>
+	</ul>
 </div>
 {% endblock %}
