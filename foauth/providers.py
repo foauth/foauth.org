@@ -210,6 +210,16 @@ class OAuth2(OAuth):
 
         return self.parse_token(resp.content)
 
+    def refresh_token(self, token):
+        resp = requests.post(self.access_token_url, {
+            'client_id': self.client_id,
+            'client_secret': self.client_secret,
+            'grant_type': 'refresh_token',
+            'refresh_token': token
+        })
+
+        return self.parse_token(resp.content)
+
     def api(self, key, domain, path):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s/%s' % (protocol, domain, path)

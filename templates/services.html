@@ -28,7 +28,8 @@
 {% endfor %}">{{ service.available_permissions|count }} permissions</abbr>{% else %}{{ service.available_permissions[0][1] }}{% endif %}</td>
 							<td>
 							{% if key and key.expires %}
-								Expires {{ key.expires.strftime("%Y-%m-%d") }}
+								{% if key.refresh_token %}Refreshes{% else %}Expires{% endif %}
+								on {{ key.expires.strftime("%Y-%m-%d") }}
 							{% endif %}
 							<td>
 							{% if current_user.is_authenticated() %}

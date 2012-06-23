@@ -137,6 +137,16 @@ def api(domain, path):
             key = user.keys.filter_by(service_alias=service.alias).first()
             if not key:
                 abort(403)
+            if key.is_expired():
+                # Key has expired
+                if key.refresh_token:
+                    data = service.refresh_token(key.refresh_token)
+                    key.update(data)
+                    models.db.session.add(key)
+                    models.db.session.commit()
+                else:
+                    # Unable to refresh the token
+                    abort(403)
             resp = service.api(key, domain, path)
             content = resp.raw.read()
 
