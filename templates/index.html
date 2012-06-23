@@ -13,6 +13,9 @@
 	<ol class="row">
 		<li class="span8 signup">
 			<h2>Sign up with foauth.org.</h2>
+			{% if current_user.is_authenticated() %}
+			<p>Looks like you&rsquo;ve already signed up. Well done!</p>
+			{% else %}
 			<p>This is the entire form. No joke.</p>
 			<form action="{{ url_for('signup') }}" method="post" class="row">
 				{{ signup.csrf_token }}
@@ -43,9 +46,13 @@
 				</p>
 				<button type="submit" class="span8 btn primary">Sign up</button>
 			</form>
+			{% endif %}
 		</li>
 		<li class="span8">
 			<h2>Activate your services.</h2>
+			{% if current_user.is_authenticated() %}
+			<p>You&rsquo;ve already authorized {{ current_user.keys.count() }} service{% if current_user.keys.count() != 1 %}s{% endif %}, why not <a href="{{ url_for('services') }}">add more</a>?</p>
+			{% else %}
 			<p>This only takes a couple clicks if you&rsquo;re already logged in with them. Here are just a few of the <a href="{{ url_for('services') }}">services we support</a>.</p>
 			<table class="services condensed-table">
 				<tr>
@@ -69,6 +76,7 @@
 					<td><img class="favicon" src="https://secure.shared.live.com/~Live.SiteContent.ID/~16.2.8/~/~/~/~/images/favicon.ico">LiveConnect</td>
 				</tr>
 			</table>
+			{% endif %}
 		</li>
 		<li class="span16">
 			<h2>Access your own data.</h2>
