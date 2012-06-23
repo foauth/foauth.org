@@ -25,6 +25,9 @@
 								<p>You&rsquo;ll have to figure that out with each of those services themselves. With OAuth, service providers can revoke the token that foauth.org uses to access your data, but that can only be done on their end. Usually, it&rsquo;s somewhere in your account settings.</p>
 								<p>Techcnically, we could offer a feature for that as well, where we simply delete your token, but that would be another anti-pattern we don&rsquo;t want to start. After all, someone less scrupulous could just tell you they deleted your OAuth tokens but still keep them behind the scenes. It&rsquo;s just better for you to manage it with your services directly.</p>
 							</dd>
+							<dt>Shouldn't this all use SSL?</dt>
+							<dd>
+								<p>Yes, it probably should, but unfortunately, SSL isn&rsquo;t free. Because we don&rsquo;t plan on charging for people to use the site, we have no way to fund the necessary services. A certificate alone would be easy enough to swallow, but the additional cost of using with Heroku make it prohibitive. If you&rsquo;d be willing to pay a small fee to use SSL, feel free to speak up. If there are enough people to be able to cover the costs involved, we might be able to happen.</p>
 						</dl>
 					</div>
 				</div>
