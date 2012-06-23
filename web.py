@@ -105,14 +105,7 @@ def callback(service):
         if not user_key:
             user_key = models.Key(user_id=current_user.id,
                                   service_alias=service.alias)
-        user_key.access_token = data['access_token']
-        user_key.secret = data.get('secret', None)
-        expires = data.get('expires_in', None)
-        if expires:
-            # Convert to a real datetime
-            expires = datetime.datetime.now() + datetime.timedelta(seconds=int(expires))
-        user_key.expires = expires
-        user_key.refresh_token = data.get('refresh_token', None)
+        user_key.update(data)
         models.db.session.add(user_key)
         flash('Granted access to %s' % service.name, 'success')
 
