@@ -4,9 +4,9 @@
 <html>
 	<head>
 		<title>foauth.org makes OAuth optional</title>
-		<link rel="stylesheet" href="http://media.foauth.org/bootstrap.min.css">
-		<link rel="stylesheet" href="http://media.foauth.org/style.css">
-		<link rel="sortcut icon" href="http://media.foauth.org/favicon.png">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="sortcut icon" href="{{ url_for('static', filename='favicon.png') }}">
 	</head>
 	<body>
 		<div class="topbar">
@@ -48,6 +48,6 @@
 		{% endwith %}
 			{% block content %}{% endblock %}
 		</div>
-		<p class="footer">Brought to you by <img class="g" src="http://media.foauth.org/g.png" width="24" height="24"> <a href="https://github.com/gulopine">Marty Alchin</a></p>
+		<p class="footer">Brought to you by <img class="g" src="{{ url_for('static', filename='g.png') }}" width="24" height="24"> <a href="https://github.com/gulopine">Marty Alchin</a></p>
 	</body>
 </html>
