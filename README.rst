@@ -31,5 +31,5 @@ is still forthcoming.
 
 .. _OAuth: http://oauth.net/
 .. _requests: https://github.com/kennethreitz/requests
-.. _oauthlib: https://github.com/idangazit/oauthlib
+.. _oauthlib: https://github.com/idan/oauthlib
 .. _Flask: https://flask.pocoo.org/
