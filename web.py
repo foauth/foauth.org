@@ -1,8 +1,9 @@
 import datetime
 from functools import wraps
 import os
+from urlparse import urljoin
 
-from flask import request, flash, redirect, render_template, abort, url_for
+from flask import request, flash, redirect, render_template, abort, url_for as _url_for
 from flask.ext.login import current_user, login_user, logout_user, login_required
 
 from foauth import OAuthDenied, OAuthError
@@ -10,6 +11,10 @@ import config
 import forms
 import models
 
+
+def url_for(name, **vars):
+    url = _url_for(name, **vars)
+    return urljoin(request.host_url, url)
 
 @config.app.route('/')
 def index():
