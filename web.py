@@ -15,7 +15,7 @@ import models
 def url_for(name, **vars):
     host = request.host_url
     if request.is_secure:
-        host = host.replace('https://', 'https://', 1)
+        host = host.replace('http://', 'https://', 1)
     return urljoin(host, _url_for(name, **vars))
 
 @config.app.route('/')
