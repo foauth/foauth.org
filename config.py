@@ -2,6 +2,7 @@ import os
 from flask import Flask
 
 from services import bitbucket
+from services import dailymile
 from services import deviantart
 from services import digg
 from services import disqus
@@ -46,6 +47,7 @@ def init_services(*services):
     return service_list
 
 services = init_services(bitbucket.Bitbucket,
+                         dailymile.Dailymile,
                          deviantart.DeviantArt,
                          digg.Digg,
                          disqus.Disqus,
