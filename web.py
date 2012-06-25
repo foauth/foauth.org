@@ -13,8 +13,10 @@ import models
 
 
 def url_for(name, **vars):
-    url = _url_for(name, **vars)
-    return urljoin(request.host_url, url)
+    host = request.host_url
+    if request.is_secure:
+        host = host.replace('https://', 'https://', 1)
+    return urljoin(host, _url_for(name, **vars))
 
 @config.app.route('/')
 def index():
