@@ -41,7 +41,7 @@ def login():
             return redirect(url_for('services'))
         else:
             flash('Incorrect login', 'error')
-            return redirect('/')
+            return redirect(url_for('index'))
     else:
         return render_template('index.html', login=form, signup=forms.Signup())
 
@@ -49,7 +49,7 @@ def login():
 @config.app.route('/logout/', methods=['GET'])
 def logout():
     logout_user()
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
 @config.app.route('/signup/', methods=['POST'])
