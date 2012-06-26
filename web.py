@@ -13,7 +13,11 @@ import models
 
 
 def url_for(name, **vars):
-    print 'Getting url for %s'
+    print 'Getting url for %s' % name
+    print request.url_root
+    print request.base_url
+    print request.url
+    print request.host_url
     host = request.host_url
     print host
     print request.is_secure
