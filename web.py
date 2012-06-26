@@ -12,6 +12,22 @@ import forms
 import models
 
 
+def url_for(name, **vars):
+    print 'Getting url for %s' % name
+    print request.url_root
+    print request.base_url
+    print request.url
+    print request.host_url
+    host = request.host_url
+    print host
+    print request.is_secure
+    if request.is_secure:
+        host = host.replace('http://', 'https://', 1)
+    print host
+    print _url_for(name, **vars)
+    print urljoin(host, _url_for(name, **vars))
+    return urljoin(host, _url_for(name, **vars))
+
 @config.app.route('/')
 def index():
     return render_template('index.html', login=forms.Login(), signup=forms.Signup())
