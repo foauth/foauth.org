@@ -81,13 +81,12 @@
 		<li class="span16">
 			<h2>Access your own data.</h2>
 			<p>Write your own programs to access your data, using HTTP Basic authen&shy;tication, which is much easier to deal with. Most program&shy;ming languages have built-in support for it, and we don&rsquo;t even care which one you use. Sure, <a href="{{ url_for('about') }}">we love Python</a>, but it&rsquo;s okay if you don&rsquo;t.</p>
-			<pre>>>> import json
->>> import <a href="https://github.com/kennethreitz/requests">requests</a>
+			<pre>>>> import <a href="https://github.com/kennethreitz/requests">requests</a>
 >>> auth = 'email@example.com', 'password'
 >>> data = {'status': "Just signed up with http://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"}
 >>> requests.post('{{ request.host_url }}<a href="https://dev.twitter.com/docs/api/1/post/statuses/update">api.twitter.com/1/statuses/update.json</a>', data=data, auth=auth)
 >>> r = requests.get('{{ request.host_url }}<a href="https://dev.twitter.com/docs/api/1/get/statuses/home_timeline">api.twitter.com/1/statuses/home_timeline.json</a>', auth=auth)
->>> json.loads(r.content)[0]['text']
+>>> r.json[0]['text']
 "Just signed up with http://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"</pre>
 		</li>
 	</ul>
