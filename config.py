@@ -13,6 +13,7 @@ from services import facebook
 from services import fitbit
 from services import flickr
 from services import foursquare
+from services import getglue
 from services import github
 from services import google
 from services import instagram
@@ -59,6 +60,7 @@ services = init_services(bitbucket.Bitbucket,
                          fitbit.FitBit,
                          flickr.Flickr,
                          foursquare.Foursquare,
+                         getglue.GetGlue,
                          github.GitHub,
                          google.Google,
                          instagram.Instagram,
