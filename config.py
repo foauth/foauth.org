@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from werkzeug.contrib.fixers import ProxyFix
 
 from services import bitbucket
 from services import dailymile
@@ -32,6 +33,7 @@ app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['DEBUG'] = 'DEBUG' in os.environ
+app.wsgi_app = ProxyFix(app.wsgi_app)
 
 def init_services(*services):
     service_list = []
