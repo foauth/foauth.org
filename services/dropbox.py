@@ -1,4 +1,5 @@
 import foauth.providers
+from oauthlib.oauth1.rfc5849 import SIGNATURE_PLAINTEXT
 
 
 class Dropbox(foauth.providers.OAuth1):
@@ -12,6 +13,8 @@ class Dropbox(foauth.providers.OAuth1):
     authorize_url = 'https://www.dropbox.com/1/oauth/authorize'
     access_token_url = 'https://api.dropbox.com/1/oauth/access_token'
     api_domains = ['api.dropbox.com', 'api-content.dropbox.com']
+
+    signature_method = SIGNATURE_PLAINTEXT
 
     available_permissions = [
         (None, 'read and write to your entire Dropbox'),
