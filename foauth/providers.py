@@ -46,6 +46,10 @@ class OAuthMeta(type):
             cls.alias = cls.__name__.lower()
         if 'api_domain' in attrs and 'api_domains' not in attrs:
             cls.api_domains = [cls.api_domain]
+        if 'provider_url' in attrs and 'favicon_url' not in attrs:
+            # Use Google's favicon service, where possible
+            favicon_domain = urlparse.urlparse(cls.provider_url).netloc
+            cls.favicon_url = 'https://www.google.com/s2/favicons?domain=%s' % favicon_domain
 
         if 'name' not in attrs:
             cls.name = cls.__name__

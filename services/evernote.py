@@ -5,7 +5,6 @@ import urlparse
 class Evernote(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.evernote.com/'
-    favicon_url = 'http://www.evernote.com/about/media/img/favicon.ico'
     docs_url = 'https://www.evernote.com/about/developer/api/'
 
     # URLs to interact with the API

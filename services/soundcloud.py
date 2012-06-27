@@ -5,7 +5,6 @@ import foauth.providers
 class SoundCloud(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://soundcloud.com'
-    favicon_url = 'http://a1.sndcdn.com/favicon.ico'
     docs_url = 'http://developers.soundcloud.com/docs/api/reference'
 
     # URLs to interact with the API

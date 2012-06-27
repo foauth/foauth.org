@@ -4,7 +4,6 @@ import foauth.providers
 class FitBit(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.fitbit.com/'
-    favicon_url = 'http://www.fitbit.com/favicon.ico'
     docs_url = 'https://wiki.fitbit.com/display/API/Fitbit+API'
 
     # URLs to interact with the API

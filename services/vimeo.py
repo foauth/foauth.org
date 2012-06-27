@@ -4,7 +4,6 @@ import foauth.providers
 class Vimeo(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://vimeo.com/'
-    favicon_url = 'http://vimeo.com/favicon.ico'
     docs_url = 'http://developer.vimeo.com/apis/advanced'
 
     # URLs to interact with the API

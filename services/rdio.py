@@ -7,7 +7,6 @@ import foauth.providers
 class Rdio(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.rdio.com/'
-    favicon_url = 'http://ak.rdio.com/media/images/icons/Rdio_32.png'
     docs_url = 'http://developer.rdio.com/docs/REST/'
 
     # URLs to interact with the API

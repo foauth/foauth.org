@@ -11,7 +11,6 @@ def draft10(service, token, r):
 class DeviantArt(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://deviantart.com/'
-    favicon_url = 'http://i.deviantart.net/icons/favicon.ico'
     docs_url = 'http://www.deviantart.com/developers/'
 
     # URLs to interact with the API

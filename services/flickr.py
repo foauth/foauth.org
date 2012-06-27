@@ -4,7 +4,6 @@ import foauth.providers
 class Flickr(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.flickr.com/'
-    favicon_url = 'http://l.yimg.com/g/favicon.ico'
     docs_url = 'http://www.flickr.com/services/api/'
 
     # URLs to interact with the API

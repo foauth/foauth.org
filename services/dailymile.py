@@ -5,7 +5,6 @@ import foauth.providers
 class Dailymile(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://dailymile.com'
-    favicon_url = 'http://www.dailymile.com/favicon.ico'
     docs_url = 'http://www.dailymile.com/api/documentation'
 
     # URLs to interact with the API

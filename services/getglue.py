@@ -5,7 +5,6 @@ import foauth.providers
 class GetGlue(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://getglue.com/'
-    favicon_url = 'http://getglue.com/favicon.ico'
     docs_url = 'http://getglue.com/api'
 
     # URLs to interact with the API

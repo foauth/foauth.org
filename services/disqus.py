@@ -11,7 +11,6 @@ def token_uri(service, token, r):
 class Disqus(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://disqus.com/'
-    favicon_url = 'http://mediacdn.disqus.com/1324593591/img/favicon.ico'
     docs_url = 'http://disqus.com/api/docs/'
 
     # URLs to interact with the API

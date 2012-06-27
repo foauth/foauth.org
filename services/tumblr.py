@@ -4,7 +4,6 @@ import foauth.providers
 class Tumblr(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.tumblr.com/'
-    favicon_url = 'http://assets.tumblr.com/images/favicon.gif'
     docs_url = 'http://www.tumblr.com/docs/en/api/v2'
 
     # URLs to interact with the API

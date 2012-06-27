@@ -5,7 +5,6 @@ from foauth import OAuthDenied
 class Twitter(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.twitter.com/'
-    favicon_url = 'https://twitter.com/phoenix/favicon.ico'
     docs_url = 'https://dev.twitter.com/docs'
 
     # URLs to interact with the API

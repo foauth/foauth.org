@@ -4,7 +4,6 @@ import foauth.providers
 class Yammer(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://www.yammer.com/'
-    favicon_url = 'https://www.yammer.com/favicon.ico'
     docs_url = 'https://developer.yammer.com/api/'
 
     # URLs to interact with the API

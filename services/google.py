@@ -4,7 +4,6 @@ import foauth.providers
 class Google(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://google.com/'
-    favicon_url = 'http://www.google.com/favicon.ico'
     docs_url = 'http://code.google.com/more/'
 
     # URLs to interact with the API

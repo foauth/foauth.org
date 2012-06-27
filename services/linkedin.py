@@ -5,7 +5,6 @@ from foauth import OAuthDenied
 class LinkedIn(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.linkedin.com/'
-    favicon_url = 'https://developer.linkedin.com/sites/all/themes/dlc/favicon.ico'
     docs_url = 'https://developer.linkedin.com/documents/linkedin-api-resource-map'
 
     # URLs to interact with the API
