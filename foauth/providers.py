@@ -1,6 +1,6 @@
 import json
 from os import urandom
-from urlparse import urljoin
+import urlparse
 
 import flask
 import requests
@@ -68,7 +68,7 @@ class OAuth(object):
     def get_redirect_uri(self):
         root = flask.request.url_root
         path = flask.url_for('callback', alias=self.alias)
-        return urljoin(root, path).decode('utf8')
+        return urlparse.urljoin(root, path).decode('utf8')
 
     def get_scope_string(self, scopes):
         return ''
