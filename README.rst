@@ -7,12 +7,14 @@ That's where foauth.org comes in, giving you access to these services using
 HTTP Basic, which is easily available in hundreds of existing tools, such as
 `requests`_::
 
-  >>> import json, requests
-  >>> basic = 'email@example.com', 'password'
-  >>> r = requests.get('https://foauth.org/api.twitter.com/1/statuses/home_timeline.json', auth=basic)
-  >>> timeline = json.loads(r.content)
-  >>> timeline[0]['text']
-  "Just signed up with http://foauth.org/ and it's awesome! Thanks @Gulopine and @kennethreitz!"
+
+  >>> import requests
+  >>> auth = 'email@example.com', 'password'
+  >>> data = {'status': "Just signed up with http://foauth.org/ and it's awesome! Thanks @Gulopine!"}
+  >>> requests.post('https://foauth.herokuapp.com/api.twitter.com/1/statuses/update.json', data=data, auth=auth)
+  >>> r = requests.get('https://foauth.herokuapp.com/api.twitter.com/1/statuses/user_timeline.json', auth=auth)
+  >>> r.json[0]['text']
+  "Just signed up with http://foauth.org/ and it's awesome! Thanks @Gulopine!"
 
 Implementation
 --------------
