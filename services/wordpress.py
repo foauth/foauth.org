@@ -4,7 +4,6 @@ import foauth.providers
 class Wordpress(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://www.wordpress.com/'
-    favicon_url = 'http://s2.wp.com/i/favicon.ico'
     docs_url = 'http://developer.wordpress.com/docs/api/'
 
     # URLs to interact with the API

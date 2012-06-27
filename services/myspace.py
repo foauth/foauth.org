@@ -4,7 +4,6 @@ import foauth.providers
 class MySpace(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.myspace.com/'
-    favicon_url = 'http://www.myspace.com/favicon.ico'
     docs_url = 'http://developerwiki.myspace.com/index.php?title=RESTful_API_Overview'
 
     # URLs to interact with the API

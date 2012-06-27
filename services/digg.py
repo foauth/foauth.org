@@ -4,7 +4,6 @@ import foauth.providers
 class Digg(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://digg.com/'
-    favicon_url = 'http://cdn1.diggstatic.com/img/favicon.a015f25c.ico'
     docs_url = 'http://developers.digg.com/documentation'
 
     # URLs to interact with the API

@@ -6,7 +6,6 @@ import foauth.providers
 class Etsy(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.etsy.com/'
-    favicon_url = 'http://www.etsy.com/images/favicon.ico'
     docs_url = 'http://www.etsy.com/developers/documentation'
 
     # URLs to interact with the API

@@ -4,7 +4,6 @@ import foauth.providers
 class Instagram(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://instagram.com'
-    favicon_url = 'http://instagram.com/static/images/favicon.ico'
     docs_url = 'http://instagram.com/developer/'
 
     # URLs to interact with the API

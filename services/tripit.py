@@ -4,7 +4,6 @@ import foauth.providers
 class TripIt(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.tripit.com/'
-    favicon_url = 'http://www.tripit.com/favicon.ico'
     docs_url = 'http://tripit.github.com/api/doc/v1/'
 
     # URLs to interact with the API

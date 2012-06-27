@@ -4,7 +4,6 @@ import foauth.providers
 class Meetup(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://www.meetup.com/'
-    favicon_url = 'http://www.meetup.com/favicon.ico'
     docs_url = 'http://www.meetup.com/meetup_api/'
 
     # URLs to interact with the API

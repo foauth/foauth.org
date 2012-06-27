@@ -5,7 +5,6 @@ import foauth.providers
 class Facebook(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://facebook.com/'
-    favicon_url = 'https://s-static.ak.facebook.com/rsrc.php/yi/r/q9U99v3_saj.ico'
     docs_url = 'https://developers.facebook.com/docs/'
 
     # URLs to interact with the API

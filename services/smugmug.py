@@ -5,7 +5,6 @@ import foauth.providers
 class SmugMug(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://smugmug.com/'
-    favicon_url = 'http://smugmug.com/favicon.ico'
     docs_url = 'http://wiki.smugmug.net/display/API/API+1.3.0'
 
     # URLs to interact with the API

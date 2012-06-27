@@ -4,7 +4,6 @@ import foauth.providers
 class Friendfeed(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://friendfeed.com/'
-    favicon_url = 'http://friendfeed.com/favicon.ico'
     docs_url = 'http://friendfeed.com/api/documentation'
 
     # URLs to interact with the API

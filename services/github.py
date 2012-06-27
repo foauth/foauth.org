@@ -5,7 +5,6 @@ import foauth.providers
 class GitHub(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://github.com/'
-    favicon_url = 'https://github.com/favicon.ico'
     docs_url = 'http://developer.github.com/v3/'
 
     # URLs to interact with the API
