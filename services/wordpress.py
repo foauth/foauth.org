@@ -3,6 +3,7 @@ import foauth.providers
 
 class Wordpress(foauth.providers.OAuth2):
     # General info about the provider
+    name = 'WordPress.com'
     provider_url = 'https://www.wordpress.com/'
     docs_url = 'http://developer.wordpress.com/docs/api/'
 
