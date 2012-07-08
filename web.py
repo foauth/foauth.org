@@ -1,7 +1,5 @@
-import datetime
 from functools import wraps
 import os
-from urlparse import urljoin
 
 from flask import request, flash, redirect, render_template, abort, url_for
 from flask.ext.login import current_user, login_user, logout_user, login_required
@@ -73,7 +71,6 @@ def services():
 
 
 def auth_endpoint(func):
-    services = config.services
     @wraps(func)
     def wrapper(alias, *args, **kwargs):
         try:
