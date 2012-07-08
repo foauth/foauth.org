@@ -10,22 +10,22 @@ import forms
 import models
 
 
-@config.app.route('/')
+@config.app.route('/', methods=['GET'])
 def index():
     return render_template('index.html', login=forms.Login(), signup=forms.Signup())
 
 
-@config.app.route('/about/')
+@config.app.route('/about/', methods=['GET'])
 def about():
     return render_template('about.html', login=forms.Login())
 
 
-@config.app.route('/about/faq/')
+@config.app.route('/about/faq/', methods=['GET'])
 def faq():
     return render_template('faq.html', login=forms.Login())
 
 
-@config.app.route('/about/terms/')
+@config.app.route('/about/terms/', methods=['GET'])
 def terms():
     return render_template('terms.html', login=forms.Login())
 
