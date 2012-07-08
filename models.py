@@ -79,8 +79,7 @@ class Key(db.Model):
 login_manager = login.LoginManager()
 login_manager.setup_app(config.app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
-
-

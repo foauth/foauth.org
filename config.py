@@ -37,6 +37,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['DEBUG'] = 'DEBUG' in os.environ
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
+
 def init_services(*services):
     service_list = []
 
@@ -45,7 +46,7 @@ def init_services(*services):
         key = os.environ.get('%s_KEY' % alias, '').decode('utf8')
         secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8')
 
-        if key and secret: # Only initialize if all the pieces are in place
+        if key and secret:  # Only initialize if all the pieces are in place
             service_list.append(service(key, secret))
 
     return service_list
@@ -88,4 +89,3 @@ domain_map = {}
 for service in services:
     for domain in service.api_domains:
         domain_map[domain] = service
-
