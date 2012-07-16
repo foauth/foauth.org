@@ -11,3 +11,4 @@ rsa==3.0.1
 oauthlib==0.1.3
 certifi==0.0.8
 requests==0.13.0
+Flask-SSLify==0.1.3
