@@ -64,7 +64,7 @@ class Key(db.Model):
     def update(self, data):
         self.access_token = data['access_token']
         self.secret = data.get('secret', None)
-        if 'expires_in' in data:
+        if data.get('expires_in'):
             # Convert to a real datetime
             expires_in = datetime.timedelta(seconds=int(data['expires_in']))
             self.expires = datetime.datetime.now() + expires_in
