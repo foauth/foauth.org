@@ -4,7 +4,7 @@ import foauth.providers
 
 def token_uri(service, token, r):
     params = [((u'access_token', token)), ((u'api_key', service.client_id))]
-    r.url =  utils.add_params_to_uri(r.url, params)
+    r.url = utils.add_params_to_uri(r.url, params)
     return r
 
 
