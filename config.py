@@ -24,6 +24,7 @@ from services import meetup
 from services import rdio
 from services import smugmug
 from services import soundcloud
+from services import stackexchange
 from services import tripit
 from services import tumblr
 from services import twitter
@@ -74,6 +75,7 @@ services = init_services(bitbucket.Bitbucket,
                          rdio.Rdio,
                          smugmug.SmugMug,
                          soundcloud.SoundCloud,
+                         stackexchange.StackExchange,
                          tripit.TripIt,
                          tumblr.Tumblr,
                          twitter.Twitter,
