@@ -22,7 +22,6 @@ class Flickr(foauth.providers.OAuth1):
     ]
 
     https = False
-    signature_type = SIGNATURE_TYPE_QUERY
 
     def get_authorize_params(self):
         params = super(Flickr, self).get_authorize_params()
