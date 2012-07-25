@@ -1,3 +1,5 @@
+from oauthlib.oauth1.rfc5849 import SIGNATURE_TYPE_QUERY
+
 import foauth.providers
 
 
@@ -20,6 +22,7 @@ class Flickr(foauth.providers.OAuth1):
     ]
 
     https = False
+    signature_type = SIGNATURE_TYPE_QUERY
 
     def get_authorize_params(self):
         params = super(Flickr, self).get_authorize_params()
