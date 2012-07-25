@@ -19,6 +19,8 @@ class Flickr(foauth.providers.OAuth1):
         ('delete', 'upload, edit, replace and delete your photos'),
     ]
 
+    https = False
+
     def get_authorize_params(self):
         params = super(Flickr, self).get_authorize_params()
         params['perms'] = self.available_permissions[0][0]
