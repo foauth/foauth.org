@@ -1,13 +1,18 @@
 from functools import wraps
 import os
 
-from flask import request, flash, redirect, render_template, abort, url_for
+from flask import request, flash, redirect, render_template, abort, url_for, make_response
 from flask.ext.login import current_user, login_user, logout_user, login_required
 
 from foauth import OAuthDenied, OAuthError
 import config
 import forms
 import models
+
+
+@config.app.errorhandler(403)
+def forbidden(e):
+    return make_response(render_template('403.html'), 403)
 
 
 @config.app.route('/', methods=['GET'])
