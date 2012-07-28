@@ -1,5 +1,3 @@
-from oauthlib.oauth1.rfc5849 import SIGNATURE_TYPE_QUERY
-
 import foauth.providers
 
 
