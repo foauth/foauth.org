@@ -128,6 +128,15 @@ def callback(service):
 @config.app.route('/<domain>/<path:path>', methods=['OPTIONS', 'GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 @config.app.route('/<domain>/', defaults={'path': u''}, methods=['OPTIONS', 'GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 def api(domain, path):
+    # Allow clients to override the method being provided, in case the client
+    # or network doesn't natively support PATCH. For example, Amazon discards
+    # PATCH requests before they ever reach Heroku, much less foauth.org.
+    if request.method == 'POST':
+        override = request.headers.get('X-Http-Method-Override')
+        if override == 'PATCH':
+            print 'Overriding to %s!' % override
+            request.environ['REQUEST_METHOD'] = override
+
     auth = request.authorization
     if auth:
         user = models.User.query.filter_by(email=auth.username).first()
