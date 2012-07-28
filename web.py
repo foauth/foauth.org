@@ -134,7 +134,6 @@ def api(domain, path):
     if request.method == 'POST':
         override = request.headers.get('X-Http-Method-Override')
         if override == 'PATCH':
-            print 'Overriding to %s!' % override
             request.environ['REQUEST_METHOD'] = override
 
     auth = request.authorization
