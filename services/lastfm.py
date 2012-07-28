@@ -31,7 +31,6 @@ class LastFM(foauth.providers.OAuth2):
     def get_authorize_params(self):
         return {
             'api_key': self.client_id,
-            'cb': self.get_redirect_uri(),
         }
 
     def callback(self, data):
