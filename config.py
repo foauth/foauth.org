@@ -17,6 +17,7 @@ from services import getglue
 from services import github
 from services import google
 from services import instagram
+from services import lastfm
 from services import linkedin
 from services import liveconnect
 from services import meetup
@@ -67,6 +68,7 @@ services = init_services(bitbucket.Bitbucket,
                          github.GitHub,
                          google.Google,
                          instagram.Instagram,
+                         lastfm.LastFM,
                          linkedin.LinkedIn,
                          liveconnect.LiveConnect,
                          meetup.Meetup,
