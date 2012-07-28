@@ -125,8 +125,8 @@ def callback(service):
     return redirect(url_for('services'))
 
 
-@config.app.route('/<domain>/<path:path>', methods=['GET', 'POST'])
-@config.app.route('/<domain>/', defaults={'path': u''}, methods=['GET', 'POST'])
+@config.app.route('/<domain>/<path:path>', methods=['OPTIONS', 'GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
+@config.app.route('/<domain>/', defaults={'path': u''}, methods=['OPTIONS', 'GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
 def api(domain, path):
     auth = request.authorization
     if auth:
