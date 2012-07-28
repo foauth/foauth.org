@@ -21,6 +21,7 @@ from services import lastfm
 from services import linkedin
 from services import liveconnect
 from services import meetup
+from services import plurk
 from services import rdio
 from services import smugmug
 from services import soundcloud
@@ -72,6 +73,7 @@ services = init_services(bitbucket.Bitbucket,
                          linkedin.LinkedIn,
                          liveconnect.LiveConnect,
                          meetup.Meetup,
+                         plurk.Plurk,
                          rdio.Rdio,
                          smugmug.SmugMug,
                          soundcloud.SoundCloud,
