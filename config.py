@@ -32,7 +32,6 @@ from services import twitter
 from services import vimeo
 from services import wordpress
 from services import yahoo
-from services import yammer
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
@@ -84,7 +83,6 @@ services = init_services(bitbucket.Bitbucket,
                          vimeo.Vimeo,
                          wordpress.Wordpress,
                          yahoo.Yahoo,
-                         yammer.Yammer,
 )
 
 alias_map = {}
