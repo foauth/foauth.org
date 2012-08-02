@@ -11,6 +11,7 @@ from services import disqus
 from services import dropbox
 from services import facebook
 from services import fitbit
+from services import fivehundredpx
 from services import flickr
 from services import foursquare
 from services import getglue
@@ -62,6 +63,7 @@ services = init_services(bitbucket.Bitbucket,
                          dropbox.Dropbox,
                          facebook.Facebook,
                          fitbit.FitBit,
+                         fivehundredpx.FiveHundredPX,
                          flickr.Flickr,
                          foursquare.Foursquare,
                          getglue.GetGlue,
