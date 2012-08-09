@@ -4,6 +4,7 @@ from werkzeug.contrib.fixers import ProxyFix
 from flask_sslify import SSLify
 
 from services import bitbucket
+from services import bitly
 from services import dailymile
 from services import deviantart
 from services import digg
@@ -57,6 +58,7 @@ def init_services(*services):
     return service_list
 
 services = init_services(bitbucket.Bitbucket,
+                         bitly.Bitly,
                          dailymile.Dailymile,
                          deviantart.DeviantArt,
                          digg.Digg,
