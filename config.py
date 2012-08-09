@@ -18,6 +18,7 @@ from services import foursquare
 from services import getglue
 from services import github
 from services import google
+from services import imgur
 from services import instagram
 from services import lastfm
 from services import linkedin
@@ -72,6 +73,7 @@ services = init_services(bitbucket.Bitbucket,
                          getglue.GetGlue,
                          github.GitHub,
                          google.Google,
+                         imgur.Imgur,
                          instagram.Instagram,
                          lastfm.LastFM,
                          linkedin.LinkedIn,
