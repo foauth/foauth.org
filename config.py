@@ -17,6 +17,7 @@ from services import flickr
 from services import foursquare
 from services import getglue
 from services import github
+from services import goodreads
 from services import google
 from services import imgur
 from services import instagram
@@ -72,6 +73,7 @@ services = init_services(bitbucket.Bitbucket,
                          foursquare.Foursquare,
                          getglue.GetGlue,
                          github.GitHub,
+                         goodreads.Goodreads,
                          google.Google,
                          imgur.Imgur,
                          instagram.Instagram,
