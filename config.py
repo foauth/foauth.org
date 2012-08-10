@@ -1,44 +1,10 @@
+import glob
 import os
 from flask import Flask
 from werkzeug.contrib.fixers import ProxyFix
 from flask_sslify import SSLify
 
-from services import bitbucket
-from services import bitly
-from services import dailymile
-from services import deviantart
-from services import digg
-from services import disqus
-from services import dropbox
-from services import facebook
-from services import fitbit
-from services import fivehundredpx
-from services import flickr
-from services import foursquare
-from services import getglue
-from services import github
-from services import goodreads
-from services import google
-from services import imgur
-from services import instagram
-from services import lastfm
-from services import linkedin
-from services import liveconnect
-from services import meetup
-from services import miso
-from services import ohloh
-from services import plurk
-from services import readmill
-from services import rdio
-from services import smugmug
-from services import soundcloud
-from services import stackexchange
-from services import tripit
-from services import tumblr
-from services import twitter
-from services import vimeo
-from services import wordpress
-from services import yahoo
+from foauth.providers import OAuthMeta
 
 app = Flask(__name__)
 app.secret_key = os.environ['SECRET_KEY']
@@ -48,56 +14,31 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 SSLify(app)
 
 
-def init_services(*services):
-    service_list = []
+def get_service_modules():
+    for filename in glob.glob(os.path.join('services', '*.py')):
+        module_name = os.path.splitext(os.path.split(filename)[1])[0]
+        if not module_name.startswith('__'):
+            yield module_name
 
-    for service in services:
+
+def get_oauth_providers(module_name):
+    module = getattr(__import__('services.%s' % module_name), module_name)
+    for name, obj in module.__dict__.items():
+        if isinstance(obj, OAuthMeta):
+            yield obj
+
+
+services = []
+for module_name in get_service_modules():
+    for service in get_oauth_providers(module_name):
         alias = service.alias.upper()
         key = os.environ.get('%s_KEY' % alias, '').decode('utf8')
         secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8')
 
         if key and secret:  # Only initialize if all the pieces are in place
-            service_list.append(service(key, secret))
+            print '%s: %s' % (alias, key)
+            services.append(service(key, secret))
 
-    return service_list
-
-services = init_services(bitbucket.Bitbucket,
-                         bitly.Bitly,
-                         dailymile.Dailymile,
-                         deviantart.DeviantArt,
-                         digg.Digg,
-                         disqus.Disqus,
-                         dropbox.Dropbox,
-                         facebook.Facebook,
-                         fitbit.FitBit,
-                         fivehundredpx.FiveHundredPX,
-                         flickr.Flickr,
-                         foursquare.Foursquare,
-                         getglue.GetGlue,
-                         github.GitHub,
-                         goodreads.Goodreads,
-                         google.Google,
-                         imgur.Imgur,
-                         instagram.Instagram,
-                         lastfm.LastFM,
-                         linkedin.LinkedIn,
-                         liveconnect.LiveConnect,
-                         meetup.Meetup,
-                         miso.Miso,
-                         ohloh.Ohloh,
-                         plurk.Plurk,
-                         readmill.Readmill,
-                         rdio.Rdio,
-                         smugmug.SmugMug,
-                         soundcloud.SoundCloud,
-                         stackexchange.StackExchange,
-                         tripit.TripIt,
-                         tumblr.Tumblr,
-                         twitter.Twitter,
-                         vimeo.Vimeo,
-                         wordpress.Wordpress,
-                         yahoo.Yahoo,
-)
 
 alias_map = {}
 for service in services:
