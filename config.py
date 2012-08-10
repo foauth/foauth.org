@@ -26,6 +26,7 @@ from services import linkedin
 from services import liveconnect
 from services import meetup
 from services import miso
+from services import ohloh
 from services import plurk
 from services import readmill
 from services import rdio
@@ -83,6 +84,7 @@ services = init_services(bitbucket.Bitbucket,
                          liveconnect.LiveConnect,
                          meetup.Meetup,
                          miso.Miso,
+                         ohloh.Ohloh,
                          plurk.Plurk,
                          readmill.Readmill,
                          rdio.Rdio,
