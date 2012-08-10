@@ -27,6 +27,7 @@ from services import liveconnect
 from services import meetup
 from services import miso
 from services import plurk
+from services import readmill
 from services import rdio
 from services import smugmug
 from services import soundcloud
@@ -83,6 +84,7 @@ services = init_services(bitbucket.Bitbucket,
                          meetup.Meetup,
                          miso.Miso,
                          plurk.Plurk,
+                         readmill.Readmill,
                          rdio.Rdio,
                          smugmug.SmugMug,
                          soundcloud.SoundCloud,
