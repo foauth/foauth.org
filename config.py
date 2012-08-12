@@ -36,7 +36,6 @@ for module_name in get_service_modules():
         secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8')
 
         if key and secret:  # Only initialize if all the pieces are in place
-            print '%s: %s' % (alias, key)
             services.append(service(key, secret))
 
 
