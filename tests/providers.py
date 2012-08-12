@@ -1,5 +1,6 @@
 import unittest
 import foauth.providers
+import urllib
 
 
 class ProviderTests(unittest.TestCase):
@@ -17,7 +18,9 @@ class ProviderTests(unittest.TestCase):
         self.assertEqual(self.provider.alias, 'example')
 
     def test_auto_favicon_url(self):
-        url = 'https://www.google.com/s2/favicons?domain=example.com'
+        primary = 'https://getfavicon.appspot.com/http://example.com'
+        backup = 'https://www.google.com/s2/favicons?domain=example.com'
+        url = '%s?defaulticon=%s' % (primary, urllib.quote(backup))
         self.assertEqual(self.provider.favicon_url, url)
 
     def test_auto_api_domains(self):
