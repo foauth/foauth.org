@@ -4,7 +4,6 @@ import foauth.providers
 class LiveConnect(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://www.live.com/'
-    favicon_url = 'https://secure.shared.live.com/~Live.SiteContent.ID/~16.2.8/~/~/~/~/images/favicon.ico'
     docs_url = 'http://msdn.microsoft.com/en-us/library/hh243648.aspx'
 
     # URLs to interact with the API
