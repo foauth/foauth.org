@@ -1,5 +1,6 @@
 import json
 from os import urandom
+import urllib
 import urlparse
 
 import flask
@@ -47,9 +48,11 @@ class OAuthMeta(type):
         if 'api_domain' in attrs and 'api_domains' not in attrs:
             cls.api_domains = [cls.api_domain]
         if 'provider_url' in attrs and 'favicon_url' not in attrs:
-            # Use Google's favicon service, where possible
-            favicon_domain = urlparse.urlparse(cls.provider_url).netloc
-            cls.favicon_url = 'https://www.google.com/s2/favicons?domain=%s' % favicon_domain
+            # Use a favicon service when no favicon is supplied
+            primary = 'https://getfavicon.appspot.com/%s' % cls.provider_url
+            domain = urlparse.urlparse(cls.provider_url).netloc
+            backup = 'https://www.google.com/s2/favicons?domain=%s' % domain
+            cls.favicon_url = '%s?defaulticon=%s' % (primary, urllib.quote(backup))
 
         if 'name' not in attrs:
             cls.name = cls.__name__

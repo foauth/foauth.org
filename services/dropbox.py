@@ -5,7 +5,6 @@ from oauthlib.oauth1.rfc5849 import SIGNATURE_PLAINTEXT
 class Dropbox(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.dropbox.com/'
-    favicon_url = 'https://www.dropbox.com/static/20659/images/favicon.ico'
     docs_url = 'https://www.dropbox.com/developers/reference/api'
 
     # URLs to interact with the API
