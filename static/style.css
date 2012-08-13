@@ -121,6 +121,10 @@ dd {
 	margin-right: .25em;
 }
 
+.services tr:hover {
+	background: #eee;
+}
+
 .services tbody tr:first-child th[scope="row"],
 .services tbody tr:first-child td {
 	padding-top: 10px;
