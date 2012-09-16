@@ -83,10 +83,10 @@ class OAuth(object):
     # The remainder of the API must be implemented for each flavor of OAuth
 
     def authorize(self):
-        """
-        Redirect the user to the service for authorization
-        """
-        raise NotImplementedError("authorize() must be defined in a subclass")
+        redirect_uri = self.get_redirect_uri()
+        params = self.get_authorize_params(redirect_uri=redirect_uri)
+        req = requests.Request(self.authorize_url, params=params)
+        return flask.redirect(req.full_url)
 
     def callback(self, data):
         """
@@ -127,11 +127,6 @@ class OAuth1(OAuth):
             'oauth_token': data['access_token'],
             'oauth_callback': self.get_redirect_uri(),
         }
-
-    def authorize(self):
-        params = self.get_authorize_params()
-        req = requests.Request(self.authorize_url, params=params)
-        return flask.redirect(req.full_url)
 
     def callback(self, data):
         token = data['oauth_token']
@@ -193,11 +188,6 @@ class OAuth2(OAuth):
             scopes = (s for (s, desc) in self.available_permissions if s)
             params['scope'] = self.get_scope_string(scopes)
         return params
-
-    def authorize(self):
-        params = self.get_authorize_params()
-        req = requests.Request(self.authorize_url, params=params)
-        return flask.redirect(req.full_url)
 
     def callback(self, data):
         state = flask.session['%s_state' % self.alias]
