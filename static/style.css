@@ -175,11 +175,11 @@ dd {
 	margin-top: 6px;
 }
 
-.signup p {
+form p {
 	position: relative;
 }
 
-.signup .btn {
+form .btn {
 	font-size: 12pt;
 }
 
