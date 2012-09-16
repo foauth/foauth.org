@@ -17,8 +17,8 @@ class LinkedIn(foauth.providers.OAuth1):
         (None, 'read and write to your employment information'),
     ]
 
-    def callback(self, data):
+    def callback(self, data, *args, **kwargs):
         if data.get('oauth_problem', '') == 'user_refused':
             raise OAuthDenied('Denied access to LinkedIn')
 
-        return super(LinkedIn, self).callback(data)
+        return super(LinkedIn, self).callback(data, *args, **kwargs)

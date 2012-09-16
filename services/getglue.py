@@ -23,9 +23,9 @@ class GetGlue(foauth.providers.OAuth1):
         flask.session['%s_temp_token' % self.alias] = params['oauth_token']
         return params
 
-    def callback(self, data):
+    def callback(self, data, *args, **kwargs):
         # GetGlue doesn't parrot this back, so we have to retrieve it
         data = dict(data, oauth_token=flask.session['%s_temp_token' % self.alias])
         del flask.session['%s_temp_token' % self.alias]
-        return super(GetGlue, self).callback(data)
+        return super(GetGlue, self).callback(data, *args, **kwargs)
 

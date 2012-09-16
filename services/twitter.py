@@ -17,8 +17,8 @@ class Twitter(foauth.providers.OAuth1):
         (None, 'read and send tweets, including DMs'),
     ]
 
-    def callback(self, data):
+    def callback(self, data, *args, **kwargs):
         if 'denied' in data:
             raise OAuthDenied('Denied access to Twitter')
 
-        return super(Twitter, self).callback(data)
+        return super(Twitter, self).callback(data, *args, **kwargs)
