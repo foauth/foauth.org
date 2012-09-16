@@ -66,3 +66,7 @@ class Facebook(foauth.providers.OAuth2):
         data['expires_in'] = data.get('expires', None)
         return data
 
+    def bearer_type(self, token, r):
+        r.url = utils.add_params_to_uri(r.url, [((u'access_token', token))])
+        return r
+
