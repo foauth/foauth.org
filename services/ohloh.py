@@ -5,6 +5,7 @@ class Ohloh(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.ohloh.net/'
     docs_url = 'http://meta.ohloh.net/reference/'
+    category = 'Code'
 
     # URLs to interact with the API
     request_token_url = 'http://www.ohloh.net/oauth/request_token'

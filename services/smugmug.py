@@ -6,6 +6,7 @@ class SmugMug(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://smugmug.com/'
     docs_url = 'http://wiki.smugmug.net/display/API/API+1.3.0'
+    category = 'Pictures'
 
     # URLs to interact with the API
     request_token_url = 'http://api.smugmug.com/services/oauth/getRequestToken.mg'

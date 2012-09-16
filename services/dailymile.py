@@ -6,6 +6,7 @@ class Dailymile(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://dailymile.com'
     docs_url = 'http://www.dailymile.com/api/documentation'
+    category = 'Fitness'
 
     # URLs to interact with the API
     authorize_url = 'https://api.dailymile.com/oauth/authorize'

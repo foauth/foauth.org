@@ -6,6 +6,7 @@ class Facebook(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://facebook.com/'
     docs_url = 'https://developers.facebook.com/docs/'
+    category = 'Social'
 
     # URLs to interact with the API
     authorize_url = 'https://www.facebook.com/dialog/oauth'

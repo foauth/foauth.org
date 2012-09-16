@@ -6,6 +6,7 @@ class SoundCloud(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://soundcloud.com'
     docs_url = 'http://developers.soundcloud.com/docs/api/reference'
+    category = 'Music'
 
     # URLs to interact with the API
     authorize_url = 'https://soundcloud.com/connect'

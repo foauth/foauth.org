@@ -8,6 +8,7 @@ class Rdio(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.rdio.com/'
     docs_url = 'http://developer.rdio.com/docs/REST/'
+    category = 'Music'
 
     # URLs to interact with the API
     request_token_url = 'http://api.rdio.com/oauth/request_token'

@@ -12,6 +12,7 @@ class DeviantArt(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://deviantart.com/'
     docs_url = 'http://www.deviantart.com/developers/'
+    category = 'Pictures'
 
     # URLs to interact with the API
     authorize_url = 'https://www.deviantart.com/oauth2/draft15/authorize'

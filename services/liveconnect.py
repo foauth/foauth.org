@@ -5,6 +5,7 @@ class LiveConnect(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://www.live.com/'
     docs_url = 'http://msdn.microsoft.com/en-us/library/hh243648.aspx'
+    category = 'Stuff'
 
     # URLs to interact with the API
     authorize_url = 'https://oauth.live.com/authorize'

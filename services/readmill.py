@@ -5,6 +5,7 @@ class Readmill(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://readmill.com/'
     docs_url = 'https://github.com/Readmill/api/wiki'
+    category = 'Books'
 
     # URLs to interact with the API
     authorize_url = 'http://readmill.com/oauth/authorize'

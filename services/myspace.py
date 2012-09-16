@@ -5,6 +5,7 @@ class MySpace(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.myspace.com/'
     docs_url = 'http://developerwiki.myspace.com/index.php?title=RESTful_API_Overview'
+    category = 'Social'
 
     # URLs to interact with the API
     request_token_url = 'http://api.myspace.com/request_token'

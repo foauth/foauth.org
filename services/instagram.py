@@ -5,6 +5,7 @@ class Instagram(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://instagram.com'
     docs_url = 'http://instagram.com/developer/'
+    category = 'Pictures'
 
     # URLs to interact with the API
     authorize_url = 'https://api.instagram.com/oauth/authorize/'

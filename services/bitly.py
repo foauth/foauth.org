@@ -7,6 +7,7 @@ class Bitly(foauth.providers.OAuth2):
     name = 'bitly'
     provider_url = 'https://bitly.com/'
     docs_url = 'https://dev.bitly.com/'
+    category = 'Social'
 
     # URLs to interact with the API
     authorize_url = 'https://bitly.com/oauth/authorize'

@@ -6,6 +6,7 @@ class Yahoo(foauth.providers.OAuth1):
     name = 'Yahoo!'
     provider_url = 'http://www.yahoo.com/'
     docs_url = 'http://developer.yahoo.com/everything.html'
+    category = 'Stuff'
 
     # URLs to interact with the API
     request_token_url = 'https://api.login.yahoo.com/oauth/v2/get_request_token'

@@ -6,6 +6,7 @@ class GitHub(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://github.com/'
     docs_url = 'http://developer.github.com/v3/'
+    category = 'Code'
 
     # URLs to interact with the API
     authorize_url = 'https://github.com/login/oauth/authorize'
