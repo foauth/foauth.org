@@ -14,7 +14,7 @@ class Signup(Form):
     ])
     retype = PasswordField('Password (again)')
     consent = BooleanField('Accept the Terms', [
-        validators.Required('Don&rsquo;t worry, they&rsquo;re really simple.')
+        validators.Required('Is there something you don&rsquo;t agree with?')
     ])
 
     def validate_email(form, field):
