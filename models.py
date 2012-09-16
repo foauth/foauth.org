@@ -14,13 +14,16 @@ class User(db.Model):
 
     def __init__(self, email, password):
         self.email = email
-        self.password = self.hash_password(password)
+        self.set_password(password)
 
     def hash_password(self, password):
         return generate_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    def set_password(self, password):
+        self.password = self.hash_password(password)
 
     def is_authenticated(self):
         return self.id is not None
