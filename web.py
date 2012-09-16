@@ -17,26 +17,34 @@ def forbidden(e):
 
 @config.app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', login=forms.Login(), signup=forms.Signup())
+    return render_template('index.html', signup=forms.Signup())
 
 
 @config.app.route('/about/', methods=['GET'])
 def about():
-    return render_template('about.html', login=forms.Login())
+    return render_template('about.html')
 
 
 @config.app.route('/about/faq/', methods=['GET'])
 def faq():
-    return render_template('faq.html', login=forms.Login())
+    return render_template('faq.html')
 
 
 @config.app.route('/about/terms/', methods=['GET'])
 def terms():
-    return render_template('terms.html', login=forms.Login())
+    return render_template('terms.html')
+
+
+@config.app.route('/login/', methods=['GET'])
+def login():
+    if current_user.is_authenticated():
+        return redirect(url_for('services'))
+
+    return render_template('login.html', form=forms.Login())
 
 
 @config.app.route('/login/', methods=['POST'])
-def login():
+def login_post():
     form = forms.Login(request.form)
     if form.validate():
         user = models.User.query.filter_by(email=form.email.data).first()
@@ -45,9 +53,9 @@ def login():
             return redirect(url_for('services'))
         else:
             flash('Incorrect login', 'error')
-            return redirect(url_for('index'))
+            return redirect(url_for('login'))
     else:
-        return render_template('index.html', login=form, signup=forms.Signup())
+        return render_template('login.html', form=form)
 
 
 @config.app.route('/logout/', methods=['GET'])
@@ -66,13 +74,13 @@ def signup():
         login_user(user)
         return redirect(url_for('services'))
     else:
-        return render_template('index.html', login=forms.Login(), signup=form)
+        return render_template('index.html', signup=form)
 
 
 @config.app.route('/services/', methods=['GET'])
 def services():
     services = sorted((s.alias, s) for s in config.services)
-    return render_template('services.html', login=forms.Login(), services=services)
+    return render_template('services.html', services=services)
 
 
 def auth_endpoint(func):

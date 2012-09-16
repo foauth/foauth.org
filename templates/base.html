@@ -1,8 +1,23 @@
 {% macro nav(section) %}
+    <a class="brand" href="{{ url_for('index') }}"><span class="fo">fo</span>auth.org</a>
+    <ul class="nav">
         <li{% if section == 'index' %} class="active"{% endif %}><a href="/">Home</a></li>
         <li{% if section == 'services' %} class="active"{% endif %}><a href="/services/">Services</a></li>
         <li{% if section == 'about' %} class="active"{% endif %}><a href="/about/">About</a></li>
         <li><a href="https://github.com/gulopine/foauth.org">Source</a></li>
+    </ul>
+    <div class="pull-right"><ul class="nav">
+        {% if current_user.is_authenticated() %}
+        <li><a href="{{ url_for('logout') }}">Sign out of {{ current_user.email }}</a></li>
+        {% else %}
+        <li{% if section == 'login' %} class="active"{% endif %}>
+            <a href="{{ url_for('login') }}">
+                <img src="{{ url_for('static', filename='key.png') }}">
+                Log in
+            </a>
+        </li>
+        {% endif %}
+    </ul></div>
 {% endmacro %}
 
 <!doctype html>
@@ -17,27 +32,7 @@
 		<div class="topbar">
 			<div class="fill">
 				<div class="container">
-					<a class="brand" href="{{ url_for('index') }}"><span class="fo">fo</span>auth.org</a>
-					<ul class="nav">
-						{% block nav %}{{ nav('index') }}{% endblock %}
-					</ul>
-					{% if current_user.is_authenticated() %}
-					<div class="pull-right"><ul class="nav">
-						<li><a href="{{ url_for('logout') }}">Sign out of {{ current_user.email }}</a></li>
-					</ul></div>
-					{% else %}
-					<form action="{{ url_for('login') }}" method="post" class="pull-right">
-						{{ login.csrf_token }}
-						{% if login.errors.email %}
-						<strong class="error">{{ login.errors.email.0|safe }}</strong>
-						{% elif login.errors.password %}
-						<strong class="error">{{ login.errors.password.0|safe }}</strong>
-						{% endif %}
-						<input name="email" type="text" {% if login.data.email %}value="{{ login.data.email }}"{% endif %} placeholder="Email address">
-						<input name="password" class="input-small" type="password" placeholder="Password">
-						<button class="btn" type="submit">Sign in</button>
-					</form>
-					{% endif %}
+					{% block nav %}{{ nav('index') }}{% endblock %}
 				</div>
 			</div>
 		</div>
