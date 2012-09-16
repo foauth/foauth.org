@@ -171,20 +171,8 @@ def api(domain, path):
             except KeyError:
                 abort(404)
 
-            key = user.keys.filter_by(service_alias=service.alias).first()
-            if not key:
-                abort(403)
-            if key.is_expired():
-                # Key has expired
-                if key.refresh_token:
-                    data = service.refresh_token(key.refresh_token)
-                    key.update(data)
-                    models.db.session.add(key)
-                    models.db.session.commit()
-                else:
-                    # Unable to refresh the token
-                    abort(403)
-            resp = service.api(key, domain, path)
+            key = get_user_key(service, user)
+            resp = service.api(key, domain, '/%s' % path)
             content = resp.raw.read()
 
             if 'Transfer-Encoding' in resp.headers and \
@@ -200,6 +188,23 @@ def api(domain, path):
                                              resp.status_code,
                                              resp.headers))
     abort(403)
+
+
+def get_user_key(service, user):
+    key = user.keys.filter_by(service_alias=service.alias).first()
+    if not key:
+        abort(403)
+    if key.is_expired():
+        # Key has expired
+        if key.refresh_token:
+            data = service.refresh_token(key.refresh_token)
+            key.update(data)
+            models.db.session.add(key)
+            models.db.session.commit()
+        else:
+            # Unable to refresh the token
+            abort(403)
+    return key
 
 
 if __name__ == '__main__':
