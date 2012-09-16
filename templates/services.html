@@ -32,6 +32,7 @@
 								{% if key.refresh_token %}Refreshes{% else %}Expires{% endif %}
 								on {{ key.expires.strftime("%Y-%m-%d") }}
 							{% endif %}
+							</td>
 							<td>
 							{% if current_user.is_authenticated() %}
 								{% if key %}
@@ -41,11 +42,11 @@
 									{% set icon = 'key.png' %}
 									{% set title = 'Authorize' %}
 								{% endif %}
-								<a href="{{ url_for('authorize', alias=alias) }}"><img src="{{ url_for('static', filename=icon) }}" alt="{{ title }}" title="{{ title }}"></a>
+								<a href="{{ url_for('authorize', alias=alias) }}"><img src="{{ url_for('static', filename=icon) }}" alt="{{ title }}" title="{{ title }} {{ service.name }}"></a>
 							{% endif %}
 							</td>
 							<td>
-								<a href="{{ service.docs_url }}"><img src="{{ url_for('static', filename='book.png') }}" alt="Documentation" title="Documentation"></a>
+								<a href="{{ service.docs_url }}"><img src="{{ url_for('static', filename='book.png') }}" alt="Documentation" title="{{ service.name }} Documentation"></a>
 							</td>
 						</tr>
 {% endfor %}
