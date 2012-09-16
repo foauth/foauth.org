@@ -12,9 +12,9 @@ class Yahoo(foauth.providers.OAuth1):
     authorize_url = 'https://api.login.yahoo.com/oauth/v2/request_auth'
     access_token_url = 'https://api.login.yahoo.com/oauth/v2/get_token'
     api_domains = [
+        'social.yahooapis.com',
         'answers.yahooapis.com',
         'messenger.yahooapis.com',
-        'social.yahooapis.com',
         'query.yahooapis.com',
         'mail.yahooapis.com',
     ]
