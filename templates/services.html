@@ -8,6 +8,7 @@
 					<h1>{{ services|count }} Supported Services</h1>
 				</div>
 				<p>{% if current_user.is_authenticated() %} Use the key on the right to authorize a service, or the refresh icon to re-authorize it. We&rsquo;ll automatically re-authorize whenever we can, but you might have to manually re-authorize some services. {% endif %}If you use a service that&rsquo;s not on this list, feel free to <a href="https://github.com/gulopine/foauth.org/issues">request it</a>.</p>
+				{% if current_user.is_authenticated() %}<p>If one of your scripts fell into the wrong hands, you can <a href="{{ url_for('password') }}">change your password</a>.</p>{% endif %}
 				<table class="services condensed-table">
 					<col><col><col>
 					<col width="27">
