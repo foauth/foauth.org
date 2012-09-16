@@ -6,6 +6,7 @@ class Twitter(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.twitter.com/'
     docs_url = 'https://dev.twitter.com/docs'
+    category = 'Social'
 
     # URLs to interact with the API
     request_token_url = 'https://api.twitter.com/oauth/request_token'

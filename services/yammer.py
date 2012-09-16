@@ -5,6 +5,7 @@ class Yammer(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://www.yammer.com/'
     docs_url = 'https://developer.yammer.com/api/'
+    category = 'Social'
 
     # URLs to interact with the API
     authorize_url = 'https://www.yammer.com/dialog/oauth'

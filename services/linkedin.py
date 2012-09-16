@@ -6,6 +6,7 @@ class LinkedIn(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.linkedin.com/'
     docs_url = 'https://developer.linkedin.com/documents/linkedin-api-resource-map'
+    category = 'Social'
 
     # URLs to interact with the API
     request_token_url = 'https://api.linkedin.com/uas/oauth/requestToken'

@@ -5,6 +5,7 @@ class Meetup(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://www.meetup.com/'
     docs_url = 'http://www.meetup.com/meetup_api/'
+    category = 'Social'
 
     # URLs to interact with the API
     authorize_url = 'https://secure.meetup.com/oauth2/authorize'

@@ -5,6 +5,7 @@ class Flickr(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.flickr.com/'
     docs_url = 'http://www.flickr.com/services/api/'
+    category = 'Pictures'
 
     # URLs to interact with the API
     request_token_url = 'http://www.flickr.com/services/oauth/request_token'

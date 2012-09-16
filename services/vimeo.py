@@ -5,6 +5,7 @@ class Vimeo(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://vimeo.com/'
     docs_url = 'http://developer.vimeo.com/apis/advanced'
+    category = 'Videos'
 
     # URLs to interact with the API
     request_token_url = 'https://vimeo.com/oauth/request_token'

@@ -12,6 +12,7 @@ class LastFM(foauth.providers.OAuth2):
     name = 'last.fm'
     provider_url = 'http://last.fm/'
     docs_url = 'http://www.last.fm/api/intro'
+    category = 'Music'
 
     # URLs to interact with the API
     authorize_url = 'http://www.last.fm/api/auth/'

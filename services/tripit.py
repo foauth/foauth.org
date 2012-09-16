@@ -5,6 +5,7 @@ class TripIt(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.tripit.com/'
     docs_url = 'http://tripit.github.com/api/doc/v1/'
+    category = 'Travel'
 
     # URLs to interact with the API
     request_token_url = 'https://api.tripit.com/oauth/request_token'

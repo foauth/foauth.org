@@ -6,6 +6,7 @@ class Dropbox(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.dropbox.com/'
     docs_url = 'https://www.dropbox.com/developers/reference/api'
+    category = 'Files'
 
     # URLs to interact with the API
     request_token_url = 'https://api.dropbox.com/1/oauth/request_token'

@@ -5,6 +5,7 @@ class Bitbucket(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://bitbucket.org/'
     docs_url = 'http://confluence.atlassian.com/display/BITBUCKET/Using+the+Bitbucket+REST+APIs'
+    category = 'Code'
 
     # URLs to interact with the API
     request_token_url = 'https://bitbucket.org/api/1.0/oauth/request_token/'

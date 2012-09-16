@@ -6,6 +6,7 @@ class Evernote(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.evernote.com/'
     docs_url = 'https://www.evernote.com/about/developer/api/'
+    category = 'Notes'
 
     # URLs to interact with the API
     request_token_url = 'https://www.evernote.com/oauth'

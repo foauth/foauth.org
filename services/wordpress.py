@@ -6,6 +6,7 @@ class Wordpress(foauth.providers.OAuth2):
     name = 'WordPress.com'
     provider_url = 'https://www.wordpress.com/'
     docs_url = 'http://developer.wordpress.com/docs/api/'
+    category = 'Blogs'
 
     # URLs to interact with the API
     authorize_url = 'https://public-api.wordpress.com/oauth2/authorize'

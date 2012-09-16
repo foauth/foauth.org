@@ -12,6 +12,7 @@ class Disqus(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://disqus.com/'
     docs_url = 'http://disqus.com/api/docs/'
+    category = 'Social'
 
     # URLs to interact with the API
     authorize_url = 'https://disqus.com/api/oauth/2.0/authorize/'

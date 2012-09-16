@@ -5,6 +5,7 @@ class Plurk(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'http://www.plurk.com/'
     docs_url = 'http://www.plurk.com/API#toc'
+    category = 'Social'
 
     # URLs to interact with the API
     request_token_url = 'https://www.plurk.com/OAuth/request_token'

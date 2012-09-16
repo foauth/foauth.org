@@ -6,6 +6,7 @@ class Imgur(foauth.providers.OAuth1):
     name = 'imgur'
     provider_url = 'http://imgur.com/'
     docs_url = 'http://api.imgur.com/'
+    category = 'Pictures'
 
     # URLs to interact with the API
     request_token_url = 'https://api.imgur.com/oauth/request_token'

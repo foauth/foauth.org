@@ -6,6 +6,7 @@ class GetSatisfaction(foauth.providers.OAuth1):
     name = 'Get Satisfaction'
     provider_url = 'http://getsatisfaction.com/'
     docs_url = 'http://getsatisfaction.com/developers/api-resources'
+    category = 'Support'
 
     # URLs to interact with the API
     request_token_url = 'http://getsatisfaction.com/api/request_token'

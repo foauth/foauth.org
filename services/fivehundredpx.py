@@ -7,6 +7,7 @@ class FiveHundredPX(foauth.providers.OAuth1):
     name = '500px'
     provider_url = 'http://500px.com/'
     docs_url = 'https://github.com/500px/api-documentation'
+    category = 'Pictures'
 
     # URLs to interact with the API
     request_token_url = 'https://api.500px.com/v1/oauth/request_token'
