@@ -80,8 +80,6 @@ class OAuth(object):
     def get_scope_string(self, scopes):
         return ''
 
-    # The remainder of the API must be implemented for each flavor of OAuth
-
     def authorize(self):
         redirect_uri = self.get_redirect_uri()
         params = self.get_authorize_params(redirect_uri=redirect_uri)
@@ -89,6 +87,8 @@ class OAuth(object):
         return flask.redirect(req.full_url)
 
     def callback(self, data):
+    # The remainder of the API must be implemented for each flavor of OAuth
+
         """
         Receives the full callback from the service and returns a 2-tuple
         containing the user token and user secret (if applicable).
