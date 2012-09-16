@@ -17,7 +17,7 @@ def forbidden(e):
 
 @config.app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', signup=forms.Signup())
+    return render_template('index.html', form=forms.Signup())
 
 
 @config.app.route('/about/', methods=['GET'])
@@ -74,7 +74,7 @@ def signup():
         login_user(user)
         return redirect(url_for('services'))
     else:
-        return render_template('index.html', signup=form)
+        return render_template('index.html', form=form)
 
 
 @config.app.route('/services/', methods=['GET'])
