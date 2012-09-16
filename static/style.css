@@ -107,6 +107,10 @@ dd {
 	margin-bottom: 9px;
 }
 
+.nav img {
+	vertical-align: bottom;
+}
+
 .services a,
 .btn {
 	display: inline-block;

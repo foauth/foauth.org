@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block nav %}{{ nav('login') }}{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-header">
+        <h1>Log into foauth.org</h1>
+    </div>
+    <div class="row">
+        <div class="span8">
+            <form action="{{ url_for('login') }}" method="post" class="row">
+                {{ form.csrf_token }}
+                <p class="span8">
+                    {% if form.errors.email %}
+                    <strong class="error">{{ form.errors.email.0|safe }}</strong>
+                    {% endif %}
+                    <input class="span8" type="text" id="login_email" name="email" {% if form.data.email %}value="{{ form.data.email }}"{% endif %} placeholder="{{ form.email.label.text }}">
+                </p>
+                <p class="span8">
+                    {% if form.errors.password %}
+                    <strong class="error">{{ form.errors.password.0|safe }}</strong>
+                    {% endif %}
+                    <input class="span8" type="password" id="login_password" name="password" placeholder="{{ form.password.label.text }}">
+                </p>
+                <button type="submit" class="span8 btn primary">Log in</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
