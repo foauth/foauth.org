@@ -77,6 +77,24 @@ def signup():
         return render_template('index.html', form=form)
 
 
+@config.app.route('/password/', methods=['GET'])
+def password():
+    return render_template('password.html', form=forms.Password())
+
+
+@config.app.route('/password/', methods=['POST'])
+@login_required
+def password_post():
+    form = forms.Password(request.form)
+    if form.validate():
+        current_user.set_password(form.data['password'])
+        models.db.session.add(current_user)
+        models.db.session.commit()
+        return redirect(url_for('services'))
+    else:
+        return render_template('password.html', form=form)
+
+
 @config.app.route('/services/', methods=['GET'])
 def services():
     services = sorted((s.alias, s) for s in config.services)
