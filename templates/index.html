@@ -18,28 +18,28 @@
 			{% else %}
 			<p>This is the entire form. No joke.</p>
 			<form action="{{ url_for('signup') }}" method="post" class="row">
-				{{ signup.csrf_token }}
+				{{ form.csrf_token }}
 				<p class="span8">
-					{% if signup.errors.email %}
-					<strong class="error">{{ signup.errors.email.0|safe }}</strong>
+					{% if form.errors.email %}
+					<strong class="error">{{ form.errors.email.0|safe }}</strong>
 					{% endif %}
-					<input class="span8" type="text" id="signup_email" name="email" {% if signup.data.email %}value="{{ signup.data.email }}"{% endif %} placeholder="{{ signup.email.label.text }}">
+					<input class="span8" type="text" id="signup_email" name="email" {% if form.data.email %}value="{{ form.data.email }}"{% endif %} placeholder="{{ form.email.label.text }}">
 				</p>
 				<p class="span4">
-					<input class="span4" type="password" id="signup_password" name="password" placeholder="{{ signup.password.label.text }}">
+					<input class="span4" type="password" id="signup_password" name="password" placeholder="{{ form.password.label.text }}">
 				</p>
 				<p class="span4">
-					{% if signup.errors.password %}
-					<strong class="error">{{ signup.errors.password.0|safe }}</strong>
+					{% if form.errors.password %}
+					<strong class="error">{{ form.errors.password.0|safe }}</strong>
 					{% endif %}
-					<input class="span4" type="password" id="signup_retype" name="retype" placeholder="{{ signup.retype.label.text }}">
+					<input class="span4" type="password" id="signup_retype" name="retype" placeholder="{{ form.retype.label.text }}">
 				</p>
 				<p class="span8 consent">
-					{% if signup.errors.consent %}
-					<strong class="error">{{ signup.errors.consent.0|safe }}</strong>
+					{% if form.errors.consent %}
+					<strong class="error">{{ form.errors.consent.0|safe }}</strong>
 					{% endif %}
 					<label>
-						<input type="checkbox" name="consent" {% if signup.data.consent %}checked{% endif %}>
+						<input type="checkbox" name="consent" {% if form.data.consent %}checked{% endif %}>
 						Accept the <a href="{{ url_for('terms') }}">terms of service</a>.
 					</label>
 					Don&rsquo;t worry, they&rsquo;re really simple.
