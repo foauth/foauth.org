@@ -51,7 +51,7 @@ class LastFM(foauth.providers.OAuth2):
         return flask.redirect(req.full_url)
 
     def api(self, key, domain, path):
-        url = 'http://%s/%s' % (domain, path)
+        url = 'http://%s%s' % (domain, path)
         auth = Session(self.client_id, self.client_secret, key.access_token)
         return requests.request(flask.request.method, url, auth=auth,
                                 params=flask.request.args,
