@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-{% import 'nav.html' as nav %}
 
-{% block nav %}{{ nav.select('services') }}{% endblock %}
+{% block nav %}{{ nav('services') }}{% endblock %}
 
 {% block content %}
 			<div class="content">
