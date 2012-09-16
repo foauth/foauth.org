@@ -33,7 +33,7 @@ class LastFM(foauth.providers.OAuth2):
             'api_key': self.client_id,
         }
 
-    def callback(self, data):
+    def callback(self, data, *args, **kwargs):
         auth = Session(self.client_id, self.client_secret, data['token'])
         params = {
             'method': 'auth.getSession',
