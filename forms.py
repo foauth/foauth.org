@@ -19,7 +19,7 @@ class Signup(Form):
 
     def validate_email(form, field):
         if models.User.query.filter_by(email=field.data).count():
-            raise validators.ValidationError('Looks like you&rsquo;ve already registered. Try the login box at the top.')
+            raise validators.ValidationError('Looks like you&rsquo;ve already registered. Try logging in instead.')
 
 
 class Login(Form):
