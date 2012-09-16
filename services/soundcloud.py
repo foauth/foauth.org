@@ -17,6 +17,6 @@ class SoundCloud(foauth.providers.OAuth2):
     ]
 
     def bearer_type(self, token, r):
-        r.url =  utils.add_params_to_uri(r.url, [((u'oauth_token', token))])
+        r.url = utils.add_params_to_uri(r.url, [((u'oauth_token', token))])
         return r
 
