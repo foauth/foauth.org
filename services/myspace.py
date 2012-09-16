@@ -16,4 +16,3 @@ class MySpace(foauth.providers.OAuth1):
     available_permissions = [
         (None, 'read and write your social information'),
     ]
-
