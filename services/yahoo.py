@@ -30,3 +30,5 @@ class Yahoo(foauth.providers.OAuth1):
         (None, 'read, write and delete updates information from your updates stream'),
     ]
 
+    https = False
+
