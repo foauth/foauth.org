@@ -4,7 +4,7 @@ import models
 
 
 class Signup(Form):
-    email = TextField('Email', [
+    email = TextField('Email address', [
         validators.Required('It&rsquo;s okay, we won&rsquo;t email you unless you want us to.'),
         validators.Email('Um, that doesn&rsquo;t look like an email address.'),
     ])
@@ -12,7 +12,7 @@ class Signup(Form):
         validators.Required('How else will we know it&rsquo;s really you?'),
         validators.EqualTo('retype', message='If you can&rsquo;t type it twice now, you&rsquo;ll never be able to login with it.')
     ])
-    retype = PasswordField('(again)')
+    retype = PasswordField('Password (again)')
     consent = BooleanField('Accept the Terms', [
         validators.Required('Don&rsquo;t worry, they&rsquo;re really simple.')
     ])
@@ -23,7 +23,7 @@ class Signup(Form):
 
 
 class Login(Form):
-    email = TextField('Email', validators=[
+    email = TextField('Email address', validators=[
         validators.Email('Please supply an email address.')
     ])
     password = PasswordField('Password', validators=[
