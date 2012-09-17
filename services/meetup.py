@@ -20,3 +20,6 @@ class Meetup(foauth.providers.OAuth2):
         ('ageless', 'keep the authorization active for two weeks'),
     ]
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/2/profiles?member_id=self')
+        return unicode(r.json[u'results'][0][u'member_id'])

@@ -27,3 +27,8 @@ class Flickr(foauth.providers.OAuth1):
         params['perms'] = self.available_permissions[0][0]
         return params
 
+    def get_user_id(self, key):
+        url = u'/services/rest/?method=flickr.people.getLimits'
+        url += u'&format=json&nojsoncallback=1'
+        r = self.api(key, self.api_domain, url)
+        return r.json[u'person'][u'nsid']

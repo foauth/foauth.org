@@ -23,3 +23,7 @@ class LinkedIn(foauth.providers.OAuth1):
             raise OAuthDenied('Denied access to LinkedIn')
 
         return super(LinkedIn, self).callback(data, *args, **kwargs)
+
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/v1/people/~:(id)?format=json')
+        return r.json[u'id']

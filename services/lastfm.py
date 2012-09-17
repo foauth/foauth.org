@@ -58,6 +58,11 @@ class LastFM(foauth.providers.OAuth2):
                                 params=flask.request.args,
                                 data=flask.request.form or flask.request.data)
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/2.0/?method=user.getInfo')
+        dom = minidom.parseString(r.content)
+        return dom.getElementsByTagName('id')[0].firstChild.nodeValue
+
 
 class Session(object):
     def __init__(self, client_id, client_secret, token):

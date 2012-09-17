@@ -1,3 +1,5 @@
+from xml.dom import minidom
+
 import foauth.providers
 
 
@@ -17,3 +19,7 @@ class TripIt(foauth.providers.OAuth1):
         (None, 'read, create and modify your trips'),
     ]
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/v1/get/profile')
+        dom = minidom.parseString(r.content)
+        return dom.getElementsByTagName('Profile')[0].getAttribute('ref')

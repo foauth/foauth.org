@@ -18,3 +18,7 @@ class Miso(foauth.providers.OAuth1):
     ]
 
     https = False
+
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/api/oauth/v1/users/show.json')
+        return unicode(r.json[u'user'][u'id'])

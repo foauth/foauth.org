@@ -22,3 +22,6 @@ class Instagram(foauth.providers.OAuth2):
     bearer_type = foauth.providers.BEARER_URI
     supports_state = False
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/v1/users/self')
+        return r.json[u'data'][u'id']

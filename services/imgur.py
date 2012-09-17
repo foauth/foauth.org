@@ -17,3 +17,7 @@ class Imgur(foauth.providers.OAuth1):
     available_permissions = [
         (None, 'read and write to your images'),
     ]
+
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/2/account.json')
+        return unicode(r.json[u'account'][u'url'])

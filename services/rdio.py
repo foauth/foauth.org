@@ -30,3 +30,8 @@ class Rdio(foauth.providers.OAuth1):
             self.authorize_url = data['login_url']
         return super(Rdio, self).parse_token(content)
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/1/', method='POST', data={
+            'method': 'currentUser',
+        })
+        return unicode(r.json[u'result'][u'key'])

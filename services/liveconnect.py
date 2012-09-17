@@ -39,3 +39,6 @@ class LiveConnect(foauth.providers.OAuth2):
 
     bearer_type = foauth.providers.BEARER_URI
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/v5.0/me')
+        return r.json[u'id']

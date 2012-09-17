@@ -25,3 +25,6 @@ class DeviantArt(foauth.providers.OAuth2):
 
     bearer_type = draft10
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/api/draft15/user/whoami')
+        return r.json[u'username']

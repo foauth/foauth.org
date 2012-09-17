@@ -20,3 +20,6 @@ class Dropbox(foauth.providers.OAuth1):
         (None, 'read and write to your entire Dropbox'),
     ]
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domains[0], u'/1/account/info')
+        return unicode(r.json[u'uid'])
