@@ -147,18 +147,19 @@ class OAuth1(OAuth):
         except Exception:
             raise OAuthError('Unable to parse access token')
 
-    def api(self, key, domain, path):
+    def api(self, key, domain, path, method=None, params=None, data=None):
         protocol = self.https and 'https' or 'http'
-        url = '%s://%s/%s' % (protocol, domain, path)
+        url = '%s://%s%s' % (protocol, domain, path)
         auth = requests.auth.OAuth1(client_key=self.client_id,
                                     client_secret=self.client_secret,
                                     resource_owner_key=key.access_token,
                                     resource_owner_secret=key.secret,
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
-        return requests.request(flask.request.method, url, auth=auth,
-                                params=flask.request.args,
-                                data=flask.request.form or flask.request.data)
+        method = method or flask.request.method
+        params = params or flask.request.args
+        data = data or flask.request.form or flask.request.data
+        return requests.request(method, url, params=params, data=data, auth=auth)
 
 
 class OAuth2(OAuth):
@@ -216,13 +217,14 @@ class OAuth2(OAuth):
 
         return self.parse_token(resp.content)
 
-    def api(self, key, domain, path):
+    def api(self, key, domain, path, method=None, params=None, data=None):
         protocol = self.https and 'https' or 'http'
-        url = '%s://%s/%s' % (protocol, domain, path)
+        url = '%s://%s%s' % (protocol, domain, path)
         if self.token_type == BEARER:
             auth = Bearer(key.access_token, bearer_type=self.bearer_type)
-        return requests.request(flask.request.method, url, auth=auth,
-                                params=flask.request.args,
-                                data=flask.request.form or flask.request.data)
+        method = method or flask.request.method
+        params = params or flask.request.args
+        data = data or flask.request.form or flask.request.data
+        return requests.request(method, url, params=params, data=data, auth=auth)
 
 
