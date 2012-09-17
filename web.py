@@ -112,6 +112,22 @@ def auth_endpoint(func):
     return wrapper
 
 
+@config.app.route('/oauth_login/', methods=['GET'])
+def oauth_login():
+    services = sorted((s.alias, s) for s in config.services)
+    return render_template('service_login.html', services=services)
+
+
+@config.app.route('/services/<alias>/login', methods=['GET'])
+@auth_endpoint
+def service_login(service):
+    try:
+        return service.login()
+    except OAuthError, e:
+        flash('Error occured while authorizing %s' % service.name, 'error')
+        return redirect(url_for('oauth_login'))
+
+
 @config.app.route('/services/<alias>/authorize', methods=['GET'])
 @login_required
 @auth_endpoint
@@ -150,6 +166,33 @@ def callback(service):
 
     models.db.session.commit()
     return redirect(url_for('services'))
+
+
+@config.app.route('/services/<alias>/callback/login', methods=['GET'])
+@auth_endpoint
+def login_callback(service):
+    try:
+        data = service.callback(request.args, 'login_callback')
+    except OAuthError:
+        flash('Error occurred while authorizing %s' % service.name, 'error')
+        return redirect(url_for('oauth_login'))
+
+    except OAuthDenied, e:
+        # User denied the authorization request
+        flash(e.args[0], 'error')
+        return redirect(url_for('oauth_login'))
+
+    key = models.Key()
+    key.update(data)
+    user_id = service.get_user_id(key)
+    user_key = models.Key.query.filter_by(service_alias=service.alias,
+                                          service_user_id=user_id).first()
+    if user_key:
+        login_user(user_key.user)
+        return redirect(url_for('password'))
+    else:
+        flash('Unable to log in using %s' % service.name, 'error')
+        return redirect(url_for('oauth_login'))
 
 
 @config.app.route('/<domain>/<path:path>', methods=['OPTIONS', 'GET', 'PUT', 'POST', 'PATCH', 'DELETE'])
