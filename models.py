@@ -53,6 +53,7 @@ class Key(db.Model):
     secret = db.Column(db.String)
     expires = db.Column(db.DateTime)
     refresh_token = db.Column(db.String)
+    service_user_id = db.Column(db.String)
 
     user = db.relationship('User', backref=db.backref('keys', lazy='dynamic'))
 

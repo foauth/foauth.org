@@ -135,6 +135,7 @@ def callback(service):
             user_key = models.Key(user_id=current_user.id,
                                   service_alias=service.alias)
         user_key.update(data)
+        user_key.service_user_id = service.get_user_id(user_key)
         models.db.session.add(user_key)
         flash('Granted access to %s' % service.name, 'success')
 
