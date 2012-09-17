@@ -130,7 +130,7 @@ def callback(service):
     user_key = models.Key.query.filter_by(user_id=current_user.id,
                                           service_alias=service.alias).first()
     try:
-        data = service.callback(request.args)
+        data = service.callback(request.args, 'callback')
         if not user_key:
             user_key = models.Key(user_id=current_user.id,
                                   service_alias=service.alias)
