@@ -1,4 +1,5 @@
 import foauth.providers
+from xml.dom import minidom
 
 
 class Goodreads(foauth.providers.OAuth1):
@@ -18,3 +19,8 @@ class Goodreads(foauth.providers.OAuth1):
     available_permissions = [
         (None, 'read and write to your reading history'),
     ]
+
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/api/auth_user')
+        dom = minidom.parseString(r.content)
+        return dom.getElementsByTagName('user')[0].getAttribute('id')

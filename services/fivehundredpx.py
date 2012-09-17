@@ -18,3 +18,7 @@ class FiveHundredPX(foauth.providers.OAuth1):
     available_permissions = [
         (None, 'access and manage your photos'),
     ]
+
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domains[0], u'/v1/users')
+        return unicode(r.json[u'user'][u'id'])

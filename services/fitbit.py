@@ -16,3 +16,7 @@ class FitBit(foauth.providers.OAuth1):
     available_permissions = [
         (None, 'read and write your fitness data'),
     ]
+
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/1/user/-/profile.json')
+        return r.json[u'user'][u'encodedId']

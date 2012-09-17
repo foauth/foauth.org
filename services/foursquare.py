@@ -21,3 +21,6 @@ class Foursquare(foauth.providers.OAuth2):
         r.url = utils.add_params_to_uri(r.url, [((u'oauth_token', token))])
         return r
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/v2/users/self')
+        return r.json[u'response'][u'user'][u'id']

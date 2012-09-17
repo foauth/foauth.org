@@ -17,3 +17,6 @@ class Wordpress(foauth.providers.OAuth2):
         (None, 'read and post to your blog'),
     ]
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/rest/v1/me')
+        return unicode(r.json[u'ID'])

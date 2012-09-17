@@ -19,3 +19,6 @@ class Plurk(foauth.providers.OAuth1):
 
     https = False
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/APP/Users/currUser')
+        return unicode(r.json[u'id'])

@@ -1,3 +1,5 @@
+from xml.dom import minidom
+
 import foauth.providers
 
 
@@ -33,3 +35,7 @@ class Yahoo(foauth.providers.OAuth1):
 
     https = False
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domains[0], u'/v1/me/guid')
+        dom = minidom.parseString(r.content)
+        return dom.getElementsByTagName('value')[0].firstChild.nodeValue

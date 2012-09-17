@@ -21,3 +21,6 @@ class SoundCloud(foauth.providers.OAuth2):
         r.url = utils.add_params_to_uri(r.url, [((u'oauth_token', token))])
         return r
 
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/me.json')
+        return unicode(r.json[u'id'])
