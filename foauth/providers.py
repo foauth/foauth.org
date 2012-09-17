@@ -86,6 +86,12 @@ class OAuth(object):
         req = requests.Request(self.authorize_url, params=params)
         return flask.redirect(req.full_url)
 
+    def login(self):
+        redirect_uri = self.get_redirect_uri('login_callback')
+        params = self.get_authorize_params(redirect_uri=redirect_uri)
+        req = requests.Request(self.authorize_url, params=params)
+        return flask.redirect(req.full_url)
+
     # The remainder of the API must be implemented for each flavor of OAuth
 
     def callback(self, data, url_name):

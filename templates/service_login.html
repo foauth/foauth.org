@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block nav %}{{ nav('login') }}{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="page-header">
+        <h1>Log in using an authorized service</h1>
+    </div>
+    <div class="row">
+        <p class="span16">You can use a service you&rsquo;ve already authorized to gain access to your foauth.org account in order to change your password. If you use one that doesn&rsquo;t already exist on your account, this won&rsquo;t create a new account, so you don&rsquo;t have to worry about creating a duplicate.</p>
+        <div class="span16">
+            <table class="services condensed-table">
+                {% for row in services|batch(6) %}
+                <tr>
+                    {% for alias, service in row %}
+                    <td width="12.5%">
+                        <img class="favicon" src="{{ service.favicon_url }}">
+                        <a href="{{ url_for('service_login', alias=alias) }}">{{ service.name }}</a>
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

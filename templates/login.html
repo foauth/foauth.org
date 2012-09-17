@@ -26,6 +26,9 @@
                 <button type="submit" class="span8 btn primary">Log in</button>
             </form>
         </div>
+        <div class="span8">
+            <p>If you&rsquo;ve forgotten your password, you can instead <a href="{{ url_for('oauth_login') }}">log in using one of the services you&rsquo;ve already authorized</a>. As long as you use an account that&rsquo;s already on file here, we&rsquo;ll let you in long enough to change your password.</p>
+        </div>
     </div>
 </div>
 {% endblock %}
