@@ -162,9 +162,10 @@ class OAuth1(OAuth):
                                     resource_owner_secret=key.secret,
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
-        method = method or flask.request.method
-        params = params or flask.request.args
-        data = data or flask.request.form or flask.request.data
+        req = flask.request
+        method = method or (req and req.method) or 'GET'
+        params = params or (req and req.args) or {}
+        data = data or (req and (req.form or req.data)) or {}
         return requests.request(method, url, params=params, data=data, auth=auth)
 
 
@@ -228,9 +229,10 @@ class OAuth2(OAuth):
         url = '%s://%s%s' % (protocol, domain, path)
         if self.token_type == BEARER:
             auth = Bearer(key.access_token, bearer_type=self.bearer_type)
-        method = method or flask.request.method
-        params = params or flask.request.args
-        data = data or flask.request.form or flask.request.data
+        req = flask.request
+        method = method or (req and req.method) or 'GET'
+        params = params or (req and req.args) or {}
+        data = data or (req and (req.form or req.data)) or {}
         return requests.request(method, url, params=params, data=data, auth=auth)
 
 
