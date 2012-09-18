@@ -62,7 +62,7 @@ class Key(db.Model):
         if not self.service_alias:
             raise AttributeError('No service specified.')
         try:
-            return config.services[self.service_alias]
+            return config.alias_map[self.service_alias]
         except KeyError:
             raise AttributeError('%r is not a valid service.' % self.service_alias)
 
