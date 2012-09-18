@@ -10,7 +10,6 @@
         {% if current_user.is_authenticated() %}
         <li{% if section == 'password' %} class="active"{% endif %}><a href="{{ url_for('password') }}">Change password</a></li>
         <li><a href="{{ url_for('logout') }}">Log out</a></li>
-        <li><a href="{{ url_for('logout') }}">Sign out of {{ current_user.email }}</a></li>
         {% else %}
         <li{% if section == 'login' %} class="active"{% endif %}>
             <a href="{{ url_for('login') }}">
