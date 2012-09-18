@@ -80,6 +80,16 @@ class Key(db.Model):
     def is_expired(self):
         return self.expires and self.expires < datetime.datetime.now()
 
+    def fill_user_id(self):
+        try:
+            self.service_user_id = self.service.get_user_id(self)
+        except Exception:
+            # Normally `except Exception` would be a tremendously terrible
+            # idea, but in this case a lot of things can go wrong, and the
+            # end result is simply that the key couldn't be retrieved. In
+            # that case, we can still handle it gracefully and return None.
+            self.service_user_id = None
+
 
 login_manager = login.LoginManager()
 login_manager.setup_app(config.app)
