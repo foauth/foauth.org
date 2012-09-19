@@ -18,9 +18,9 @@ class GetGlue(foauth.providers.OAuth1):
         (None, 'read and write your social checkins'),
     ]
 
-    def get_authorize_params(self):
+    def get_authorize_params(self, redirect_uri):
         # GetGlue doesn't parrot this back, so we have to save it
-        params = super(GetGlue, self).get_authorize_params()
+        params = super(GetGlue, self).get_authorize_params(redirect_uri)
         flask.session['%s_temp_token' % self.alias] = params['oauth_token']
         return params
 
