@@ -29,7 +29,7 @@
 {% endfor %}">{{ service.available_permissions|count }} permissions</abbr>{% else %}{{ service.available_permissions[0][1] }}{% endif %}</td>
 							<td>
 							{% if key and key.expires %}
-								{% if key.refresh_token %}Refreshes{% else %}Expires{% endif %}
+								{% if key.refresh_token %}Refreshes{% else %}Expire{% if key.is_expired() %}d{% else %}s{% endif %}{% endif %}
 								on {{ key.expires.strftime("%Y-%m-%d") }}
 							{% endif %}
 							</td>
