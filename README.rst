@@ -1,5 +1,5 @@
-foauth.org makes OAuth optional
-===============================
+foauth.org: OAuth for one
+=========================
 
 `OAuth`_ is a great idea for interaction between big sites with lots of users.
 But, as one of those users, it's a pretty terrible way to get at your own data.
