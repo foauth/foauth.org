@@ -59,8 +59,8 @@ class Google(foauth.providers.OAuth2):
         # TODO: Find more and add them here
     ]
 
-    def get_authorize_params(self):
-        params = super(Google, self).get_authorize_params()
+    def get_authorize_params(self, redirect_uri):
+        params = super(Google, self).get_authorize_params(redirect_uri)
         params['access_type'] = 'offline'
         return params
 

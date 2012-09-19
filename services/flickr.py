@@ -22,8 +22,8 @@ class Flickr(foauth.providers.OAuth1):
 
     https = False
 
-    def get_authorize_params(self):
-        params = super(Flickr, self).get_authorize_params()
+    def get_authorize_params(self, redirect_uri):
+        params = super(Flickr, self).get_authorize_params(redirect_uri)
         params['perms'] = self.available_permissions[0][0]
         return params
 

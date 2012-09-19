@@ -29,7 +29,7 @@ class LastFM(foauth.providers.OAuth2):
         access_token = dom.getElementsByTagName('key')[0].firstChild.nodeValue
         return {'access_token': access_token}
 
-    def get_authorize_params(self):
+    def get_authorize_params(self, redirect_uri):
         return {
             'api_key': self.client_id,
         }
