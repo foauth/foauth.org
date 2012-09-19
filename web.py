@@ -1,3 +1,4 @@
+import datetime
 from functools import wraps
 import os
 
@@ -88,6 +89,15 @@ def password_post():
     form = forms.Password(request.form)
     if form.validate():
         current_user.set_password(form.data['password'])
+
+        # Expire all stored keys, so this can't be used as an attack vector
+        for key in current_user.keys:
+            key.access_token = ''
+            key.refresh_token = ''
+            key.secret = ''
+            key.service_user_id = ''
+            key.expires = datetime.datetime.now()
+
         models.db.session.add(current_user)
         models.db.session.commit()
         return redirect(url_for('services'))
