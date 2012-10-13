@@ -130,6 +130,10 @@ dd {
 	padding-top: 10px;
 }
 
+.services tr {
+	border-bottom: 1px solid whitesmoke;
+}
+
 .services th[scope="col"] {
 	border-bottom: 1px solid #ddd;
 }
