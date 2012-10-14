@@ -1,4 +1,5 @@
 import foauth.providers
+from oauthlib.oauth1.rfc5849 import SIGNATURE_TYPE_QUERY
 
 
 class Netflix(foauth.providers.OAuth1):
@@ -15,3 +16,11 @@ class Netflix(foauth.providers.OAuth1):
     available_permissions = [
         (None, 'read and manage your queue'),
     ]
+
+    https = False
+    signature_type = SIGNATURE_TYPE_QUERY
+
+    def get_authorize_params(self, redirect_uri):
+        params = super(Netflix, self).get_authorize_params(redirect_uri)
+        params['oauth_consumer_key'] = self.client_id
+        return params
