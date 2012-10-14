@@ -145,7 +145,7 @@ class OAuth1(OAuth):
                                     resource_owner_secret=secret,
                                     verifier=verifier,
                                     signature_method=self.signature_method,
-                                    signature_type=SIGNATURE_TYPE_BODY
+                                    signature_type=self.signature_type
         )
         resp = requests.post(self.access_token_url, auth=auth)
         try:
