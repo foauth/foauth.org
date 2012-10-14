@@ -153,7 +153,7 @@ class OAuth1(OAuth):
         except Exception:
             raise OAuthError('Unable to parse access token')
 
-    def api(self, key, domain, path, method=None, params=None, data=None):
+    def api(self, key, domain, path, method='GET', params=None, data=None):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s%s' % (protocol, domain, path)
         auth = requests.auth.OAuth1(client_key=self.client_id,
@@ -162,11 +162,8 @@ class OAuth1(OAuth):
                                     resource_owner_secret=key.secret,
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
-        req = flask.request
-        method = method or (req and req.method) or 'GET'
-        params = params or (req and req.args) or {}
-        data = data or (req and (req.form or req.data)) or {}
-        return requests.request(method, url, params=params, data=data, auth=auth)
+        return requests.request(method, url, auth=auth, params=params or {},
+                                data=data or {})
 
 
 class OAuth2(OAuth):
@@ -224,15 +221,10 @@ class OAuth2(OAuth):
 
         return self.parse_token(resp.content)
 
-    def api(self, key, domain, path, method=None, params=None, data=None):
+    def api(self, key, domain, path, method='GET', params=None, data=None):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s%s' % (protocol, domain, path)
         if self.token_type == BEARER:
             auth = Bearer(key.access_token, bearer_type=self.bearer_type)
-        req = flask.request
-        method = method or (req and req.method) or 'GET'
-        params = params or (req and req.args) or {}
-        data = data or (req and (req.form or req.data)) or {}
-        return requests.request(method, url, params=params, data=data, auth=auth)
-
-
+        return requests.request(method, url, auth=auth, params=params or {},
+                                data=data or {})

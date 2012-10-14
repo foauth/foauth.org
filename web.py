@@ -226,7 +226,8 @@ def api(domain, path):
                 abort(404)
 
             key = get_user_key(service, user)
-            resp = service.api(key, domain, '/%s' % path)
+            resp = service.api(key, domain, '/%s' % path, request.method,
+                               request.args, request.form or request.data)
             content = resp.raw.read()
 
             if 'Transfer-Encoding' in resp.headers and \
