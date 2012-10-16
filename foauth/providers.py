@@ -100,7 +100,7 @@ class OAuth(object):
         """
         raise NotImplementedError("callback() must be defined in a subclass")
 
-    def api(self, key, domain, path):
+    def api(self, key, domain, path, method='GET', params=None, data=None):
         """
         Passes along an API request to the service and returns the response.
         """
