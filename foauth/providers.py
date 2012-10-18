@@ -145,7 +145,8 @@ class OAuth1(OAuth):
                                     verifier=verifier,
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
-        resp = requests.post(self.access_token_url, auth=auth)
+        resp = requests.post(self.access_token_url, auth=auth,
+                             headers={'Content-Length': '0'})
         try:
             return self.parse_token(resp.content)
         except Exception:
