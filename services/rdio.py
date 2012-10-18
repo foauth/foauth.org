@@ -1,5 +1,4 @@
 from werkzeug.urls import url_decode
-from oauthlib.oauth1.rfc5849 import SIGNATURE_TYPE_BODY
 
 import foauth.providers
 
@@ -21,7 +20,6 @@ class Rdio(foauth.providers.OAuth1):
     ]
 
     https = False
-    signature_type = SIGNATURE_TYPE_BODY
 
     def parse_token(self, content):
         # Override standard token request to also get the authorization URL
