@@ -152,7 +152,8 @@ class OAuth1(OAuth):
         except Exception:
             raise OAuthError('Unable to parse access token')
 
-    def api(self, key, domain, path, method='GET', params=None, data=None):
+    def api(self, key, domain, path, method='GET', params=None, data=None,
+            headers=None):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s%s' % (protocol, domain, path)
         auth = requests.auth.OAuth1(client_key=self.client_id,
@@ -162,7 +163,7 @@ class OAuth1(OAuth):
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
         return requests.request(method, url, auth=auth, params=params or {},
-                                data=data or {})
+                                data=data or {}, headers=headers or {})
 
 
 class OAuth2(OAuth):
@@ -220,10 +221,11 @@ class OAuth2(OAuth):
 
         return self.parse_token(resp.content)
 
-    def api(self, key, domain, path, method='GET', params=None, data=None):
+    def api(self, key, domain, path, method='GET', params=None, data=None,
+            headers=None):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s%s' % (protocol, domain, path)
         if self.token_type == BEARER:
             auth = Bearer(key.access_token, bearer_type=self.bearer_type)
         return requests.request(method, url, auth=auth, params=params or {},
-                                data=data or {})
+                                data=data or {}, headers=headers or {})
