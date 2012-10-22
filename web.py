@@ -227,7 +227,8 @@ def api(domain, path):
 
             key = get_user_key(service, user)
             resp = service.api(key, domain, '/%s' % path, request.method,
-                               request.args, request.form or request.data)
+                               request.args, request.form or request.data,
+                               prepare_headers(request.headers))
             content = resp.raw.read()
 
             if 'Transfer-Encoding' in resp.headers and \
@@ -243,6 +244,23 @@ def api(domain, path):
                                              resp.status_code,
                                              resp.headers))
     abort(403)
+
+
+def prepare_headers(headers):
+    # Make sure we have a mutable dictionary
+    headers = dict(headers)
+
+    # These are specific to foauth.org
+    del headers['Host']
+    del headers['Authorization']
+
+    # These are invalid if using the empty defaults
+    if 'Content-Length' in headers and headers['Content-Length'] == '':
+        del headers['Content-Length']
+    if 'Content-Type' in headers and headers['Content-Type'] == '':
+        del headers['Content-Type']
+
+    return headers
 
 
 def get_user_key(service, user):
