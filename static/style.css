@@ -131,6 +131,7 @@ dd {
 
 .service .btn {
 	float: right;
+	font-size: inherit;
 	margin-right: 0;
 }
 
