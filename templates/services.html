@@ -20,7 +20,7 @@
 {% endif %}
 						<div class="span6 service {% if loop.first %}offset1{% else %}offset2{% endif %} {% if key %}active{% endif %}">
 							<h2>
-								<img class="favicon" src="{{ service.favicon_url }}">{{ service.name }}
+								{{ service.name }}
 								<span class="expires">
 									{% if key %}
 										{% if key.expires %}
