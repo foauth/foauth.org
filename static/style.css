@@ -121,12 +121,22 @@ abbr {
 }
 
 .services img {
-	vertical-align: top;
 	margin-top: 1px;
 }
 
 .services .favicon {
-	margin-right: .25em;
+	margin-left: -24px;
+	margin-right: 8px;
+}
+
+.service {
+	margin-bottom: 1em;
+}
+
+.service .btn {
+	float: right;
+	font-size: inherit;
+	margin-right: 0;
 }
 
 .services tbody tr:first-child th[scope="row"],
@@ -235,18 +245,11 @@ form .error::before {
 }
 
 .btn img {
-	vertical-align: -3px;
-	padding: .5em;
-	margin: -.5em .25em -.5em -1em;
-	border-right: 1px solid #ccc;
+	vertical-align: top;
 }
 
 .services {
 	padding-right: 1em;
-}
-
-.services .btn {
-	width: 100px;
 }
 
 .services .active th::before {
@@ -266,9 +269,8 @@ form .error::before {
 	height: 16px;
 }
 
-h2 img {
-	float: right;
-	margin-top: 8px;
+h2 .expires {
+	font-weight: normal;
 }
 
 .permissions {
@@ -280,6 +282,10 @@ h2 img {
 	padding: 0;
 	width: auto;
 	float: none;
+}
+
+.links a {
+	margin-right: 1em;
 }
 
 p.footer {
