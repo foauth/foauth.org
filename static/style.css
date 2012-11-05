@@ -134,24 +134,6 @@ abbr {
 	margin-right: 0;
 }
 
-.services tbody tr:first-child th[scope="row"],
-.services tbody tr:first-child td {
-	padding-top: 10px;
-}
-
-.services tr + tr {
-	border-top: 1px solid whitesmoke;
-}
-
-.services th[scope="col"] {
-	border-bottom: 1px solid #ddd;
-}
-
-.services tbody th,
-.services td {
-	border-top: none;
-}
-
 .services .btn {
 	margin-top: -5px;
 }
@@ -245,18 +227,6 @@ form .error::before {
 
 .services {
 	padding-right: 1em;
-}
-
-.services .active th::before {
-	content: url('bullet_key.png');
-	position: absolute;
-	margin: 6px;
-}
-
-.services .error th::before {
-	content: url('bullet_error.png');
-	position: absolute;
-	margin: 6px;
 }
 
 .favicon {
