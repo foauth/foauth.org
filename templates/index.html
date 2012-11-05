@@ -12,7 +12,7 @@
 	</div>
 	<ol class="row">
 		<li class="span8 signup">
-			<h2>Sign up with foauth.org.</h2>
+			<h2>Sign up with foauth.org</h2>
 			{% if current_user.is_authenticated() %}
 			<p>Looks like you&rsquo;ve already signed up. Well done!</p>
 			{% else %}
@@ -49,7 +49,7 @@
 			{% endif %}
 		</li>
 		<li class="span8">
-			<h2>Activate your services.</h2>
+			<h2>Activate your services</h2>
 			{% if current_user.is_authenticated() %}
 			<p>You&rsquo;ve already authorized {{ current_user.keys.count() }} service{% if current_user.keys.count() != 1 %}s{% endif %}, why not <a href="{{ url_for('services') }}">add more</a>?</p>
 			{% else %}
@@ -79,7 +79,7 @@
 			{% endif %}
 		</li>
 		<li class="span16">
-			<h2>Access your own data.</h2>
+			<h2>Access your own data</h2>
 			<p>Write your own programs to access your data, using HTTP Basic authen&shy;tication, which is much easier to deal with. Most program&shy;ming languages have built-in support for it, and we don&rsquo;t even care which one you use. Sure, <a href="{{ url_for('about') }}">we love Python</a>, but it&rsquo;s okay if you don&rsquo;t.</p>
 			<pre>>>> import <a href="https://github.com/kennethreitz/requests">requests</a>
 >>> auth = 'email@example.com', 'password'
