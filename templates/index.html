@@ -54,26 +54,26 @@
 			<p>You&rsquo;ve already authorized {{ current_user.keys.count() }} service{% if current_user.keys.count() != 1 %}s{% endif %}, why not <a href="{{ url_for('services') }}">add more</a>?</p>
 			{% else %}
 			<p>This only takes a couple clicks if you&rsquo;re already logged in with them. Here are just a few of the <a href="{{ url_for('services') }}">services we support</a>.</p>
-			<table class="services condensed-table">
+			<table class="condensed-table">
 				<tr>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.twitter.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.twitter.com">Twitter</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.twitter.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.twitter.com">Facebook</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/http://www.meetup.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.meetup.com">Meetup</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.twitter.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.twitter.com"> Twitter</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.twitter.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.twitter.com"> Facebook</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/http://www.meetup.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.meetup.com"> Meetup</td>
 				</tr>
 				<tr>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/http://instagram.com?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dinstagram.com">Instagram</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/http://www.flickr.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.flickr.com">Flickr</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/http://vimeo.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dvimeo.com">Vimeo</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/http://instagram.com?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dinstagram.com"> Instagram</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/http://www.flickr.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.flickr.com"> Flickr</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/http://vimeo.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dvimeo.com"> Vimeo</td>
 				</tr>
 				<tr>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/https://github.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgithub.com">GitHub</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/https://bitbucket.org/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dbitbucket.org">Bitbucket</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.dropbox.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.dropbox.com">Dropbox</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/https://github.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgithub.com"> GitHub</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/https://bitbucket.org/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dbitbucket.org"> Bitbucket</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.dropbox.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.dropbox.com"> Dropbox</td>
 				</tr>
 				<tr>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/http://google.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgoogle.com">Google</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/http://www.yahoo.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.yahoo.com">Yahoo!</td>
-					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.live.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.live.com">LiveConnect</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/http://google.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgoogle.com"> Google</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/http://www.yahoo.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.yahoo.com"> Yahoo!</td>
+					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.live.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.live.com"> LiveConnect</td>
 				</tr>
 			</table>
 			{% endif %}
