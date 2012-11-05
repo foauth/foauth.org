@@ -121,7 +121,8 @@ dd {
 }
 
 .services .favicon {
-	margin-right: .25em;
+	margin-left: -24px;
+	margin-right: 8px;
 }
 
 .services tbody tr:first-child th[scope="row"],
