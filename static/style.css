@@ -107,6 +107,10 @@ dd {
 	margin-bottom: 9px;
 }
 
+abbr {
+	border-bottom: 1px dotted #303030;
+}
+
 .nav img {
 	vertical-align: bottom;
 }
