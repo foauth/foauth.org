@@ -240,10 +240,6 @@ form .error::before {
 	padding-right: 1em;
 }
 
-.services .btn {
-	width: 100px;
-}
-
 .services .active th::before {
 	content: url('bullet_key.png');
 	position: absolute;
