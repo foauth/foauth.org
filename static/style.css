@@ -230,10 +230,7 @@ form .error::before {
 }
 
 .btn img {
-	vertical-align: -3px;
-	padding: .5em;
-	margin: -.5em .25em -.5em -1em;
-	border-right: 1px solid #ccc;
+	vertical-align: top;
 }
 
 .services {
