@@ -18,7 +18,7 @@
 {% else %}
 	{% set key = None %}
 {% endif %}
-						<div class="span6 service {% if loop.first %}offset1{% else %}offset2{% endif %} {% if key %}active{% endif %}">
+						<div class="span8 service {% if key %}authorized {% if key.is_expired() %}expired{% endif %}{% endif %}">
 							<h2>
 								{{ service.name }}
 								<span class="expires">
