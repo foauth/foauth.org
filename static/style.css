@@ -125,6 +125,10 @@ dd {
 	margin-right: 8px;
 }
 
+.service {
+	margin-bottom: 1em;
+}
+
 .services tbody tr:first-child th[scope="row"],
 .services tbody tr:first-child td {
 	padding-top: 10px;
