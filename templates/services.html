@@ -48,7 +48,7 @@
 										{% set icon = 'key.png' %}
 										{% set title = 'Authorize' %}
 									{% endif %}
-									<a href="{{ url_for('authorize', alias=alias) }}" class="btn authorize"><img src="{{ url_for('static', filename=icon) }}"> {{ title }}</a>
+									<a href="{{ url_for('authorize', alias=alias) }}" class="btn authorize"><img class="favicon" src="{{ service.favicon_url }}"> {{ title }} {{ service.name }}</a>
 								{% endif %}
 							</p>
 						</div>
