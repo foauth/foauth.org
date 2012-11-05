@@ -129,6 +129,10 @@ dd {
 	margin-bottom: 1em;
 }
 
+.service .btn {
+	margin-right: 0;
+}
+
 .services tbody tr:first-child th[scope="row"],
 .services tbody tr:first-child td {
 	padding-top: 10px;
@@ -272,6 +276,10 @@ h2 .expires {
 	padding: 0;
 	width: auto;
 	float: none;
+}
+
+.links a {
+	margin-right: 1em;
 }
 
 p.footer {
