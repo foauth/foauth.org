@@ -9,48 +9,52 @@
 				</div>
 				<p>{% if current_user.is_authenticated() %} Use the key on the right to authorize a service, or the refresh icon to re-authorize it. We&rsquo;ll automatically re-authorize whenever we can, but you might have to manually re-authorize some services. {% endif %}If you use a service that&rsquo;s not on this list, feel free to <a href="https://github.com/gulopine/foauth.org/issues">request it</a>.</p>
 				{% if current_user.is_authenticated() %}<p>If one of your scripts fell into the wrong hands, you can <a href="{{ url_for('password') }}">change your password</a>.</p>{% endif %}
-				<table class="services condensed-table">
-					<col><col><col>
-					<col width="27">
-					<col width="27">
-					<tbody>
-{% for alias, service in services %}
+				<div class="services container">
+{% for row in services|batch(2) %}
+					<div class="row">
+{% for alias, service in row %}
 {% if current_user.is_authenticated() %}
 	{% set key = current_user.key_for_service(alias) %}
 {% else %}
 	{% set key = None %}
 {% endif %}
-						<tr class="{% if key %}active{% else %}inactive{% endif %}" id="{{ alias }}">
-							<th scope="row">
-								<img class="favicon" src="{{ service.favicon_url }}">
-								<a href="{{ service.provider_url }}">{{ service.name }}</a>
-							</th>
-							<td>{% if service.available_permissions|count > 1 %}<abbr title="{% for scope, perm in service.available_permissions %}{{ perm }}
-{% endfor %}">{{ service.available_permissions|count }} permissions</abbr>{% else %}{{ service.available_permissions[0][1] }}{% endif %}</td>
-							<td>
-							{% if key and key.expires %}
-								{% if key.refresh_token %}Refreshes{% else %}Expire{% if key.is_expired() %}d{% else %}s{% endif %}{% endif %}
-								on {{ key.expires.strftime("%Y-%m-%d") }}
-							{% endif %}
-							</td>
-							<td>
-							{% if current_user.is_authenticated() %}
-								{% if key %}
-									{% set icon = 'arrow_refresh.png' %}
-									{% set title = 'Re-authorize' %}
-								{% else %}
-									{% set icon = 'key.png' %}
-									{% set title = 'Authorize' %}
+						<div class="span7 service offset1 {% if key %}active{% endif %}">
+							<h2>
+								<img class="favicon" src="{{ service.favicon_url }}">{{ service.name }}
+								<span class="expires">
+									{% if key %}
+										{% if key.expires %}
+											{% if key.refresh_token %}will refresh{% else %}{% if key.is_expired() %}expired{% else %}will expire{% endif %}{% endif %}
+											on {{ key.expires.strftime("%Y-%m-%d") }}
+										{% else %}
+											has been authorized
+										{% endif %}
+									{% endif %}
+								</span>
+							</h2>
+							<p>
+								You can {{ service.available_permissions[0][1] }}{% if service.available_permissions|count > 1 %}
+								and <abbr title="{% for scope, perm in service.available_permissions[1:] %}{{ perm }}
+{% endfor %}">{{ service.available_permissions|count - 1 }} other {% if service.available_permissions|count > 2 %}activities{% else %}activity{% endif %}</abbr>{% endif %}.
+							</p>
+							<p class="links">
+								<a href="{{ service.provider_url }}">Site</a>
+								<a href="{{ service.docs_url }}">API Docs</a>
+								{% if current_user.is_authenticated() %}
+									{% if key %}
+										{% set icon = 'arrow_refresh.png' %}
+										{% set title = 'Re-authorize' %}
+									{% else %}
+										{% set icon = 'key.png' %}
+										{% set title = 'Authorize' %}
+									{% endif %}
+									<a href="{{ url_for('authorize', alias=alias) }}" class="btn authorize"><img src="{{ url_for('static', filename=icon) }}"> {{ title }}</a>
 								{% endif %}
-								<a href="{{ url_for('authorize', alias=alias) }}"><img src="{{ url_for('static', filename=icon) }}" alt="{{ title }}" title="{{ title }} {{ service.name }}"></a>
-							{% endif %}
-							</td>
-							<td>
-								<a href="{{ service.docs_url }}"><img src="{{ url_for('static', filename='book.png') }}" alt="Documentation" title="{{ service.name }} Documentation"></a>
-							</td>
-						</tr>
+							</p>
+						</div>
 {% endfor %}
-					</tbody>
-				</table>
+					</div>
+{% endfor %}
+				</div>
 			</div>
 {% endblock %}
