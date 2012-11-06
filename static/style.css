@@ -128,6 +128,10 @@ abbr {
 	color: #E00040;
 }
 
+.expiring .expires {
+	color: #E09000;
+}
+
 .service {
 	margin-bottom: 1em;
 }
@@ -244,6 +248,8 @@ h2 .expires {
 
 .permissions {
 	list-style: none;
+	max-height: 10em;
+	overflow: auto;
 }
 
 .permissions label, .consent label {
@@ -281,6 +287,10 @@ p.footer .g {
 
 .container {
 	position: relative;
+}
+
+ul {
+	margin-bottom: 9px;
 }
 
 ul.flashes {
