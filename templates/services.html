@@ -18,7 +18,7 @@
 {% else %}
 	{% set key = None %}
 {% endif %}
-						<div class="span8 service {% if key %}authorized {% if key.is_expired() %}expired{% endif %}{% endif %}">
+						<div class="span8 service {% if key %}authorized {% if key.is_expired() and not key.refresh_token %}expired{% endif %}{% endif %}">
 							<h2>
 								{{ service.name }}
 								<span class="expires">
