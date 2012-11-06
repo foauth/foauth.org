@@ -108,9 +108,7 @@ def password_post():
 @config.app.route('/services/', methods=['GET'])
 def services():
     services = sorted((s.alias, s) for s in config.services)
-    # Provide a way to warn of services that are expiring soon (1 week)
-    soon = datetime.datetime.now() + datetime.timedelta(weeks=1)
-    return render_template('services.html', services=services, soon=soon)
+    return render_template('services.html', services=services)
 
 
 def auth_endpoint(func):

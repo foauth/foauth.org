@@ -78,7 +78,11 @@ class Key(db.Model):
         self.refresh_token = data.get('refresh_token', None)
 
     def is_expired(self):
-        return self.expires and self.expires < datetime.datetime.now()
+        return self.will_expire(days=0)
+
+    def will_expire(self, days=7):
+        soon = datetime.datetime.now() + datetime.timedelta(days=days)
+        return self.expires and self.expires < soon
 
     def fill_user_id(self):
         try:
