@@ -44,11 +44,6 @@
 								</li>
 							{% endfor %}
 							</ul>
-							<p>
-								You can {{ service.available_permissions[0][1] }}{% if service.available_permissions|count > 1 %}
-								and <abbr title="{% for scope, perm in service.available_permissions[1:] %}{{ perm }}
-{% endfor %}">{{ service.available_permissions|count - 1 }} other {% if service.available_permissions|count > 2 %}activities{% else %}activity{% endif %}</abbr>{% endif %}.
-							</p>
 							<p class="links">
 								<a href="{{ service.provider_url }}">Site</a>
 								<a href="{{ service.docs_url }}">API Docs</a>
