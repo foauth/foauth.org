@@ -138,7 +138,7 @@ def service_login(service):
         return redirect(url_for('oauth_login'))
 
 
-@config.app.route('/services/<alias>/authorize', methods=['GET'])
+@config.app.route('/services/<alias>/authorize', methods=['POST'])
 @login_required
 @auth_endpoint
 def authorize(service):
