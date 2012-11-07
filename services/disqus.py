@@ -21,9 +21,10 @@ class Disqus(foauth.providers.OAuth2):
 
     available_permissions = [
         (None, 'read data on your behalf'),
-        ('write', 'write data on your behalf'),
-        ('admin', 'moderate your forums'),
+        ('write', 'read and write data on your behalf'),
+        ('admin', 'read and write data on your behalf and moderate your forums'),
     ]
+    permissions_widget = 'radio'
 
     bearer_type = token_uri
 
