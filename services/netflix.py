@@ -22,8 +22,8 @@ class Netflix(foauth.providers.OAuth1):
     https = False
     signature_type = SIGNATURE_TYPE_QUERY
 
-    def get_authorize_params(self, redirect_uri):
-        params = super(Netflix, self).get_authorize_params(redirect_uri)
+    def get_authorize_params(self, *args, **kwargs):
+        params = super(Netflix, self).get_authorize_params(*args, **kwargs)
         params['oauth_consumer_key'] = self.client_id
         return params
 
