@@ -14,17 +14,21 @@ class Flickr(foauth.providers.OAuth1):
     api_domain = 'api.flickr.com'
 
     available_permissions = [
-        # (None, 'access only your public photos'),
-        # ('read', 'access your public and private photos'),
-        # ('write', 'upload, edit and replace your photos'),
+        (None, 'access only your public photos'),
+        ('read', 'access your public and private photos'),
+        ('write', 'upload, edit and replace your photos'),
         ('delete', 'upload, edit, replace and delete your photos'),
     ]
+    permissions_widget = 'radio'
 
     https = False
 
-    def get_authorize_params(self, redirect_uri):
-        params = super(Flickr, self).get_authorize_params(redirect_uri)
-        params['perms'] = self.available_permissions[0][0]
+    def get_authorize_params(self, redirect_uri, scopes):
+        params = super(Flickr, self).get_authorize_params(redirect_uri, scopes)
+
+        if any(scopes):
+            params['perms'] = scopes[0]
+
         return params
 
     def get_user_id(self, key):
