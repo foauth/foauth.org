@@ -248,7 +248,8 @@ h2 .expires {
 
 .permissions {
 	list-style: none;
-	max-height: 10em;
+	max-height: 7.5em;
+	margin-left: .5em;
 	overflow: auto;
 }
 
@@ -257,6 +258,10 @@ h2 .expires {
 	padding: 0;
 	width: auto;
 	float: none;
+}
+
+.permissions input {
+	vertical-align: -2px;
 }
 
 .links a {
