@@ -79,15 +79,17 @@ class OAuth(object):
     def get_scope_string(self, scopes):
         return ''
 
-    def authorize(self):
+    def authorize(self, scopes):
         redirect_uri = self.get_redirect_uri('callback')
-        params = self.get_authorize_params(redirect_uri=redirect_uri)
+        params = self.get_authorize_params(redirect_uri=redirect_uri,
+                                           scopes=scopes)
         req = requests.Request(self.authorize_url, params=params)
         return flask.redirect(req.full_url)
 
     def login(self):
         redirect_uri = self.get_redirect_uri('login_callback')
-        params = self.get_authorize_params(redirect_uri=redirect_uri)
+        params = self.get_authorize_params(redirect_uri=redirect_uri,
+                                           scopes=[])
         req = requests.Request(self.authorize_url, params=params)
         return flask.redirect(req.full_url)
 
@@ -115,7 +117,7 @@ class OAuth1(OAuth):
             'secret': content['oauth_token_secret'],
         }
 
-    def get_authorize_params(self, redirect_uri):
+    def get_authorize_params(self, redirect_uri, scopes):
         auth = requests.auth.OAuth1(client_key=self.client_id,
                                     client_secret=self.client_secret,
                                     callback_uri=redirect_uri,
@@ -177,7 +179,7 @@ class OAuth2(OAuth):
     def get_scope_string(self, scopes):
         return ' '.join(scopes)
 
-    def get_authorize_params(self, redirect_uri):
+    def get_authorize_params(self, redirect_uri, scopes):
         state = ''.join('%02x' % ord(x) for x in urandom(16))
         flask.session['%s_state' % self.alias] = state
         if not self.supports_state:
@@ -188,8 +190,7 @@ class OAuth2(OAuth):
             'redirect_uri': redirect_uri,
             'state': state,
         }
-        if any(s for (s, desc) in self.available_permissions):
-            scopes = (s for (s, desc) in self.available_permissions if s)
+        if any(scopes):
             params['scope'] = self.get_scope_string(scopes)
         return params
 

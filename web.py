@@ -142,8 +142,9 @@ def service_login(service):
 @login_required
 @auth_endpoint
 def authorize(service):
+    scopes = request.form.getlist('scope')
     try:
-        return service.authorize()
+        return service.authorize(scopes)
     except OAuthError:
         flash('Error occured while authorizing %s' % service.name, 'error')
         return redirect(url_for('services'))
