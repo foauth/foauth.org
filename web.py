@@ -133,7 +133,7 @@ def oauth_login():
 def service_login(service):
     try:
         return service.login()
-    except OAuthError, e:
+    except OAuthError:
         flash('Error occured while authorizing %s' % service.name, 'error')
         return redirect(url_for('oauth_login'))
 
