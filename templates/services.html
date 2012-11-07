@@ -32,6 +32,18 @@
 									{% endif %}
 								</span>
 							</h2>
+							<form action="{{ url_for('authorize', alias=alias) }}" method="post">
+							<ul class="permissions">
+							{% for scope, perm in service.available_permissions %}
+								<li>
+								{% if scope or service.permissions_widget == 'radio' %}
+									<label><input type="{{ service.permissions_widget }}" name="scope" value="{{ scope or '' }}" {% if not scope %}checked{% endif %}> {{ perm }}</label>
+								{% else %}
+									<input type="checkbox" checked disabled> {{ perm }}
+								{% endif %}
+								</li>
+							{% endfor %}
+							</ul>
 							<p>
 								You can {{ service.available_permissions[0][1] }}{% if service.available_permissions|count > 1 %}
 								and <abbr title="{% for scope, perm in service.available_permissions[1:] %}{{ perm }}
@@ -48,9 +60,10 @@
 										{% set icon = 'key.png' %}
 										{% set title = 'Authorize' %}
 									{% endif %}
-									<a href="{{ url_for('authorize', alias=alias) }}" class="btn authorize"><img class="favicon" src="{{ service.favicon_url }}"> {{ title }} {{ service.name }}</a>
+									<button type="submit" class="btn authorize"><img class="favicon" src="{{ service.favicon_url }}"> {{ title }} {{ service.name }}</button>
 								{% endif %}
 							</p>
+							</form>
 						</div>
 {% endfor %}
 					</div>
