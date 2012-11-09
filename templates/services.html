@@ -7,8 +7,8 @@
 				<div class="page-header">
 					<h1>{{ services|count }} Supported Services</h1>
 				</div>
-				<p>{% if current_user.is_authenticated() %} Use the key on the right to authorize a service, or the refresh icon to re-authorize it. We&rsquo;ll automatically re-authorize whenever we can, but you might have to manually re-authorize some services. {% endif %}If you use a service that&rsquo;s not on this list, feel free to <a href="https://github.com/gulopine/foauth.org/issues">request it</a>.</p>
 				{% if current_user.is_authenticated() %}<p>If one of your scripts fell into the wrong hands, you can <a href="{{ url_for('password') }}">change your password</a>.</p>{% endif %}
+				<p>{% if current_user.is_authenticated() %}You can authorize your services here, and if the service supports it, you can also specify which permissions you&rsuqo;d like to authorize. We&rsquo;ll automatically refresh your authorization whenever we can, but not all services support this, so you might have to manually re-authorize services that expire. {% endif %}If you use a service that&rsquo;s not on this list, feel free to <a href="https://github.com/gulopine/foauth.org/issues">request it</a>.</p>
 				<div class="services container">
 {% for row in services|batch(2) %}
 					<div class="row">
@@ -54,6 +54,7 @@
 								<a href="{{ service.docs_url }}">API Docs</a>
 								{% if current_user.is_authenticated() %}
 									{% if key %}
+										{% if service.revoke_url %}<a href="{{ service.revoke_url }}">Revoke</a>{% endif %}
 										{% set icon = 'arrow_refresh.png' %}
 										{% set title = 'Re-authorize' %}
 									{% else %}
