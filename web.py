@@ -18,7 +18,8 @@ def forbidden(e):
 
 @config.app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', form=forms.Signup())
+    return render_template('index.html', form=forms.Signup(),
+                           service_count=len(config.services))
 
 
 @config.app.route('/about/', methods=['GET'])
