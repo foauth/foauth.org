@@ -8,6 +8,7 @@ class Netflix(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.netflix.com/'
     docs_url = 'http://developer.netflix.com/docs'
+    category = 'Movies/TV'
 
     # URLs to interact with the API
     request_token_url = 'http://api.netflix.com/oauth/request_token'
