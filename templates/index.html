@@ -53,7 +53,7 @@
 			{% if current_user.is_authenticated() %}
 			<p>You&rsquo;ve already authorized {{ current_user.keys.count() }} service{% if current_user.keys.count() != 1 %}s{% endif %}, why not <a href="{{ url_for('services') }}">add more</a>?</p>
 			{% else %}
-			<p>This only takes a couple clicks if you&rsquo;re already logged in with them. Here are just a few of the <a href="{{ url_for('services') }}">services we support</a>.</p>
+			<p>This only takes a couple clicks if you&rsquo;re already logged in with them. Here are just a few of the <a href="{{ url_for('services') }}">{{ service_count }} services we support</a>.</p>
 			<table class="services condensed-table">
 				<tr>
 					<td><img class="favicon" src="https://getfavicon.appspot.com/https://www.twitter.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dwww.twitter.com"> Twitter</td>
