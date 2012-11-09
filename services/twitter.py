@@ -15,8 +15,35 @@ class Twitter(foauth.providers.OAuth1):
     api_domain = 'api.twitter.com'
 
     available_permissions = [
-        (None, 'read and send tweets, including DMs'),
+        (None, 'read your tweets'),
+        ('write', 'read and send tweets'),
+        ('dm', 'read and send tweets, including DMs'),
     ]
+    permissions_widget = 'radio'
+
+    # Twitter's permissions model is subtractive, rather than additive. foauth
+    # is registered with maximum permissions, which then have to be limited on
+    # each authorization call. This mapping converts between the additive model
+    # used within foauth and the subtractive model used by Twitter.
+    scope_map = {
+        None: 'read',
+        'write': 'write',
+        'dm': None
+    }
+
+    def get_request_token_params(self, redirect_uri, scopes):
+        params = super(Twitter, self).get_request_token_params(redirect_uri, scopes)
+
+        # Convert to Twitter's permissions model
+        print scopes
+        scopes = map(lambda x: self.scope_map.get(x or None), scopes)
+        print scopes
+        if any(scopes):
+            params['x_auth_access_type'] = scopes[0]
+
+        print params
+
+        return params
 
     def callback(self, data, *args, **kwargs):
         if 'denied' in data:
