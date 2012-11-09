@@ -118,6 +118,9 @@ class OAuth1(OAuth):
             'secret': content['oauth_token_secret'],
         }
 
+    def get_request_token_params(self, redirect_uri, scopes):
+        return {}
+
     def get_authorize_params(self, redirect_uri, scopes):
         auth = requests.auth.OAuth1(client_key=self.client_id,
                                     client_secret=self.client_secret,
@@ -125,6 +128,7 @@ class OAuth1(OAuth):
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
         resp = requests.post(self.get_request_token_url(), auth=auth,
+                             params=self.get_request_token_params(redirect_uri, scopes),
                              headers={'Content-Length': '0'})
         try:
             data = self.parse_token(resp.content)
