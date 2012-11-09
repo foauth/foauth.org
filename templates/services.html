@@ -53,7 +53,6 @@
 								<a href="{{ service.docs_url }}">API Docs</a>
 								{% if current_user.is_authenticated() %}
 									{% if key %}
-										{% if service.revoke_url %}<a href="{{ service.revoke_url }}">Revoke</a>{% endif %}
 										{% set icon = 'arrow_refresh.png' %}
 										{% set title = 'Re-authorize' %}
 									{% else %}
