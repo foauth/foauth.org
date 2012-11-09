@@ -20,9 +20,9 @@ class Disqus(foauth.providers.OAuth2):
     api_domain = 'disqus.com'
 
     available_permissions = [
-        (None, 'read data on your behalf'),
-        ('write', 'read and write data on your behalf'),
-        ('admin', 'read and write data on your behalf and moderate your forums'),
+        (None, 'access your contact info'),
+        ('write', 'access your contact info and add comments'),
+        ('admin', 'access your contact info, and comments and moderate your forums'),
     ]
     permissions_widget = 'radio'
 
