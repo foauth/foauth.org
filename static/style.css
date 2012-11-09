@@ -273,16 +273,6 @@ h2 .expires {
 	margin-right: .25em;
 }
 
-.links .btn::before {
-	content: url('bullet_key.png');
-	position: absolute;
-	margin: 6px;
-}
-
-.authorized .links .btn::before {
-	content: url('arrow_refresh_small.png');
-}
-
 p.footer {
 	text-align: center;
 }
