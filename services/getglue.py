@@ -6,7 +6,7 @@ class GetGlue(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://getglue.com/'
     docs_url = 'http://getglue.com/api'
-    category = 'Entertainment'
+    category = 'Movies/TV'
 
     # URLs to interact with the API
     request_token_url = 'https://api.getglue.com/oauth/request_token'
