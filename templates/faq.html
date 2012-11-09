@@ -19,6 +19,10 @@
 							<dd>
 								<p>Sort of. Apigee is focused on services, with their own sets of users, who want to work with other services without bothering with OAuth. So even though their process is simpler than OAuth proper, it&rsquo;s still way more compli&shy;cated than it needs to be for a single user accessing his or her own data.</p>
 							</dd>
+							<dt>Why doesn&rsquo;t foauth.org remember which permissions I&rsquo;ve selected?</dt>
+							<dd>
+								<p>We could, but it would quickly get out of sync with the provider. If you authorize a provider with full permissions, then re-authorize it with limited permissions later, foauth.org will store the limited permissions, even though provider will typically keep the original permissions intact. Your token would have greater permissions than we know about, and if we tried to tell you what we do know, it&rsquo;d be an outright lie.</p>
+							</dd>
 							<dt>How do I revoke access to services I no longer wish foauth.org to use?</dt>
 							<dd>
 								<p>You&rsquo;ll have to figure that out with each of those services themselves. With OAuth, service providers can revoke the token that foauth.org uses to access your data, but that can only be done on their end. Usually, it&rsquo;s somewhere in your account settings.</p>
