@@ -36,10 +36,14 @@
 							<ul class="permissions">
 							{% for scope, perm in service.available_permissions %}
 								<li>
+								{% if current_user.is_authenticated() %}
 								{% if scope or service.permissions_widget == 'radio' %}
 									<label><input type="{{ service.permissions_widget }}" name="scope" value="{{ scope or '' }}" {% if not scope %}checked{% endif %}> {{ perm }}</label>
 								{% else %}
 									<input type="checkbox" checked disabled> {{ perm }}
+								{% endif %}
+								{% else %}
+								{{ perm }}
 								{% endif %}
 								</li>
 							{% endfor %}

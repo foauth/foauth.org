@@ -249,7 +249,7 @@ h2 .expires {
 .permissions {
 	list-style: none;
 	max-height: 7.5em;
-	margin-left: .5em;
+	margin-left: 0;
 	overflow: auto;
 }
 
@@ -262,6 +262,7 @@ h2 .expires {
 
 .permissions input {
 	vertical-align: -2px;
+	margin-left: .5em;
 }
 
 .links a {
