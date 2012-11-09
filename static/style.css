@@ -124,6 +124,10 @@ abbr {
 	margin-top: 1px;
 }
 
+.services td {
+	border: none;
+}
+
 .expired .expires, .error .expires {
 	color: #E00040;
 }
