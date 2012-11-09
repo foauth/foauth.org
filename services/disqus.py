@@ -22,7 +22,7 @@ class Disqus(foauth.providers.OAuth2):
     available_permissions = [
         (None, 'access your contact info'),
         ('write', 'access your contact info and add comments'),
-        ('admin', 'access your contact info, and comments and moderate your forums'),
+        ('admin', 'access your contact info, add comments and moderate your forums'),
     ]
     permissions_widget = 'radio'
 
