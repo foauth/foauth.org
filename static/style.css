@@ -257,6 +257,11 @@ h2 .expires {
 	overflow: auto;
 }
 
+.permissions li {
+	margin-left: 1.5em;
+	text-indent: -1.5em;
+}
+
 .permissions label, .consent label {
 	text-align: left;
 	padding: 0;
@@ -266,7 +271,7 @@ h2 .expires {
 
 .permissions input {
 	vertical-align: -2px;
-	margin-left: .5em;
+	width: 1.5em;
 }
 
 .links a {
