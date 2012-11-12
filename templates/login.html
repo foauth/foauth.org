@@ -15,7 +15,7 @@
                     {% if form.errors.email %}
                     <strong class="error">{{ form.errors.email.0|safe }}</strong>
                     {% endif %}
-                    <input class="span8" type="text" id="login_email" name="email" {% if form.data.email %}value="{{ form.data.email }}"{% endif %} placeholder="{{ form.email.label.text }}">
+                    <input class="span8" type="email" id="login_email" name="email" {% if form.data.email %}value="{{ form.data.email }}"{% endif %} placeholder="{{ form.email.label.text }}">
                 </p>
                 <p class="span8">
                     {% if form.errors.password %}
