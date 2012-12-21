@@ -61,6 +61,7 @@ class OAuth(object):
     __metaclass__ = OAuthMeta
 
     https = True
+    verify = True
     signature_method = requests.auth.SIGNATURE_HMAC
     signature_type = requests.auth.SIGNATURE_TYPE_AUTH_HEADER
     permissions_widget = 'checkbox'
@@ -129,7 +130,7 @@ class OAuth1(OAuth):
                                     signature_type=self.signature_type)
         resp = requests.post(self.get_request_token_url(), auth=auth,
                              params=self.get_request_token_params(redirect_uri, scopes),
-                             headers={'Content-Length': '0'})
+                             headers={'Content-Length': '0'}, verify=self.verify)
         try:
             data = self.parse_token(resp.content)
         except Exception:
@@ -153,7 +154,7 @@ class OAuth1(OAuth):
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
         resp = requests.post(self.access_token_url, auth=auth,
-                             headers={'Content-Length': '0'})
+                             headers={'Content-Length': '0'}, verify=self.verify)
         try:
             return self.parse_token(resp.content)
         except Exception:
@@ -170,7 +171,8 @@ class OAuth1(OAuth):
                                     signature_method=self.signature_method,
                                     signature_type=self.signature_type)
         return requests.request(method, url, auth=auth, params=params or {},
-                                data=data or {}, headers=headers or {})
+                                data=data or {}, headers=headers or {},
+                                verify=self.verify)
 
 
 class OAuth2(OAuth):
@@ -213,7 +215,7 @@ class OAuth2(OAuth):
             'grant_type': 'authorization_code',
             'code': data['code'],
             'redirect_uri': redirect_uri
-        })
+        }, verify=self.verify)
 
         return self.parse_token(resp.content)
 
@@ -223,7 +225,7 @@ class OAuth2(OAuth):
             'client_secret': self.client_secret,
             'grant_type': 'refresh_token',
             'refresh_token': token
-        })
+        }, verify=self.verify)
 
         return self.parse_token(resp.content)
 
@@ -234,4 +236,5 @@ class OAuth2(OAuth):
         if self.token_type == BEARER:
             auth = Bearer(key.access_token, bearer_type=self.bearer_type)
         return requests.request(method, url, auth=auth, params=params or {},
-                                data=data or {}, headers=headers or {})
+                                data=data or {}, headers=headers or {},
+                                verify=self.verify)
