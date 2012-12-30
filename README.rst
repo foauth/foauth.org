@@ -12,8 +12,8 @@ HTTP Basic, which is easily available in hundreds of existing tools, such as
   >>> import requests
   >>> auth = 'email@example.com', 'password'
   >>> data = {'status': "Just signed up with http://foauth.org/ and it's awesome! Thanks @Gulopine!"}
-  >>> requests.post('https://foauth.herokuapp.com/api.twitter.com/1/statuses/update.json', data=data, auth=auth)
-  >>> r = requests.get('https://foauth.herokuapp.com/api.twitter.com/1/statuses/user_timeline.json', auth=auth)
+  >>> requests.post('https://foauth.org/api.twitter.com/1/statuses/update.json', data=data, auth=auth)
+  >>> r = requests.get('https://foauth.org/api.twitter.com/1/statuses/user_timeline.json', auth=auth)
   >>> r.json[0]['text']
   "Just signed up with http://foauth.org/ and it's awesome! Thanks @Gulopine!"
 
