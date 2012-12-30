@@ -5,8 +5,9 @@ foauth.org: OAuth for one
 But, as one of those users, it's a pretty terrible way to get at your own data.
 That's where foauth.org comes in, giving you access to these services using
 HTTP Basic, which is easily available in hundreds of existing tools, such as
-`requests`_::
+`requests`_
 
+.. code-block:: pycon
 
   >>> import requests
   >>> auth = 'email@example.com', 'password'
