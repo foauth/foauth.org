@@ -130,8 +130,8 @@ abbr {
 	font-size: inherit;
 }
 
-.services th,
-.services td {
+.service th,
+.service td {
 	margin: 0;
 	padding: 0;
 }
@@ -301,7 +301,17 @@ h2 .btn {
 	float: none;
 }
 
-a img {
+.services th,
+.services td {
+	border-width: 0;
+}
+
+.category th,
+.category td {
+	border-top-width: 1px;
+}
+
+td a img {
 	vertical-align: -3px;
 }
 
