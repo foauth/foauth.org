@@ -5,6 +5,12 @@
         <li{% if section == 'services' %} class="active"{% endif %}><a href="/services/">Services</a></li>
         <li{% if section == 'about' %} class="active"{% endif %}><a href="/about/">About</a></li>
         <li><a href="https://github.com/gulopine/foauth.org">Source</a></li>
+        <li>
+            <a href="http://gum.co/rWgD">
+                <img src="https://getfavicon.appspot.com/http://gumroad.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgumroad.com" class="favicon">
+                Donate
+            </a>
+        </li>
     </ul>
     <div class="pull-right"><ul class="nav">
         {% if current_user.is_authenticated() %}

@@ -112,7 +112,7 @@ abbr {
 }
 
 .nav img {
-	vertical-align: bottom;
+	vertical-align: -2px;
 }
 
 .services a,
