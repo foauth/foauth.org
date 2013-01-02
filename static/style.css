@@ -246,6 +246,14 @@ form .error::before {
 	height: 16px;
 }
 
+h2 .favicon {
+	margin-right: 8px;
+}
+
+h2 .btn {
+	margin-top: .35em;
+}
+
 h2 .expires {
 	font-weight: normal;
 }
