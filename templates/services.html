@@ -15,7 +15,7 @@
 				</div>
 				<p>{% if current_user.is_authenticated() %}You can authorize your services here, and if the service supports it, you can also specify which permissions you&rsquo;d like to authorize. We&rsquo;ll automatically refresh your authorization whenever we can, but not all services support this, so you might have to manually re-authorize services that expire. {% endif %}If you use a service that&rsquo;s not on this list, feel free to <a href="https://github.com/gulopine/foauth.org/issues">request it</a>.</p>
 				<div class="container services">
-					<div class="row category">
+					<div class="row">
 						<div class="span16">
 							<table>
 {% for category, services in services|groupby('category') %}
@@ -32,7 +32,7 @@
 	{% set icon = 'key.png' %}
 	{% set title = 'Authorize' %}
 {% endif %}
-								<tr class="service {% if key %}authorized {% if not key.refresh_token %}{% if key.is_expired() %}expired{% elif key.will_expire() %}expiring{% endif %}{% endif %}{% endif %}">
+								<tr class="{% if loop.index == 1 %}category{% endif %} service {% if key %}authorized {% if not key.refresh_token %}{% if key.is_expired() %}expired{% elif key.will_expire() %}expiring{% endif %}{% endif %}{% endif %}">
 {% if loop.index == 1 %}
 									<th scope="row" rowspan="{{ services|length }}">
 										<h2>{{ category }}</h2>
