@@ -233,10 +233,6 @@ form .error::before {
 	border-right: 6px solid #c43c35;
 }
 
-.btn img {
-	vertical-align: top;
-}
-
 .services {
 	padding-right: 1em;
 }
