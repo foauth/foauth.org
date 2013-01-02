@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
+{% block head %}
+{{ super() }}
+		<script type="text/javascript" src="{{ url_for('static', filename='jquery-1.8.3.min.js') }}"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+{% endblock %}
+
 {% block nav %}{{ nav('services') }}{% endblock %}
 
 {% block content %}
@@ -8,65 +14,95 @@
 					<h1>{{ services|count }} Supported Services</h1>
 				</div>
 				<p>{% if current_user.is_authenticated() %}You can authorize your services here, and if the service supports it, you can also specify which permissions you&rsquo;d like to authorize. We&rsquo;ll automatically refresh your authorization whenever we can, but not all services support this, so you might have to manually re-authorize services that expire. {% endif %}If you use a service that&rsquo;s not on this list, feel free to <a href="https://github.com/gulopine/foauth.org/issues">request it</a>.</p>
-				<div class="services container">
-{% for row in services|batch(2) %}
-					<div class="row">
-{% for alias, service in row %}
+				<div class="container services">
+					<div class="row category">
+						<div class="span16">
+							<table>
+{% for category, services in services|groupby('category') %}
+{% for service in services|sort %}
 {% if current_user.is_authenticated() %}
-	{% set key = current_user.key_for_service(alias) %}
+	{% set key = current_user.key_for_service(service.alias) %}
 {% else %}
 	{% set key = None %}
 {% endif %}
-						<div class="span8 service {% if key %}authorized {% if not key.refresh_token %}{% if key.is_expired() %}expired{% elif key.will_expire() %}expiring{% endif %}{% endif %}{% endif %}">
-							<h2>
-								{% if not current_user.is_authenticated() %}<img class="favicon" src="{{ service.favicon_url }}">{% endif %}
-								{{ service.name }}
-								<span class="expires">
-									{% if key %}
-										{% if key.expires %}
-											{% if key.refresh_token %}will refresh{% else %}{% if key.is_expired() %}expired{% else %}will expire{% endif %}{% endif %}
-											on {{ key.expires.strftime("%Y-%m-%d") }}
-										{% else %}
-											has been authorized
-										{% endif %}
-									{% endif %}
-								</span>
-							</h2>
-							<form action="{{ url_for('authorize', alias=alias) }}" method="post">
-							<ul class="permissions">
-							{% for scope, perm in service.available_permissions %}
-								<li>
-								{% if current_user.is_authenticated() %}
-								{% if scope or service.permissions_widget == 'radio' %}
-									<label><input type="{{ service.permissions_widget }}" name="scope" value="{{ scope or '' }}" {% if not scope %}checked{% endif %}>{{ perm }}</label>
-								{% else %}
-									<input type="checkbox" checked disabled>{{ perm }}
-								{% endif %}
-								{% else %}
-								{{ perm }}
-								{% endif %}
-								</li>
-							{% endfor %}
-							</ul>
-							<p class="links">
-								<a href="{{ service.provider_url }}">Site</a>
-								<a href="{{ service.docs_url }}">API Docs</a>
-								{% if current_user.is_authenticated() %}
-									{% if key %}
-										{% set icon = 'arrow_refresh.png' %}
-										{% set title = 'Re-authorize' %}
-									{% else %}
-										{% set icon = 'key.png' %}
-										{% set title = 'Authorize' %}
-									{% endif %}
-									<button type="submit" class="btn authorize"><img class="favicon" src="{{ service.favicon_url }}"> {{ title }} {{ service.name }}</button>
-								{% endif %}
-							</p>
-							</form>
+{% if key %}
+	{% set icon = 'arrow_refresh.png' %}
+	{% set title = 'Re-authorize' %}
+{% else %}
+	{% set icon = 'key.png' %}
+	{% set title = 'Authorize' %}
+{% endif %}
+								<tr class="service {% if key %}authorized {% if not key.refresh_token %}{% if key.is_expired() %}expired{% elif key.will_expire() %}expiring{% endif %}{% endif %}{% endif %}">
+{% if loop.index == 1 %}
+									<th scope="row" rowspan="{{ services|length }}">
+										<h2>{{ category }}</h2>
+									</th>
+{% endif %}
+									<th scope="row">
+										<h3>
+											<img class="favicon" src="{{ service.favicon_url }}">{{ service.name }}
+											{% if key %}
+												<span class="expires">
+													{% if key.expires %}
+														{% if key.refresh_token %}will refresh{% else %}{% if key.is_expired() %}expired{% else %}will expire{% endif %}{% endif %}
+														on {{ key.expires.strftime("%Y-%m-%d") }}
+													{% else %}
+														has been authorized
+													{% endif %}
+												</span>
+											{% endif %}
+										</h3>
+									</th>
+									<td>
+										<a href="{{ service.provider_url }}">Site</a>
+									</td>
+									<td>
+										<a href="{{ service.docs_url }}">API Docs</a>
+									</td>
+									<td>
+										<a href="#{{ service.alias }}-modal" role="button" data-toggle="modal">
+											<img src="{{ url_for('static', filename=icon) }}">
+											{% if current_user.is_authenticated() %}{{ title }}{% else %}Details{% endif %}
+										</a>
+<form action="{{ url_for('authorize', alias=service.alias) }}" method="post">
+	<div id="{{ service.alias }}-modal" class="modal hide fade" tabindex="-1" role="dialog">
+		<div class="modal-header">
+			<a href="#" class="close" data-dismiss="modal" aria-hidden="true">×</a>
+			<h3 id="{{ service.alias }}-label">
+				{{ title }} {{ service.name }} to:
+			</h3>
+		</div>
+		<div class="modal-body">
+			<ul class="permissions">
+			{% for scope, perm in service.available_permissions %}
+				<li>
+				{% if current_user.is_authenticated() %}
+				{% if scope or service.permissions_widget == 'radio' %}
+					<label><input type="{{ service.permissions_widget }}" name="scope" value="{{ scope or '' }}" {% if not scope %}checked{% endif %}>{{ perm }}</label>
+				{% else %}
+					<input type="checkbox" checked disabled>{{ perm }}
+				{% endif %}
+				{% else %}
+				{{ perm }}
+				{% endif %}
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+		{% if current_user.is_authenticated() %}
+			<div class="modal-footer">
+				<button type="submit" class="btn primary authorize">{{ title }}</button>
+			</div>
+		{% endif %}
+	</div>
+</form>
+									</td>
+								</tr>
+{% endfor %}
+{% endfor %}
+							</table>
 						</div>
-{% endfor %}
 					</div>
-{% endfor %}
 				</div>
 			</div>
 {% endblock %}
