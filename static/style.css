@@ -118,6 +118,7 @@ abbr {
 .services a,
 .btn {
 	display: inline-block;
+	font-size: inherit;
 }
 
 .services img {
@@ -142,7 +143,6 @@ abbr {
 
 .service .btn {
 	float: right;
-	font-size: inherit;
 	margin-right: 0;
 }
 
