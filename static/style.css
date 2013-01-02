@@ -91,7 +91,7 @@ dl dd {
 	color: orange;
 }
 
-h1, h2 {
+h1, h2, h3 {
 	font-family: 'YanoneKaffeesatzLight';
 }
 
@@ -99,11 +99,20 @@ h1 {
 	text-align: center;
 }
 
+.services h2 {
+	color: #bbb;
+}
+
+h3 {
+	font-size: 24px;
+	line-height: 36px;
+}
+
 li {
 	color: inherit;
 }
 
-dd {
+ul, dd {
 	margin-bottom: 9px;
 }
 
@@ -121,33 +130,43 @@ abbr {
 	font-size: inherit;
 }
 
-.services img {
-	margin-top: 2px;
+.services th,
+.services td {
+	margin: 0;
+	padding: 0;
 }
 
-.services td {
-	border: none;
+.service .favicon {
+	margin-right: 24px;
+}
+
+.service th h3 {
+	background: 28px center no-repeat;
+}
+
+.authorized th h3 {
+	background-image: url('bullet_green.png');
+}
+
+.expires {
+	font-weight: normal;
 }
 
 .expired .expires, .error .expires {
 	color: #E00040;
 }
 
+.expired th h3,
+.error th h3 {
+	background-image: url('bullet_red.png');
+}
+
 .expiring .expires {
 	color: #E09000;
 }
 
-.service {
-	margin-bottom: 1em;
-}
-
-.service .btn {
-	float: right;
-	margin-right: 0;
-}
-
-.services .btn {
-	margin-top: -5px;
+.expiring th h3 {
+	background-image: url('bullet_yellow.png');
 }
 
 .steps li {
@@ -180,6 +199,10 @@ abbr {
 
 .signup input[type="checkbox"] {
 	margin-top: 6px;
+}
+
+form {
+	margin: 0;
 }
 
 form p {
@@ -237,28 +260,33 @@ form .error::before {
 	padding-right: 1em;
 }
 
+.service {
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
 .favicon {
 	width: 16px;
 	height: 16px;
 }
 
-h2 .favicon {
-	margin-right: 8px;
+h2 .favicon,
+h3 .favicon {
+	margin: 0 8px;
 }
 
 h2 .btn {
 	margin-top: .35em;
 }
 
-h2 .expires {
-	font-weight: normal;
+.modal-body {
+	max-height: 25em;
+	overflow: auto;
 }
 
 .permissions {
 	list-style: none;
-	max-height: 7.5em;
 	margin-left: 0;
-	overflow: auto;
 }
 
 .permissions li {
@@ -273,17 +301,17 @@ h2 .expires {
 	float: none;
 }
 
+a img {
+	vertical-align: -3px;
+}
+
 .permissions input {
 	vertical-align: -2px;
 	width: 1.5em;
 }
 
-.links a {
-	margin-right: 1em;
-}
-
-.links .favicon {
-	margin-right: .25em;
+.service a {
+	margin: .5em 0;
 }
 
 p.footer {
@@ -296,10 +324,6 @@ p.footer .g {
 
 .container {
 	position: relative;
-}
-
-ul {
-	margin-bottom: 9px;
 }
 
 ul.flashes {

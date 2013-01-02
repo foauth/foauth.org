@@ -109,7 +109,7 @@ def password_post():
 @config.app.route('/services/', methods=['GET'])
 def services():
     services = sorted((s.alias, s) for s in config.services)
-    return render_template('services.html', services=services)
+    return render_template('services.html', services=config.services)
 
 
 def auth_endpoint(func):
