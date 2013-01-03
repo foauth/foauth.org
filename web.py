@@ -10,6 +10,21 @@ import config
 import forms
 import models
 
+HOST_HEADERS = [
+    'Authorization',
+    'Host',
+    'X-Forwarded-For',
+    'X-Forwarded-Port',
+    'X-Forwarded-Proto',
+    'X-Forwarded-Protocol',
+    'X-Heroku-Dynos-In-Use',
+    'X-Heroku-Queue-Depth',
+    'X-Heroku-Queue-Wait-Time',
+    'X-Real-Ip',
+    'X-Request-Start',
+    'X-Varnish',
+]
+
 
 @config.app.errorhandler(403)
 def forbidden(e):
@@ -252,9 +267,10 @@ def prepare_headers(headers):
     # Make sure we have a mutable dictionary
     headers = dict(headers)
 
-    # These are specific to foauth.org
-    del headers['Host']
-    del headers['Authorization']
+    # These are specific to the host environment and shouldn't be forwarded
+    for header in HOST_HEADERS:
+        if header in headers:
+            del headers[header]
 
     # These are invalid if using the empty defaults
     if 'Content-Length' in headers and headers['Content-Length'] == '':
