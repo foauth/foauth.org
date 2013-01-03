@@ -65,10 +65,16 @@
 		<div class="modal-header">
 			<a href="#" class="close" data-dismiss="modal" aria-hidden="true">×</a>
 			<h3 id="{{ service.alias }}-label">
-				{{ title }} {{ service.name }} to:
+				{{ title }} {{ service.name }}
 			</h3>
 		</div>
 		<div class="modal-body">
+			<p>
+				{{ service.name }} responds to
+				<abbr title="{% for domain in service.api_domains %}{% if loop.index0 != 0 %}
+{% endif %}{{ domain }}{% endfor %}">{{ service.api_domains|length }} domain{% if service.api_domains|length > 1 %}s{% endif %}</abbr>
+				and can do the following:
+			</p>
 			<ul class="permissions">
 			{% for scope, perm in service.available_permissions %}
 				<li>
