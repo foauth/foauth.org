@@ -14,8 +14,7 @@ class Flickr(foauth.providers.OAuth1):
     api_domain = 'api.flickr.com'
 
     available_permissions = [
-        (None, 'access only your public photos'),
-        ('read', 'access your public and private photos'),
+        (None, 'access your public and private photos'),
         ('write', 'upload, edit and replace your photos'),
         ('delete', 'upload, edit, replace and delete your photos'),
     ]
@@ -28,6 +27,8 @@ class Flickr(foauth.providers.OAuth1):
 
         if any(scopes):
             params['perms'] = scopes[0]
+        else:
+            params['perms'] = 'read'
 
         return params
 
