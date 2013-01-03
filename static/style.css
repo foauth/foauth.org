@@ -328,6 +328,10 @@ td a img {
 	margin: .5em 0;
 }
 
+.service h3 a {
+	margin: 0;
+}
+
 p.footer {
 	text-align: center;
 }
