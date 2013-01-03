@@ -141,7 +141,7 @@ abbr {
 }
 
 .service th h3 {
-	background: 28px 11px no-repeat;
+	background: 20px 11px no-repeat;
 }
 
 .authorized th h3 {
@@ -272,7 +272,7 @@ form .error::before {
 
 h2 .favicon,
 h3 .favicon {
-	margin: 0 8px;
+	margin-right: 8px;
 }
 
 h2 .btn {
