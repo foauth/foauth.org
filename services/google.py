@@ -5,7 +5,7 @@ class Google(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://google.com/'
     docs_url = 'http://code.google.com/more/'
-    category = 'Stuff'
+    category = 'Productivity'
 
     # URLs to interact with the API
     authorize_url = 'https://accounts.google.com/o/oauth2/auth'

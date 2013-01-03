@@ -15,7 +15,7 @@ class StackExchange(foauth.providers.OAuth2):
     name = 'Stack Exchange'
     provider_url = 'https://stackexchange.com/'
     docs_url = 'https://api.stackexchange.com/docs'
-    category = 'Stuff'
+    category = 'Questions'
 
     # URLs to interact with the API
     authorize_url = 'https://stackexchange.com/oauth'
