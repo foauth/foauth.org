@@ -54,12 +54,6 @@
 										</h3>
 									</th>
 									<td>
-										<a href="{{ service.provider_url }}">Site</a>
-									</td>
-									<td>
-										<a href="{{ service.docs_url }}">API Docs</a>
-									</td>
-									<td>
 <form action="{{ url_for('authorize', alias=service.alias) }}" method="post">
 	<div id="{{ service.alias }}-modal" class="modal hide fade" tabindex="-1" role="dialog">
 		<div class="modal-header">
@@ -98,6 +92,12 @@
 		{% endif %}
 	</div>
 </form>
+									</td>
+									<td>
+										<a href="{{ service.provider_url }}">Site</a>
+									</td>
+									<td>
+										<a href="{{ service.docs_url }}">API Docs</a>
 									</td>
 								</tr>
 {% endfor %}
