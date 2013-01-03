@@ -6,7 +6,7 @@ class Foursquare(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'http://www.foursquare.com/'
     docs_url = 'https://developer.foursquare.com/overview/'
-    category = 'Location'
+    category = 'Travel'
 
     # URLs to interact with the API
     authorize_url = 'https://foursquare.com/oauth2/authorize'
