@@ -279,6 +279,10 @@ h2 .btn {
 	margin-top: .35em;
 }
 
+.modal-header {
+	text-align: center;
+}
+
 .modal-body {
 	max-height: 25em;
 	overflow: auto;
