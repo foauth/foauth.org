@@ -61,8 +61,12 @@
 									</td>
 									<td>
 										<a href="#{{ service.alias }}-modal" role="button" data-toggle="modal">
-											<img src="{{ url_for('static', filename=icon) }}">
-											{% if current_user.is_authenticated() %}{{ title }}{% else %}Details{% endif %}
+											{% if current_user.is_authenticated() %}
+												<img src="{{ url_for('static', filename=icon) }}">
+												{{ title }}
+											{% else %}
+												Details
+											{% endif %}
 										</a>
 <form action="{{ url_for('authorize', alias=service.alias) }}" method="post">
 	<div id="{{ service.alias }}-modal" class="modal hide fade" tabindex="-1" role="dialog">
