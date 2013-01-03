@@ -11,7 +11,7 @@ class Flickr(foauth.providers.OAuth1):
     request_token_url = 'http://www.flickr.com/services/oauth/request_token'
     authorize_url = 'http://www.flickr.com/services/oauth/authorize'
     access_token_url = 'http://www.flickr.com/services/oauth/access_token'
-    api_domain = 'api.flickr.com'
+    api_domain = 'secure.flickr.com'
 
     available_permissions = [
         (None, 'access your public and private photos'),
@@ -19,8 +19,6 @@ class Flickr(foauth.providers.OAuth1):
         ('delete', 'upload, edit, replace and delete your photos'),
     ]
     permissions_widget = 'radio'
-
-    https = False
 
     def get_authorize_params(self, redirect_uri, scopes):
         params = super(Flickr, self).get_authorize_params(redirect_uri, scopes)
