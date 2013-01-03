@@ -40,7 +40,7 @@
 {% endif %}
 									<th scope="row">
 										<h3>
-											<img class="favicon" src="{{ service.favicon_url }}">{{ service.name }}
+											<img class="favicon" src="{{ service.favicon_url }}"><a href="#{{ service.alias }}-modal" role="button" data-toggle="modal">{{ service.name }}</a>
 											{% if key %}
 												<span class="expires">
 													{% if key.expires %}
@@ -60,14 +60,6 @@
 										<a href="{{ service.docs_url }}">API Docs</a>
 									</td>
 									<td>
-										<a href="#{{ service.alias }}-modal" role="button" data-toggle="modal">
-											{% if current_user.is_authenticated() %}
-												<img src="{{ url_for('static', filename=icon) }}">
-												{{ title }}
-											{% else %}
-												Details
-											{% endif %}
-										</a>
 <form action="{{ url_for('authorize', alias=service.alias) }}" method="post">
 	<div id="{{ service.alias }}-modal" class="modal hide fade" tabindex="-1" role="dialog">
 		<div class="modal-header">
