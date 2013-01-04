@@ -65,6 +65,8 @@ class OAuth(object):
     signature_method = requests.auth.SIGNATURE_HMAC
     signature_type = requests.auth.SIGNATURE_TYPE_AUTH_HEADER
     permissions_widget = 'checkbox'
+    description = ''
+    disclaimer = ''
 
     def __init__(self, client_id, client_secret):
         self.client_id = client_id

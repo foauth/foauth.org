@@ -63,6 +63,9 @@
 			</h3>
 		</div>
 		<div class="modal-body">
+			{% if service.description %}
+			<p>{{ service.description }}</p>
+			{% endif %}
 			<p>
 				{{ service.name }} responds to
 				<abbr title="{% for domain in service.api_domains %}{% if loop.index0 != 0 %}
@@ -84,6 +87,9 @@
 				</li>
 			{% endfor %}
 			</ul>
+			{% if service.disclaimer %}
+			<p>{{ service.disclaimer }}</p>
+			{% endif %}
 		</div>
 		{% if current_user.is_authenticated() %}
 			<div class="modal-footer">
