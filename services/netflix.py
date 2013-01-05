@@ -12,10 +12,10 @@ class Netflix(foauth.providers.OAuth1):
     category = 'Movies/TV'
 
     # URLs to interact with the API
-    request_token_url = 'http://api.netflix.com/oauth/request_token'
+    request_token_url = 'http://api-public.netflix.com/oauth/request_token'
     authorize_url = 'https://api-user.netflix.com/oauth/login'
-    access_token_url = 'http://api.netflix.com/oauth/access_token'
-    api_domains = ['api-public.netflix.com', 'api.netflix.com']
+    access_token_url = 'http://api-public.netflix.com/oauth/access_token'
+    api_domain = 'api-public.netflix.com'
 
     available_permissions = [
         (None, 'read and manage your queue'),
