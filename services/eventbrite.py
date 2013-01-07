@@ -19,5 +19,4 @@ class Eventbrite(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/json/user_get')
-        print r.content
         return unicode(r.json[u'user'][u'user_id'])
