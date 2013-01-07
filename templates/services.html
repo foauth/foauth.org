@@ -19,7 +19,7 @@
 						<div class="span16">
 							<table>
 {% for category, services in services|groupby('category') %}
-{% for service in services|sort %}
+{% for service in services|sort(attribute='name') %}
 {% if current_user.is_authenticated() %}
 	{% set key = current_user.key_for_service(service.alias) %}
 {% else %}
