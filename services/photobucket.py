@@ -1,5 +1,3 @@
-import urlparse
-
 import foauth.providers
 from oauthlib.oauth1.rfc5849 import SIGNATURE_TYPE_QUERY
 

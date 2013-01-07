@@ -1,4 +1,3 @@
-from werkzeug.urls import url_decode
 import foauth.providers
 
 

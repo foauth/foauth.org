@@ -1,4 +1,3 @@
-from oauthlib.oauth2.draft25 import utils
 import foauth.providers
 
 
