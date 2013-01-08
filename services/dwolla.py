@@ -36,7 +36,6 @@ class Dwolla(foauth.providers.OAuth2):
         return super(Dwolla, self).get_authorize_params(redirect_uri, scopes)
 
     def get_scope_string(self, scopes):
-        # Dwolla doesn't follow the spec on this point
         return '|'.join(scopes)
 
     def get_user_id(self, key):
