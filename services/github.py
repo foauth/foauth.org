@@ -15,7 +15,9 @@ class GitHub(foauth.providers.OAuth2):
 
     available_permissions = [
         (None, 'read your public profile, public repo info and gists'),
-        ('user', 'write to your profile'),
+        ('user:email', 'read your email address'),
+        ('user:follow', 'follow and unfollow users'),
+        ('user', 'read and write to your entire profile'),
         ('public_repo', 'write to your public repo info'),
         ('repo', 'write to your public and private repo info'),
         ('gist', 'write to your gists'),
