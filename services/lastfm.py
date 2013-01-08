@@ -24,7 +24,6 @@ class LastFM(foauth.providers.OAuth2):
     ]
 
     def parse_token(self, content):
-        # Grab the key out of the XML
         dom = minidom.parseString(content)
         access_token = dom.getElementsByTagName('key')[0].firstChild.nodeValue
         return {'access_token': access_token}
