@@ -64,7 +64,6 @@ class Facebook(foauth.providers.OAuth2):
 
     def parse_token(self, content):
         data = url_decode(content)
-        # Fix Facebook's spelling error
         data['expires_in'] = data.get('expires', None)
         return data
 

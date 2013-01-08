@@ -24,7 +24,6 @@ class GitHub(foauth.providers.OAuth2):
     supports_state = False
 
     def get_scope_string(self, scopes):
-        # GitHub doesn't follow the spec on this point
         return ','.join(scopes)
 
     def parse_token(self, content):

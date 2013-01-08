@@ -38,7 +38,6 @@ class StackExchange(foauth.providers.OAuth2):
 
     def parse_token(self, content):
         data = url_decode(content)
-        # Fix StackExchange's spelling error
         data['expires_in'] = data.get('expires', None)
         return data
 

@@ -29,7 +29,6 @@ class Disqus(foauth.providers.OAuth2):
     bearer_type = token_uri
 
     def get_scope_string(self, scopes):
-        # Disqus doesn't follow the spec on this point
         return ','.join(scopes)
 
     def get_user_id(self, key):
