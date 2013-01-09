@@ -6,6 +6,7 @@ import urlparse
 import flask
 import requests
 import requests.auth
+from oauthlib.oauth1.rfc5849 import SIGNATURE_HMAC, SIGNATURE_TYPE_AUTH_HEADER
 from oauthlib.oauth2.draft25 import tokens
 from werkzeug.urls import url_decode
 
@@ -62,8 +63,8 @@ class OAuth(object):
 
     https = True
     verify = True
-    signature_method = requests.auth.SIGNATURE_HMAC
-    signature_type = requests.auth.SIGNATURE_TYPE_AUTH_HEADER
+    signature_method = SIGNATURE_HMAC
+    signature_type = SIGNATURE_TYPE_AUTH_HEADER
     permissions_widget = 'checkbox'
     description = ''
     disclaimer = ''
