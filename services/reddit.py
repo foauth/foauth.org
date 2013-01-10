@@ -28,6 +28,10 @@ class Reddit(foauth.providers.OAuth2):
         ('privatemessages', 'read and write to your private messages'),
     ]
 
+    def __init__(self, *args, **kwargs):
+        super(Reddit, self).__init__(*args, **kwargs)
+        self.auth = (self.client_id, self.client_secret)
+
     def get_authorize_params(self, redirect_uri, scopes):
         # Always request account info, in order to get the user ID
         scopes.append('identity')
