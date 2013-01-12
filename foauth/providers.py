@@ -182,6 +182,7 @@ class OAuth2(OAuth):
     token_type = BEARER
     bearer_type = BEARER_HEADER
     supports_state = True
+    auth = None
 
     def parse_token(self, content):
         return json.loads(content)
@@ -218,7 +219,7 @@ class OAuth2(OAuth):
             'grant_type': 'authorization_code',
             'code': data['code'],
             'redirect_uri': redirect_uri
-        }, verify=self.verify)
+        }, verify=self.verify, auth=self.auth)
 
         return self.parse_token(resp.content)
 
@@ -228,7 +229,7 @@ class OAuth2(OAuth):
             'client_secret': self.client_secret,
             'grant_type': 'refresh_token',
             'refresh_token': token
-        }, verify=self.verify)
+        }, verify=self.verify, auth=self.auth)
 
         return self.parse_token(resp.content)
 
