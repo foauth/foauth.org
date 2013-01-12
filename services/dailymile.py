@@ -23,4 +23,4 @@ class Dailymile(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/people/me.json')
-        return r.json[u'username']
+        return r.json()[u'username']

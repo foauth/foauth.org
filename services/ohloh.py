@@ -19,4 +19,4 @@ class Ohloh(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/accounts/me.json')
-        return r.json[u'account'][u'id']
+        return r.json()[u'account'][u'id']

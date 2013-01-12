@@ -26,4 +26,4 @@ class LinkedIn(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/v1/people/~:(id)?format=json')
-        return r.json[u'id']
+        return r.json()[u'id']

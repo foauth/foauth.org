@@ -23,4 +23,4 @@ class Foursquare(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/v2/users/self')
-        return r.json[u'response'][u'user'][u'id']
+        return r.json()[u'response'][u'user'][u'id']
