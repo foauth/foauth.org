@@ -240,4 +240,4 @@ class OAuth2(OAuth):
             auth = Bearer(key.access_token, bearer_type=self.bearer_type)
         return requests.request(method, url, auth=auth, params=params or {},
                                 data=data or {}, headers=headers or {},
-                                verify=self.verify)
+                                verify=self.verify, stream=True)
