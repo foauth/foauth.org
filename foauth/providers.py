@@ -175,7 +175,7 @@ class OAuth1(OAuth):
                              signature_type=self.signature_type)
         return requests.request(method, url, auth=auth, params=params or {},
                                 data=data or {}, headers=headers or {},
-                                verify=self.verify)
+                                verify=self.verify, stream=True)
 
 
 class OAuth2(OAuth):
