@@ -4,12 +4,6 @@ from werkzeug.urls import url_decode
 import foauth.providers
 
 
-def token_uri(service, token, r):
-    params = [((u'access_token', token)), ((u'key', service.app_key))]
-    r.url = add_params_to_uri(r.url, params)
-    return r
-
-
 class StackExchange(foauth.providers.OAuth2):
     # General info about the provider
     name = 'Stack Exchange'
@@ -28,7 +22,10 @@ class StackExchange(foauth.providers.OAuth2):
         ('no_expiry', 'access your data indefinitely'),
     ]
 
-    bearer_type = token_uri
+    def bearer_type(service, token, r):
+        params = [((u'access_token', token)), ((u'key', service.app_key))]
+        r.url = add_params_to_uri(r.url, params)
+        return r
 
     def __init__(self, *args, **kwargs):
         super(StackExchange, self).__init__(*args, **kwargs)
