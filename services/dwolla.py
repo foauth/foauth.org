@@ -1,4 +1,4 @@
-from oauthlib.oauth2.draft25 import utils
+from oauthlib.common import add_params_to_uri
 import foauth.providers
 
 
@@ -27,7 +27,7 @@ class Dwolla(foauth.providers.OAuth2):
     ]
 
     def bearer_type(self, token, r):
-        r.url = utils.add_params_to_uri(r.url, [((u'oauth_token', token))])
+        r.url = add_params_to_uri(r.url, [((u'oauth_token', token))])
         return r
 
     def get_authorize_params(self, redirect_uri, scopes):
