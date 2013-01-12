@@ -19,4 +19,4 @@ class Bitbucket(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/1.0/user/')
-        return r.json[u'user'][u'username']
+        return r.json()[u'user'][u'username']

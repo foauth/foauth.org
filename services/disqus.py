@@ -33,4 +33,4 @@ class Disqus(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/api/3.0/users/details.json')
-        return r.json[u'response'][u'id']
+        return r.json()[u'response'][u'id']

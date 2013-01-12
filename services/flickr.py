@@ -34,4 +34,4 @@ class Flickr(foauth.providers.OAuth1):
         url = u'/services/rest/?method=flickr.people.getLimits'
         url += u'&format=json&nojsoncallback=1'
         r = self.api(key, self.api_domain, url)
-        return r.json[u'person'][u'nsid']
+        return r.json()[u'person'][u'nsid']

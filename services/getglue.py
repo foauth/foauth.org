@@ -32,4 +32,4 @@ class GetGlue(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/v2/user/profile?format=json')
-        return r.json[u'profile'][u'username']
+        return r.json()[u'profile'][u'username']

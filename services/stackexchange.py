@@ -43,4 +43,4 @@ class StackExchange(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/2.0/me/associated')
-        return unicode(r.json[u'items'][0][u'account_id'])
+        return unicode(r.json()[u'items'][0][u'account_id'])

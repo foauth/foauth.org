@@ -73,4 +73,4 @@ class Facebook(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/me')
-        return r.json[u'id']
+        return r.json()[u'id']

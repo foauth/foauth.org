@@ -21,4 +21,4 @@ class Tumblr(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/v2/user/info')
-        return r.json[u'response'][u'user'][u'name']
+        return r.json()[u'response'][u'user'][u'name']

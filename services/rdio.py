@@ -32,4 +32,4 @@ class Rdio(foauth.providers.OAuth1):
         r = self.api(key, self.api_domain, u'/1/', method='POST', data={
             'method': 'currentUser',
         })
-        return unicode(r.json[u'result'][u'key'])
+        return unicode(r.json()[u'result'][u'key'])

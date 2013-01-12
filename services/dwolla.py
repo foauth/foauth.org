@@ -40,4 +40,4 @@ class Dwolla(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/oauth/rest/users/')
-        return unicode(r.json[u'Response'][u'Id'])
+        return unicode(r.json()[u'Response'][u'Id'])

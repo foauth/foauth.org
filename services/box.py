@@ -60,7 +60,7 @@ class Box(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domains[0], u'/2.0/folders/0')
-        return r.json[u'owned_by'][u'id']
+        return r.json()[u'owned_by'][u'id']
 
 
 class Auth(object):

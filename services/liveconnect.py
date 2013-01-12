@@ -41,4 +41,4 @@ class LiveConnect(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/v5.0/me')
-        return r.json[u'id']
+        return r.json()[u'id']
