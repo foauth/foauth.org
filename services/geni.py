@@ -18,4 +18,4 @@ class Geni(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/api/profile')
-        print unicode(r.json[u'guid'])
+        print unicode(r.json()[u'guid'])
