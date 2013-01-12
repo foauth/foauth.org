@@ -1,10 +1,10 @@
-from oauthlib.oauth2.draft25 import utils
+from oauthlib.common import add_params_to_uri
 import foauth.providers
 
 
 def token_uri(service, token, r):
     params = [((u'access_token', token)), ((u'api_key', service.client_id))]
-    r.url = utils.add_params_to_uri(r.url, params)
+    r.url = add_params_to_uri(r.url, params)
     return r
 
 
