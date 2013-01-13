@@ -14,3 +14,10 @@ class GetSatisfaction(foauth.providers.OAuth1):
     access_token_url = 'http://getsatisfaction.com/api/access_token'
     api_domain = 'api.getsatisfaction.com'
 
+    available_permissions = [
+        (None, 'access your support requests'),
+    ]
+
+    def get_user_id(self, key):
+        r = self.api(key, self.api_domain, u'/me.json')
+        return unicode(r.json()[u'id'])
