@@ -9,7 +9,7 @@ class StackExchange(foauth.providers.OAuth2):
     name = 'Stack Exchange'
     provider_url = 'https://stackexchange.com/'
     docs_url = 'https://api.stackexchange.com/docs'
-    category = 'Questions'
+    category = 'Support'
 
     # URLs to interact with the API
     authorize_url = 'https://stackexchange.com/oauth'
@@ -19,7 +19,6 @@ class StackExchange(foauth.providers.OAuth2):
     available_permissions = [
         (None, 'read your user information'),
         ('read_inbox', 'read your global inbox'),
-        ('no_expiry', 'access your data indefinitely'),
     ]
 
     def bearer_type(service, token, r):
@@ -32,6 +31,11 @@ class StackExchange(foauth.providers.OAuth2):
 
         # StackExchange also uses an application key
         self.app_key = os.environ.get('STACKEXCHANGE_APP_KEY', '').decode('utf8')
+
+    def get_authorize_params(self, redirect_uri, scopes):
+        # Always request a long-lasting token
+        scopes.append('no_expiry')
+        return super(StackExchange, self).get_authorize_params(redirect_uri, scopes)
 
     def parse_token(self, content):
         data = url_decode(content)
