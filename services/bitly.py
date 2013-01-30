@@ -25,4 +25,4 @@ class Bitly(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/v3/user/info')
-        return unicode(r.json[u'data'][u'login'])
+        return unicode(r.json()[u'data'][u'login'])

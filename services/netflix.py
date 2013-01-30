@@ -32,8 +32,8 @@ class Netflix(foauth.providers.OAuth1):
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/users/current',
                      params={'output': 'json'})
-        redirect = r.json[u'resource'][u'link'][u'href']
+        redirect = r.json()[u'resource'][u'link'][u'href']
         parts = urlparse.urlparse(redirect)
         r = self.api(key, parts.netloc, parts.path,
                      params={'output': 'json'})
-        return r.json[u'user'][u'user_id']
+        return r.json()[u'user'][u'user_id']

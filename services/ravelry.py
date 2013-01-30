@@ -19,4 +19,4 @@ class Ravelry(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/current_user.json')
-        return unicode(r.json[u'user'][u'id'])
+        return unicode(r.json()[u'user'][u'id'])

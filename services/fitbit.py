@@ -19,4 +19,4 @@ class FitBit(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/1/user/-/profile.json')
-        return r.json[u'user'][u'encodedId']
+        return r.json()[u'user'][u'encodedId']
