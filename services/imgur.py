@@ -22,4 +22,4 @@ class Imgur(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/3/account/me.json')
-        return unicode(r.json[u'data'][u'id'])
+        return unicode(r.json()[u'data'][u'id'])

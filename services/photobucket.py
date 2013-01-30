@@ -23,4 +23,4 @@ class Photobucket(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/user', params={'format': 'json'})
-        return r.json[u'content'][u'username']
+        return r.json()[u'content'][u'username']

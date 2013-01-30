@@ -35,13 +35,9 @@ class Twitter(foauth.providers.OAuth1):
         params = super(Twitter, self).get_request_token_params(redirect_uri, scopes)
 
         # Convert to Twitter's permissions model
-        print scopes
         scopes = map(lambda x: self.scope_map.get(x or None), scopes)
-        print scopes
         if any(scopes):
             params['x_auth_access_type'] = scopes[0]
-
-        print params
 
         return params
 
@@ -53,4 +49,4 @@ class Twitter(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/1/account/verify_credentials.json')
-        return unicode(r.json[u'id'])
+        return unicode(r.json()[u'id'])

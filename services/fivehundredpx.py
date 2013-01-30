@@ -21,4 +21,4 @@ class FiveHundredPX(foauth.providers.OAuth1):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domains[0], u'/v1/users')
-        return unicode(r.json[u'user'][u'id'])
+        return unicode(r.json()[u'user'][u'id'])

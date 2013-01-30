@@ -5,7 +5,8 @@ import urlparse
 
 import flask
 import requests
-import requests.auth
+from requests_oauthlib import OAuth1 as OAuth1Manager
+from oauthlib.oauth1.rfc5849 import SIGNATURE_HMAC, SIGNATURE_TYPE_AUTH_HEADER
 from oauthlib.oauth2.draft25 import tokens
 from werkzeug.urls import url_decode
 
@@ -62,8 +63,8 @@ class OAuth(object):
 
     https = True
     verify = True
-    signature_method = requests.auth.SIGNATURE_HMAC
-    signature_type = requests.auth.SIGNATURE_TYPE_AUTH_HEADER
+    signature_method = SIGNATURE_HMAC
+    signature_type = SIGNATURE_TYPE_AUTH_HEADER
     permissions_widget = 'checkbox'
     description = ''
     disclaimer = ''
@@ -87,15 +88,15 @@ class OAuth(object):
         redirect_uri = self.get_redirect_uri('callback')
         params = self.get_authorize_params(redirect_uri=redirect_uri,
                                            scopes=scopes)
-        req = requests.Request(self.authorize_url, params=params)
-        return flask.redirect(req.full_url)
+        req = requests.Request(url=self.authorize_url, params=params)
+        return flask.redirect(req.prepare().url)
 
     def login(self):
         redirect_uri = self.get_redirect_uri('login_callback')
         params = self.get_authorize_params(redirect_uri=redirect_uri,
                                            scopes=[])
-        req = requests.Request(self.authorize_url, params=params)
-        return flask.redirect(req.full_url)
+        req = requests.Request(url=self.authorize_url, params=params)
+        return flask.redirect(req.prepare().url)
 
     # The remainder of the API must be implemented for each flavor of OAuth
 
@@ -125,11 +126,11 @@ class OAuth1(OAuth):
         return {}
 
     def get_authorize_params(self, redirect_uri, scopes):
-        auth = requests.auth.OAuth1(client_key=self.client_id,
-                                    client_secret=self.client_secret,
-                                    callback_uri=redirect_uri,
-                                    signature_method=self.signature_method,
-                                    signature_type=self.signature_type)
+        auth = OAuth1Manager(client_key=self.client_id,
+                             client_secret=self.client_secret,
+                             callback_uri=redirect_uri,
+                             signature_method=self.signature_method,
+                             signature_type=self.signature_type)
         resp = requests.post(self.get_request_token_url(), auth=auth,
                              params=self.get_request_token_params(redirect_uri, scopes),
                              headers={'Content-Length': '0'}, verify=self.verify)
@@ -148,13 +149,13 @@ class OAuth1(OAuth):
         verifier = data.get('oauth_verifier', None)
         secret = flask.session['%s_temp_secret' % self.alias]
         del flask.session['%s_temp_secret' % self.alias]
-        auth = requests.auth.OAuth1(client_key=self.client_id,
-                                    client_secret=self.client_secret,
-                                    resource_owner_key=token,
-                                    resource_owner_secret=secret,
-                                    verifier=verifier,
-                                    signature_method=self.signature_method,
-                                    signature_type=self.signature_type)
+        auth = OAuth1Manager(client_key=self.client_id,
+                             client_secret=self.client_secret,
+                             resource_owner_key=token,
+                             resource_owner_secret=secret,
+                             verifier=verifier,
+                             signature_method=self.signature_method,
+                             signature_type=self.signature_type)
         resp = requests.post(self.access_token_url, auth=auth,
                              headers={'Content-Length': '0'}, verify=self.verify)
         try:
@@ -166,15 +167,15 @@ class OAuth1(OAuth):
             headers=None):
         protocol = self.https and 'https' or 'http'
         url = '%s://%s%s' % (protocol, domain, path)
-        auth = requests.auth.OAuth1(client_key=self.client_id,
-                                    client_secret=self.client_secret,
-                                    resource_owner_key=key.access_token,
-                                    resource_owner_secret=key.secret,
-                                    signature_method=self.signature_method,
-                                    signature_type=self.signature_type)
+        auth = OAuth1Manager(client_key=self.client_id,
+                             client_secret=self.client_secret,
+                             resource_owner_key=key.access_token,
+                             resource_owner_secret=key.secret,
+                             signature_method=self.signature_method,
+                             signature_type=self.signature_type)
         return requests.request(method, url, auth=auth, params=params or {},
                                 data=data or {}, headers=headers or {},
-                                verify=self.verify)
+                                verify=self.verify, stream=True)
 
 
 class OAuth2(OAuth):
@@ -240,4 +241,4 @@ class OAuth2(OAuth):
             auth = Bearer(key.access_token, bearer_type=self.bearer_type)
         return requests.request(method, url, auth=auth, params=params or {},
                                 data=data or {}, headers=headers or {},
-                                verify=self.verify)
+                                verify=self.verify, stream=True)

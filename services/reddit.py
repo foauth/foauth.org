@@ -45,5 +45,4 @@ class Reddit(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/api/v1/me')
-        print 'User Content: %r' % r.content
-        return unicode(r.json[u'id'])
+        return unicode(r.json()[u'id'])

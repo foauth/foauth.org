@@ -25,4 +25,4 @@ class ThirtySevenSignals(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domains[0], u'/authorization.json')
-        return unicode(r.json[u'identity'][u'id'])
+        return unicode(r.json()[u'identity'][u'id'])

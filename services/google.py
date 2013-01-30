@@ -66,4 +66,4 @@ class Google(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domains[0], u'/oauth2/v2/userinfo')
-        return r.json[u'id']
+        return r.json()[u'id']

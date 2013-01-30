@@ -21,4 +21,4 @@ class SmugMug(foauth.providers.OAuth1):
     def get_user_id(self, key):
         url = u'/services/api/json/1.3.0/?method=smugmug.auth.checkAccessToken'
         r = self.api(key, self.api_domain, url)
-        return unicode(r.json[u'Auth'][u'User'][u'id'])
+        return unicode(r.json()[u'Auth'][u'User'][u'id'])

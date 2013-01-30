@@ -1,4 +1,4 @@
-from oauthlib.oauth2.draft25 import utils
+from oauthlib.common import add_params_to_uri
 from werkzeug.urls import url_decode
 import foauth.providers
 
@@ -68,9 +68,9 @@ class Facebook(foauth.providers.OAuth2):
         return data
 
     def bearer_type(self, token, r):
-        r.url = utils.add_params_to_uri(r.url, [((u'access_token', token))])
+        r.url = add_params_to_uri(r.url, [((u'access_token', token))])
         return r
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/me')
-        return r.json[u'id']
+        return r.json()[u'id']

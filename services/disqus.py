@@ -1,11 +1,5 @@
-from oauthlib.oauth2.draft25 import utils
+from oauthlib.common import add_params_to_uri
 import foauth.providers
-
-
-def token_uri(service, token, r):
-    params = [((u'access_token', token)), ((u'api_key', service.client_id))]
-    r.url = utils.add_params_to_uri(r.url, params)
-    return r
 
 
 class Disqus(foauth.providers.OAuth2):
@@ -26,11 +20,14 @@ class Disqus(foauth.providers.OAuth2):
     ]
     permissions_widget = 'radio'
 
-    bearer_type = token_uri
+    def bearer_type(service, token, r):
+        params = [((u'access_token', token)), ((u'api_key', service.client_id))]
+        r.url = add_params_to_uri(r.url, params)
+        return r
 
     def get_scope_string(self, scopes):
         return ','.join(scopes)
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/api/3.0/users/details.json')
-        return r.json[u'response'][u'id']
+        return r.json()[u'response'][u'id']

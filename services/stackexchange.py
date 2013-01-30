@@ -1,13 +1,7 @@
 import os
-from oauthlib.oauth2.draft25 import utils
+from oauthlib.common import add_params_to_uri
 from werkzeug.urls import url_decode
 import foauth.providers
-
-
-def token_uri(service, token, r):
-    params = [((u'access_token', token)), ((u'key', service.app_key))]
-    r.url = utils.add_params_to_uri(r.url, params)
-    return r
 
 
 class StackExchange(foauth.providers.OAuth2):
@@ -27,7 +21,10 @@ class StackExchange(foauth.providers.OAuth2):
         ('read_inbox', 'read your global inbox'),
     ]
 
-    bearer_type = token_uri
+    def bearer_type(service, token, r):
+        params = [((u'access_token', token)), ((u'key', service.app_key))]
+        r.url = add_params_to_uri(r.url, params)
+        return r
 
     def __init__(self, *args, **kwargs):
         super(StackExchange, self).__init__(*args, **kwargs)
@@ -47,4 +44,4 @@ class StackExchange(foauth.providers.OAuth2):
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/2.0/me/associated')
-        return unicode(r.json[u'items'][0][u'account_id'])
+        return unicode(r.json()[u'items'][0][u'account_id'])
