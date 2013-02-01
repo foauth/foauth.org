@@ -18,17 +18,7 @@ class GetGlue(foauth.providers.OAuth1):
         (None, 'read and write your social checkins'),
     ]
 
-    def get_authorize_params(self, *args, **kwargs):
-        # GetGlue doesn't parrot this back, so we have to save it
-        params = super(GetGlue, self).get_authorize_params(*args, **kwargs)
-        flask.session['%s_temp_token' % self.alias] = params['oauth_token']
-        return params
-
-    def callback(self, data, *args, **kwargs):
-        # GetGlue doesn't parrot this back, so we have to retrieve it
-        data = dict(data, oauth_token=flask.session['%s_temp_token' % self.alias])
-        del flask.session['%s_temp_token' % self.alias]
-        return super(GetGlue, self).callback(data, *args, **kwargs)
+    returns_token = False
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domain, u'/v2/user/profile?format=json')
