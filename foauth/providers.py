@@ -115,6 +115,8 @@ class OAuth(object):
 
 
 class OAuth1(OAuth):
+    returns_token = True
+
     def parse_token(self, content):
         content = url_decode(content)
         return {
@@ -139,6 +141,8 @@ class OAuth1(OAuth):
         except Exception:
             raise OAuthError('Unable to parse access token')
         flask.session['%s_temp_secret' % self.alias] = data['secret']
+        if not self.returns_token:
+            redirect_uri += ('?oauth_token=%s' % data['access_token'])
         return {
             'oauth_token': data['access_token'],
             'oauth_callback': redirect_uri,
