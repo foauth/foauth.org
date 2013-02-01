@@ -133,7 +133,7 @@ class OAuth1(OAuth):
                              signature_type=self.signature_type)
         resp = requests.post(self.get_request_token_url(), auth=auth,
                              params=self.get_request_token_params(redirect_uri, scopes),
-                             headers={'Content-Length': '0'}, verify=self.verify)
+                             verify=self.verify)
         try:
             data = self.parse_token(resp.content)
         except Exception:
@@ -156,8 +156,7 @@ class OAuth1(OAuth):
                              verifier=verifier,
                              signature_method=self.signature_method,
                              signature_type=self.signature_type)
-        resp = requests.post(self.access_token_url, auth=auth,
-                             headers={'Content-Length': '0'}, verify=self.verify)
+        resp = requests.post(self.access_token_url, auth=auth, verify=self.verify)
         try:
             return self.parse_token(resp.content)
         except Exception:
