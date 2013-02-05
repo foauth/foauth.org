@@ -12,7 +12,7 @@
 						<p>The idea for foauth.org came out of conver&shy;sation between a couple of guys who were frus&shy;trated with having to fight with OAuth in order get to our own data on our favorite services. It made sense for those services to talk to each other with OAuth, but for us to write our own scripts, we were required to either register our own app with a website and every&shy;thing or restrict ourselves to the few services that offer a friendlier alter&shy;native.</p>
 						<p>HTTP already has its own authen&shy;tication system, and there are hundreds &mdash; perhaps thousands &mdash; of tools that know how to work with it. Wouldn&rsquo;t it be great if there was a way to use that in our own scripts, but have something commun&shy;icate with the services using OAuth behind the scenes? Thus, foauth.org was born.</p>
 						<p>Rather than try to build a bunch of bells and whistles and make everything really complicated, we focused on just one task: taking OAuth out of the equation when accessing your own data. So, unlike Apigee, we&rsquo;re not monitoring your API usage or promising any statistics or anything like that. Our goal is to help you log in with OAuth-compliant services using HTTP Basic authentication. That&rsquo;s it.</p>
-						<p>If you&rsquo;d like to learn more, check out the <a href="/about/faq/">FAQ</a> or our <a href="/about/terms/">terms of service</a>.</p>
+						<p>If you&rsquo;d like to learn more, check out the <a href="{{ url_for('faq') }}">FAQ</a>, our <a href="{{ url_for('terms') }}">terms of service</a> and information about <a href="{{ url_for('privacy') }}">privacy</a> and <a href="{{ url_for('security') }}">security</a>.</p>
 					</div>
 					<div class="span4">
 						<dl class="info-list">

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block nav %}{{ nav('about') }}{% endblock %}
+
+{% block content %}
+			<div class="content">
+				<div class="page-header">
+					<h1>Privacy information</h1>
+				</div>
+				<div class="row">
+					<div class="span16">
+						<p>foauth.org grants access to dozens of social networks, so privacy is a very serious concern. Here's a quick run-down of what we store and what we do with it.</p>
+						<ul>
+							<li>Your foauth.org email address and password, which are used to identify you with foauth.org only. This is what you supply for Basic Authentication when making HTTP requests. At no time will we ask for, much less store, your password for any other services.</li>
+							<li>Authorization tokens for your authorized services, which are used to sign and authorize requests to those services on your behalf. Wherever possible, foauth.org lets you decide how much permission is granted by these tokens, but that granularity is dependent on support from each service.</li>
+							<li>Expiration information, including special tokens designed to refresh your authorization token. Some tokens expire after a certain amount of time, while others are permanent, and still others officially expire but can be refreshed indefinitely. foauth.org stores expiration dates when given, as well as refresh tokens to prevent you from having to reauthorize manually. Not all services support refreshing.</li>
+							<li>A unique ID to represent you with each service, which may or may not be your username. This is often a numeric ID, but can also be a username or email address, if that's how a service recognizes you. The purpose of storing this information is to allow you to use a previously authorized service as a secondary login, if you ever forget your foauth.org password. No other information about your accounts will be stored.</li>
+						</ul>
+						<p>If you'd like to remove your authorization tokens for any reason, you can simply <a href="{{ url_for('oauth_login') }}">login using one of your authorized services</a>. This will automatically wipe out your authorizations, for <a href="{{ url_for('security') }}">security reasons</a>.</p>
+						<p>If you'd like more details, the entire source code of the site is available <a href="https://github.com/gulopine/foauth.org/">on GitHub</a> and you email us at <a href="mailto:privacy@foauth.org"><strong>privacy@foauth.org</strong></a>.</p>
+					</div>
+				</div>
+			</div>
+{% endblock %}
