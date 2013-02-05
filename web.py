@@ -1,6 +1,7 @@
 import datetime
 from functools import wraps
 import os
+import sys
 
 from flask import request, flash, redirect, render_template, abort, url_for, make_response
 from flask.ext.login import current_user, login_user, logout_user, login_required
@@ -40,6 +41,18 @@ def index():
 @config.app.route('/about/', methods=['GET'])
 def about():
     return render_template('about.html')
+
+
+@config.app.route('/security/', methods=['GET'])
+def security():
+    requirements = open(os.path.join(os.path.dirname(__file__), 'requirements.txt'))
+    return render_template('security.html', py_version=sys.version_info,
+                           requirements=[r.split('==') for r in requirements])
+
+
+@config.app.route('/privacy/', methods=['GET'])
+def privacy():
+    return render_template('privacy.html')
 
 
 @config.app.route('/about/faq/', methods=['GET'])
