@@ -133,11 +133,11 @@ abbr {
 }
 
 .service .favicon {
-	margin-right: 24px;
+	margin-left: 22px;
 }
 
 .service th h3 {
-	background: 20px 11px no-repeat;
+	background: left 11px no-repeat;
 }
 
 .authorized th h3 {
