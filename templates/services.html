@@ -93,17 +93,13 @@
 		</div>
 		{% if current_user.is_authenticated() %}
 			<div class="modal-footer">
+				<a href="{{ service.provider_url }}">Visit {{ service.name }}</a>
+				<a href="{{ service.docs_url }}">API Documentation</a>
 				<button type="submit" class="btn primary authorize">{{ title }}</button>
 			</div>
 		{% endif %}
 	</div>
 </form>
-									</td>
-									<td>
-										<a href="{{ service.provider_url }}">Site</a>
-									</td>
-									<td>
-										<a href="{{ service.docs_url }}">API Docs</a>
 									</td>
 								</tr>
 {% endfor %}
