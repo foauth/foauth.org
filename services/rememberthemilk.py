@@ -2,6 +2,7 @@ import flask
 import hashlib
 import itertools
 import requests
+from urlparse import urlparse, parse_qsl
 from xml.dom import minidom
 
 import foauth.providers
@@ -81,21 +82,13 @@ class Auth(object):
         self.auth_token = auth_token
 
     def __call__(self, r):
-        r.params['api_key'] = [self.client_id]
-        r.params['auth_token'] = [self.auth_token]
-        params = r.params or r.data
-        if hasattr(params, 'keys'):
-            params = self.iterparams(params)
-        signature = self.get_signature(params)
-        r.params['api_sig'] = signature
+        r.prepare_url(r.url, {'api_key': self.client_id, 'auth_token': self.token})
+        if r.body:
+            params = parse_sql(r.body)
+        else:
+            params = parse_qsl(urlparse(r.url).query)
+        r.prepare_url(r.url, {'api_sig': self.get_signature(params)})
         return r
-
-    def iterparams(self, params):
-        # Pull the parameter values out of their lists,
-        # yielding multiple values for a key if necessary.
-        for key in sorted(params):
-            for val in params[key]:
-                yield (key, val)
 
     def get_signature(self, param_list):
         data = ''.join(i.encode('utf8') for i in itertools.chain(*sorted(param_list)))
