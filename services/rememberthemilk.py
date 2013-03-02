@@ -82,7 +82,7 @@ class Auth(object):
         self.auth_token = auth_token
 
     def __call__(self, r):
-        r.prepare_url(r.url, {'api_key': self.client_id, 'auth_token': self.token})
+        r.prepare_url(r.url, {'api_key': self.client_id, 'auth_token': self.auth_token})
         if r.body:
             params = parse_sql(r.body)
         else:
