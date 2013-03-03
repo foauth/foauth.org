@@ -48,5 +48,5 @@ class Twitter(foauth.providers.OAuth1):
         return super(Twitter, self).callback(data, *args, **kwargs)
 
     def get_user_id(self, key):
-        r = self.api(key, self.api_domain, u'/1/account/verify_credentials.json')
+        r = self.api(key, self.api_domain, u'/1.1/account/verify_credentials.json')
         return unicode(r.json()[u'id'])
