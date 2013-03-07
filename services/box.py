@@ -47,7 +47,7 @@ class Box(foauth.providers.OAuth1):
             'ticket': data['ticket'],
             'token': data['auth_token'],
         }
-        resp = requests.get(self.access_token_url, params=params)
+        resp = requests.get(self.get_access_token_url(), params=params)
 
         return self.parse_token(resp.content)
 
