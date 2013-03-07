@@ -52,7 +52,7 @@ class RememberTheMilk(foauth.providers.OAuth2):
             'frob': data['frob'],
         }
         params['api_sig'] = auth.get_signature(params.items())
-        resp = requests.get(self.access_token_url, params=params)
+        resp = requests.get(self.get_access_token_url(), params=params)
 
         return self.parse_token(resp.content)
 

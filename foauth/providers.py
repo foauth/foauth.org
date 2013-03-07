@@ -76,6 +76,9 @@ class OAuth(object):
     def get_request_token_url(self):
         return self.request_token_url
 
+    def get_access_token_url(self):
+        return self.access_token_url
+
     def get_redirect_uri(self, url_name):
         root = flask.request.url_root
         path = flask.url_for(url_name, alias=self.alias)
@@ -160,7 +163,8 @@ class OAuth1(OAuth):
                              verifier=verifier,
                              signature_method=self.signature_method,
                              signature_type=self.signature_type)
-        resp = requests.post(self.access_token_url, auth=auth, verify=self.verify)
+        resp = requests.post(self.get_access_token_url(), auth=auth,
+                             verify=self.verify)
         try:
             return self.parse_token(resp.content)
         except Exception:
@@ -216,7 +220,7 @@ class OAuth2(OAuth):
         redirect_uri = self.get_redirect_uri(url_name)
         if not self.supports_state:
             redirect_uri += ('?state=%s' % state)
-        resp = requests.post(self.access_token_url, {
+        resp = requests.post(self.get_access_token_url(), {
             'client_id': self.client_id,
             'client_secret': self.client_secret,
             'grant_type': 'authorization_code',
@@ -227,7 +231,7 @@ class OAuth2(OAuth):
         return self.parse_token(resp.content)
 
     def refresh_token(self, token):
-        resp = requests.post(self.access_token_url, {
+        resp = requests.post(self.get_access_token_url(), {
             'client_id': self.client_id,
             'client_secret': self.client_secret,
             'grant_type': 'refresh_token',
