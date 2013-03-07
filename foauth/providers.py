@@ -130,15 +130,18 @@ class OAuth1(OAuth):
     def get_request_token_params(self, redirect_uri, scopes):
         return {}
 
-    def get_authorize_params(self, redirect_uri, scopes):
+    def get_request_token_response(self, redirect_uri, scopes):
         auth = OAuth1Manager(client_key=self.client_id,
                              client_secret=self.client_secret,
                              callback_uri=redirect_uri,
                              signature_method=self.signature_method,
                              signature_type=self.signature_type)
-        resp = requests.post(self.get_request_token_url(), auth=auth,
+        return requests.post(self.get_request_token_url(), auth=auth,
                              params=self.get_request_token_params(redirect_uri, scopes),
                              verify=self.verify)
+
+    def get_authorize_params(self, redirect_uri, scopes):
+        resp = self.get_request_token_response(redirect_uri, scopes)
         try:
             data = self.parse_token(resp.content)
         except Exception:
@@ -151,11 +154,7 @@ class OAuth1(OAuth):
             'oauth_callback': redirect_uri,
         }
 
-    def callback(self, data, url_name):
-        token = data['oauth_token']
-        verifier = data.get('oauth_verifier', None)
-        secret = flask.session['%s_temp_secret' % self.alias]
-        del flask.session['%s_temp_secret' % self.alias]
+    def get_access_token_response(self, token, secret, verifier=None):
         auth = OAuth1Manager(client_key=self.client_id,
                              client_secret=self.client_secret,
                              resource_owner_key=token,
@@ -163,8 +162,15 @@ class OAuth1(OAuth):
                              verifier=verifier,
                              signature_method=self.signature_method,
                              signature_type=self.signature_type)
-        resp = requests.post(self.get_access_token_url(), auth=auth,
+        return requests.post(self.get_access_token_url(), auth=auth,
                              verify=self.verify)
+
+    def callback(self, data, url_name):
+        token = data['oauth_token']
+        verifier = data.get('oauth_verifier', None)
+        secret = flask.session['%s_temp_secret' % self.alias]
+        del flask.session['%s_temp_secret' % self.alias]
+        resp = self.get_access_token_response(token, secret, verifier)
         try:
             return self.parse_token(resp.content)
         except Exception:
