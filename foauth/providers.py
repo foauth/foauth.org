@@ -218,6 +218,15 @@ class OAuth2(OAuth):
             params['scope'] = self.get_scope_string(scopes)
         return params
 
+    def get_access_token_response(self, redirect_uri, data):
+        return requests.post(self.get_access_token_url(), {
+            'client_id': self.client_id,
+            'client_secret': self.client_secret,
+            'grant_type': 'authorization_code',
+            'code': data['code'],
+            'redirect_uri': redirect_uri
+        }, verify=self.verify, auth=self.auth)
+
     def callback(self, data, url_name):
         state = flask.session['%s_state' % self.alias]
         if 'state' in data and state != data['state']:
@@ -226,13 +235,7 @@ class OAuth2(OAuth):
         redirect_uri = self.get_redirect_uri(url_name)
         if not self.supports_state:
             redirect_uri += ('?state=%s' % state)
-        resp = requests.post(self.get_access_token_url(), {
-            'client_id': self.client_id,
-            'client_secret': self.client_secret,
-            'grant_type': 'authorization_code',
-            'code': data['code'],
-            'redirect_uri': redirect_uri
-        }, verify=self.verify, auth=self.auth)
+        resp = self.get_access_token_response(redirect_uri, data)
 
         return self.parse_token(resp.content)
 
