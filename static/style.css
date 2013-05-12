@@ -275,6 +275,10 @@ h2 .btn {
 	margin-top: .35em;
 }
 
+.modal {
+	outline: none;
+}
+
 .modal-header {
 	text-align: center;
 }
