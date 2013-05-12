@@ -91,13 +91,13 @@
 			<p>{{ service.disclaimer }}</p>
 			{% endif %}
 		</div>
+		<div class="modal-footer">
+			<a href="{{ service.provider_url }}">Visit {{ service.name }}</a>
+			<a href="{{ service.docs_url }}">API Documentation</a>
 		{% if current_user.is_authenticated() %}
-			<div class="modal-footer">
-				<a href="{{ service.provider_url }}">Visit {{ service.name }}</a>
-				<a href="{{ service.docs_url }}">API Documentation</a>
-				<button type="submit" class="btn primary authorize">{{ title }}</button>
-			</div>
+			<button type="submit" class="btn primary authorize">{{ title }}</button>
 		{% endif %}
+		</div>
 	</div>
 </form>
 									</td>
