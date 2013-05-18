@@ -5,6 +5,8 @@ import sys
 
 from flask import request, flash, redirect, render_template, abort, url_for, make_response
 from flask.ext.login import current_user, login_user, logout_user, login_required
+import static
+from werkzeug.wsgi import DispatcherMiddleware
 
 from foauth import OAuthDenied, OAuthError
 import config
@@ -309,6 +311,12 @@ def get_user_key(service, user):
             # Unable to refresh the token
             abort(403)
     return key
+
+
+#blog = static.Cling('blog/output')
+#config.app = DispatcherMiddleware(config.app, {
+#    '/blog': blog,
+#})
 
 
 if __name__ == '__main__':
