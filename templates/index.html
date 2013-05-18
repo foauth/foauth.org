@@ -84,8 +84,8 @@
 			<pre>>>> import <a href="https://github.com/kennethreitz/requests">requests</a>
 >>> auth = 'email@example.com', 'password'
 >>> data = {'status': "Just signed up with https://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"}
->>> requests.post('https://foauth.org/<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/update">api.twitter.com/1.1/statuses/update.json</a>', data=data, auth=auth)
->>> r = requests.get('https://foauth.org/<a href="https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline">api.twitter.com/1.1/statuses/user_timeline.json</a>', auth=auth)
+>>> requests.post('http{% if request.is_secure %}s{% endif %}://{{ request.host }}/<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/update">api.twitter.com/1.1/statuses/update.json</a>', data=data, auth=auth)
+>>> r = requests.get('http{% if request.is_secure %}s{% endif %}://{{ request.host }}/<a href="https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline">api.twitter.com/1.1/statuses/user_timeline.json</a>', auth=auth)
 >>> r.json()[0]['text']
 "Just signed up with https://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"</pre>
 		</li>
