@@ -91,7 +91,7 @@ dl dd {
 	color: orange;
 }
 
-h1, h2, h3 {
+h1, h2, h3, .pub-date {
 	font-family: 'YanoneKaffeesatzLight';
 }
 
@@ -114,6 +114,10 @@ ul {
 
 abbr {
 	border-bottom: 1px dotted #303030;
+}
+
+ol.row {
+	margin-bottom: 0;
 }
 
 .nav img {
@@ -389,3 +393,19 @@ ul.flashes .success {
 	background-image: linear-gradient(top, #62c462, #51a351);
 }
 
+blockquote {
+	margin: 1em;
+	padding: 0;
+	border: none;
+}
+
+blockquote p {
+	font-size: 1.25em;
+	font-style: italic;
+}
+
+.pub-date {
+	text-align: right;
+	font-size: 24px;
+	line-height: 36px;
+}
