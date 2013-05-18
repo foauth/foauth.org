@@ -1,0 +1,2 @@
+echo "-----> Building output"
+pelican -s pelican.conf.py - blog/theme
