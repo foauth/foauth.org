@@ -76,6 +76,7 @@ class Key(db.Model):
         else:
             self.expires = None
         self.refresh_token = data.get('refresh_token', None)
+        self.service_user_id = data.get('service_user_id', None)
 
     def is_expired(self):
         return self.will_expire(days=0)
