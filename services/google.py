@@ -23,7 +23,7 @@ class Google(foauth.providers.OAuth2):
     # Scopes: https://code.google.com/oauthplayground/
     # Also, search for "site:code.google.com https://www.googleapis.com/auth/"
     available_permissions = [
-        ('https://www.googleapis.com/auth/userinfo.email', 'read your email address'),
+        (None, 'read your email address'),
         ('https://www.googleapis.com/auth/userinfo.profile', 'read your basic profile information'),
         ('https://www.googleapis.com/auth/analytics', 'access your analytics'),
         ('https://www.googleapis.com/auth/blogger', 'access your blogs'),
@@ -59,8 +59,9 @@ class Google(foauth.providers.OAuth2):
         # TODO: Find more and add them here
     ]
 
-    def get_authorize_params(self, *args, **kwargs):
-        params = super(Google, self).get_authorize_params(*args, **kwargs)
+    def get_authorize_params(self, redirect_uri, scopes):
+        scopes.append('https://www.googleapis.com/auth/userinfo.email')
+        params = super(Google, self).get_authorize_params(redirect_uri, scopes)
         params['access_type'] = 'offline'
         return params
 
