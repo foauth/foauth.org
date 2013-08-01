@@ -1,20 +1,3 @@
-{% macro nav(section) %}
-    <a class="brand" href="/"><span class="fo">fo</span>auth.org</a>
-    <ul class="nav">
-        <li><a href="/">Home</a></li>
-        <li><a href="/services/">Services</a></li>
-        <li><a href="/about/">About</a></li>
-        <li class="active"><a href="/blog/">Blog</a></li>
-        <li><a href="https://github.com/gulopine/foauth.org">Source</a></li>
-        <li>
-            <a href="http://gum.co/rWgD">
-                <img src="https://getfavicon.appspot.com/http://gumroad.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgumroad.com" class="favicon">
-                Donate
-            </a>
-        </li>
-    </ul>
-{% endmacro %}
-
 <!doctype html>
 <html>
 	<head>
@@ -29,7 +12,20 @@
 		<div class="topbar">
 			<div class="fill">
 				<div class="container">
-					{% block nav %}{{ nav('index') }}{% endblock %}
+                    <a class="brand" href="/"><span class="fo">fo</span>auth.org</a>
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li class="active"><a href="/blog/">Blog</a></li>
+                        <li><a href="https://github.com/gulopine/foauth.org">Source</a></li>
+                        <li>
+                            <a href="http://gum.co/rWgD">
+                                <img src="https://getfavicon.appspot.com/http://gumroad.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgumroad.com" class="favicon">
+                                Donate
+                            </a>
+                        </li>
+                    </ul>
 				</div>
 			</div>
 		</div>
