@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+{% block head %}
+		<title>foauth.org: OAuth for one</title>
+		<link rel="stylesheet" href="/static/bootstrap.min.css">
+		<link rel="stylesheet" href="/static/style.css">
+		<link rel="sortcut icon" href="/static/favicon.png">
+{% endblock %}
+	</head>
+	<body>
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+                    <a class="brand" href="/"><span class="fo">fo</span>auth.org</a>
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li class="active"><a href="/blog/">Blog</a></li>
+                        <li><a href="https://github.com/gulopine/foauth.org">Source</a></li>
+                        <li>
+                            <a href="http://gum.co/rWgD">
+                                <img src="https://getfavicon.appspot.com/http://gumroad.com/?defaulticon=https%3A//www.google.com/s2/favicons%3Fdomain%3Dgumroad.com" class="favicon">
+                                Donate
+                            </a>
+                        </li>
+                    </ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			{% block content %}{% endblock %}
+		</div>
+		<p class="footer">Brought to you by <img class="g" src="/static/g.png" width="24" height="24"> <a href="https://github.com/gulopine">Marty Alchin</a> with sponsorship from <a href="http://heroku.com/">Heroku</a></p>
+	</body>
+</html>
