@@ -313,12 +313,12 @@ def get_user_key(service, user):
     return key
 
 
-#blog = static.Cling('blog/output')
-#config.app = DispatcherMiddleware(config.app, {
-#    '/blog': blog,
-#})
+blog = static.Cling('blog/output')
+app = DispatcherMiddleware(config.app, {
+    '/blog': blog,
+})
 
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    config.app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port)
