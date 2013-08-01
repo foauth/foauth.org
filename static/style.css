@@ -67,6 +67,7 @@ pre, code {
 }
 
 body {
+	overflow: hidden;
 	padding-top: 50px;
 	margin: 0 auto;
 }
@@ -407,5 +408,26 @@ blockquote p {
 .pub-date {
 	text-align: right;
 	font-size: 24px;
-	line-height: 36px;
+}
+
+article h2 {
+	text-align: center;
+	font-size: 16pt;
+	color: #999;
+}
+
+article pre {
+	clear: both;
+	margin-left: -1060px;
+	margin-right: -1180px;
+	padding-left: 1000px;
+	padding-right: 1000px;
+}
+
+article aside {
+	float: right;
+	width: 160px;
+	margin-right: -180px;
+	border-left: 2px solid #ccc;
+	padding-left: 8px;
 }
