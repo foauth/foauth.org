@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+echo "-----> Building output"
+pelican -s pelican.conf.py -t blog/theme -d

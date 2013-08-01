@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+	{% for article in articles_page.object_list %}
+	<div class="row">
+		<div class="span12">
+			<h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+		</div>
+		<div class="span4 pub-date">
+			{{ article.date.strftime("%B %e, %Y") }}
+		</div>
+	</div>
+	<div class="row">
+		<div class="span16">
+			{{ article.content.split('</p>')[0] }}</p>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

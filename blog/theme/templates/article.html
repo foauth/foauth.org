@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<article class="content">
+	<hgroup class="page-header">
+		<h1>{{ article.title }}</h1>
+	</hgroup>
+	<div class="row">
+        <div class="span3">
+            by {{ article.author }}<br>
+            on {{ article.date.strftime("%B %e, %Y") }}
+        </div>
+		<div class="span10">
+			{{ article.content }}
+		</div>
+	</div>
+</article>
+{% endblock %}
