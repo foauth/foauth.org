@@ -20,7 +20,7 @@ Markdown==2.2.1
 feedgenerator==1.5
 pygments==1.6
 docutils==0.10
-pytz==2012
+pytz==2013b
 blinker==1.2
 unidecode==0.04.12
 six==1.2.0
