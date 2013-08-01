@@ -5,8 +5,8 @@ TIMEZONE = 'America/Los_Angeles'
 
 DEFAULT_PAGINATION = 10
 
-ARTICLE_URL = '{date:%Y}/{date:%m}/{date:%d}/{slug}/'
-ARTICLE_SAVE_AS = '{date:%Y}/{date:%m}/{date:%d}/{slug}/index.html'
+ARTICLE_URL = '{slug}/'
+ARTICLE_SAVE_AS = '{slug}/index.html'
 FEED_ALL_ATOM = 'feed.rss'
 
 PATH = 'blog/content'
