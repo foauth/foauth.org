@@ -414,12 +414,6 @@ blockquote p {
 	font-size: 24px;
 }
 
-article h2 {
-	text-align: center;
-	font-size: 16pt;
-	color: #999;
-}
-
 article pre {
 	clear: both;
 	margin-left: -1060px;
