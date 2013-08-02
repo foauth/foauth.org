@@ -37,7 +37,7 @@ The first sponsor is [Heroku](https://heroku.com/), who have graciously donated
 the resources to host the site on their platform. They cover all hosting costs,
 including the web dynos, production-quality database and SSL support.
 Indirectly, they also support the private OAuth proxy, because it's built to
-run on their free tier. More on that in the next post.
+run on their free tier. More on that in the [next post](/blog/taking-privacy-seriously/).
 
 The second sponsor to join up is [Runscope](https://runscope.com/), who have
 donated financially. Their generous sponsorship will hopefully be used to fund
