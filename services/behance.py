@@ -36,8 +36,6 @@ class Behance(foauth.providers.OAuth2):
         return super(Behance, self).get_authorize_params(redirect_uri, scopes)
 
     def parse_token(self, content):
-        print content
         data = super(Behance, self).parse_token(content)
-        print data
         data['service_user_id'] = data['user']['id']
         return data
