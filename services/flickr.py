@@ -22,12 +22,7 @@ class Flickr(foauth.providers.OAuth1):
 
     def get_authorize_params(self, redirect_uri, scopes):
         params = super(Flickr, self).get_authorize_params(redirect_uri, scopes)
-
-        if any(scopes):
-            params['perms'] = scopes[0]
-        else:
-            params['perms'] = 'read'
-
+        params['perms'] = scopes[0] or 'read'
         return params
 
     def get_user_id(self, key):
