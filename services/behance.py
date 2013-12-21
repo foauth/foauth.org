@@ -14,8 +14,8 @@ class Behance(foauth.providers.OAuth2):
     api_domain = 'www.behance.net'
 
     available_permissions = [
-        (None, 'read your public and private projects'),
-        ('activity_read', 'read your activity feed'),
+        (None, 'read your activity feed'),
+        ('project_read', 'read your public and private projects'),
         ('post_as', 'post to your activity feed'),
         ('collection_read', 'read your private collections'),
         ('collection_write', 'write to your private collections'),
@@ -32,7 +32,7 @@ class Behance(foauth.providers.OAuth2):
 
     def get_authorize_params(self, redirect_uri, scopes):
         # We always need to at least request something
-        scopes.append('project_read')
+        scopes.append('activity_read')
         return super(Behance, self).get_authorize_params(redirect_uri, scopes)
 
     def parse_token(self, content):
