@@ -26,10 +26,8 @@
 	{% set key = None %}
 {% endif %}
 {% if key %}
-	{% set icon = 'arrow_refresh.png' %}
 	{% set title = 'Re-authorize' %}
 {% else %}
-	{% set icon = 'key.png' %}
 	{% set title = 'Authorize' %}
 {% endif %}
 								<tr class="{% if loop.index == 1 %}category{% endif %} service {% if key %}authorized {% if not key.refresh_token %}{% if key.is_expired() %}expired{% elif key.will_expire() %}expiring{% endif %}{% endif %}{% endif %}">
