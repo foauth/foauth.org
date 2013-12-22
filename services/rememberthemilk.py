@@ -56,12 +56,6 @@ class RememberTheMilk(foauth.providers.OAuth2):
 
         return self.parse_token(resp.content)
 
-    def authorize(self, scopes):
-        redirect_uri = self.get_redirect_uri('callback')
-        params = self.get_authorize_params(redirect_uri, scopes)
-        req = requests.Request(url=self.authorize_url, params=params)
-        return flask.redirect(req.prepare().url)
-
     def api(self, key, domain, path, method='GET', params=None, data=None,
             headers=None):
         url = 'http://%s%s' % (domain, path)
