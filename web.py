@@ -262,7 +262,7 @@ def api(domain, path):
             resp = service.api(key, domain, '/%s' % path, request.method,
                                request.args, request.form or request.data,
                                prepare_headers(request.headers))
-            content = resp.raw.read()
+            content = resp.raw.read() or resp.content
 
             if 'Transfer-Encoding' in resp.headers and \
                resp.headers['Transfer-Encoding'].lower() == 'chunked':
