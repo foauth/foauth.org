@@ -138,15 +138,17 @@ ol.row {
 }
 
 .service .favicon {
-	margin-left: 22px;
+	margin-left: 15px;
 }
 
-.service th h3 {
-	background: left 11px no-repeat;
-}
-
-.authorized th h3 {
-	background-image: url('bullet_green.png');
+.authorized th h3::before {
+	content: ' ';
+	position: absolute;
+	margin-top: 15px;
+	width: 8px;
+	height: 8px;
+	background: #78A830;
+	border-radius: 4px;
 }
 
 .expires {
@@ -154,20 +156,20 @@ ol.row {
 }
 
 .expired .expires, .error .expires {
-	color: #E00040;
+	color: #E12000;
 }
 
-.expired th h3,
-.error th h3 {
-	background-image: url('bullet_red.png');
+.expired th h3::before,
+.error th h3::before {
+	background: #E12000;
 }
 
 .expiring .expires {
-	color: #E09000;
+	color: #F0B731;
 }
 
-.expiring th h3 {
-	background-image: url('bullet_yellow.png');
+.expiring th h3::before {
+	background: #F0B731;
 }
 
 .steps li {
