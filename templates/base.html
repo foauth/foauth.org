@@ -19,10 +19,7 @@
         <li><a href="{{ url_for('logout') }}">Log out</a></li>
         {% else %}
         <li{% if section == 'login' %} class="active"{% endif %}>
-            <a href="{{ url_for('login') }}">
-                <img src="{{ url_for('static', filename='key.png') }}">
-                Log in
-            </a>
+            <a href="{{ url_for('login') }}">Log in</a>
         </li>
         {% endif %}
     </ul></div>
