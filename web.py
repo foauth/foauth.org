@@ -163,7 +163,9 @@ def oauth_login():
 @auth_endpoint
 def service_login(service):
     try:
-        return service.login()
+        redirect_uri = url_for('login_callback', alias=service.alias, _external=True)
+        url = service.get_authorize_url(redirect_uri.decode('utf8'), scopes=[])
+        return redirect(url)
     except OAuthError:
         flash('Error occured while authorizing %s' % service.name, 'error')
         return redirect(url_for('oauth_login'))
@@ -175,7 +177,9 @@ def service_login(service):
 def authorize(service):
     scopes = request.form.getlist('scope')
     try:
-        return service.authorize(scopes)
+        redirect_uri = url_for('callback', alias=service.alias, _external=True)
+        url = service.get_authorize_url(redirect_uri.decode('utf8'), scopes)
+        return redirect(url)
     except OAuthError:
         flash('Error occured while authorizing %s' % service.name, 'error')
         return redirect(url_for('services'))
@@ -188,7 +192,8 @@ def callback(service):
     user_key = models.Key.query.filter_by(user_id=current_user.id,
                                           service_alias=service.alias).first()
     try:
-        data = service.callback(request.args, 'callback')
+        redirect_uri = url_for('callback', alias=service.alias, _external=True)
+        data = service.callback(request.args, redirect_uri.decode('utf8'))
         if not user_key:
             user_key = models.Key(user_id=current_user.id,
                                   service_alias=service.alias)
@@ -215,7 +220,8 @@ def callback(service):
 @auth_endpoint
 def login_callback(service):
     try:
-        data = service.callback(request.args, 'login_callback')
+        redirect_uri = url_for('login_callback', alias=service.alias, _external=True)
+        data = service.callback(request.args, redirect_uri.decode('utf8'))
     except OAuthError:
         flash('Error occurred while authorizing %s' % service.name, 'error')
         return redirect(url_for('oauth_login'))

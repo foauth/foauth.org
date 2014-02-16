@@ -79,31 +79,24 @@ class OAuth(object):
     def get_access_token_url(self):
         return self.access_token_url
 
-    def get_redirect_uri(self, url_name):
-        root = flask.request.url_root
-        path = flask.url_for(url_name, alias=self.alias)
-        return urlparse.urljoin(root, path).decode('utf8')
-
     def get_scope_string(self, scopes):
         return ''
 
-    def authorize(self, scopes):
-        redirect_uri = self.get_redirect_uri('callback')
+    def get_authorize_url(self, redirect_uri, scopes):
         params = self.get_authorize_params(redirect_uri=redirect_uri,
                                            scopes=scopes)
         req = requests.Request(url=self.authorize_url, params=params)
-        return flask.redirect(req.prepare().url)
+        return req.prepare().url
 
-    def login(self):
-        redirect_uri = self.get_redirect_uri('login_callback')
+    def get_login_uri(self, redirect_uri):
         params = self.get_authorize_params(redirect_uri=redirect_uri,
                                            scopes=[])
         req = requests.Request(url=self.authorize_url, params=params)
-        return flask.redirect(req.prepare().url)
+        return req.prepare().url
 
     # The remainder of the API must be implemented for each flavor of OAuth
 
-    def callback(self, data, url_name):
+    def callback(self, data, redirect_uri):
         """
         Receives the full callback from the service and returns a 2-tuple
         containing the user token and user secret (if applicable).
@@ -165,7 +158,7 @@ class OAuth1(OAuth):
         return requests.post(self.get_access_token_url(), auth=auth,
                              verify=self.verify)
 
-    def callback(self, data, url_name):
+    def callback(self, data, redirect_uri):
         token = data['oauth_token']
         verifier = data.get('oauth_verifier', None)
         secret = flask.session['%s_temp_secret' % self.alias]
@@ -227,12 +220,11 @@ class OAuth2(OAuth):
             'redirect_uri': redirect_uri
         }, verify=self.verify, auth=self.auth)
 
-    def callback(self, data, url_name):
+    def callback(self, data, redirect_uri):
         state = flask.session['%s_state' % self.alias]
         if 'state' in data and state != data['state']:
             flask.abort(403)
         del flask.session['%s_state' % self.alias]
-        redirect_uri = self.get_redirect_uri(url_name)
         if not self.supports_state:
             redirect_uri += ('?state=%s' % state)
         resp = self.get_access_token_response(redirect_uri, data)
