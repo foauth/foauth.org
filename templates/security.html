@@ -16,13 +16,12 @@
 						<p>That's an unfortunate situation on its own, but it gets worth when you consider that our password reset procedure means an attacker could use this process to gain control of all your authorized services. To combat this, a password reset will immediately remove all of your authorization tokens form foauth.og. You'll still see which ones you had previously authorized, but everything sensitive will have been purged from the system. This also makes password reset a sort of panic button, if you ever need to wipe out your authorizations.</p>
 					</div>
 					<div class="span4">
-						<h2>Current Environment</h2>
 						<dl class="info-list">
 							<dt><a href="http://python.org/">Python</a></dt>
 							<dd>{{ py_version.major }}.{{ py_version.minor }}.{{ py_version.micro }}</dd>
 {% for package, version in requirements %}
-							<dt><a href="https://crate.io/packages/{{ package }}">{{ package }}</a></dt>
-							<dd>{{ version }}</dd>
+							<dt><a href="https://pypi.python.org/pypi/{{ package }}/{{ version }}">{{ package }}</a></dt>
+							<dd><span>{{ version }}</span></dd>
 {% endfor %}
 						</dl>
 					</div>
