@@ -48,6 +48,8 @@ class Google(foauth.providers.OAuth2):
         ('https://www.googleapis.com/auth/moderator', 'access moderator content'),
         ('https://www.googleapis.com/auth/orkut', 'access your Orkut data'),
         ('https://www.googleapis.com/auth/youtube', 'access your videos'),
+        ('https://www.googleapis.com/auth/fusiontables.readonly', 'read your fusion tables'),
+        ('https://www.googleapis.com/auth/fusiontables', 'read and write to your fusion tables'),
 
         ('http://www.google.com/reader/api', 'access your news feeds'),
         ('http://www.google.com/webmasters/tools/feeds/', 'access your webmaster tools'),
