@@ -19,6 +19,9 @@ class PayPal(foauth.providers.OAuth2):
         ('address', 'access your physical address information'),
         ('phone', 'access your phone number'),
         ('https://uri.paypal.com/services/paypalattributes', 'access your account information'),
+        ('https://api.paypal.com/v1/payments/.*', 'Access your payments'),
+        ('https://api.paypal.com/v1/vault/credit-card', 'Access your credit cards'),
+        ('https://api.paypal.com/v1/vault/credit-card/.*', 'Access your credit card history'),
     ]
 
     def get_authorize_params(self, redirect_uri, scopes):
