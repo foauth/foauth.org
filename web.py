@@ -50,7 +50,8 @@ def about():
 def security():
     requirements = open(os.path.join(os.path.dirname(__file__), 'requirements.txt'))
     return render_template('security.html', py_version=sys.version_info,
-                           requirements=[r.split('==') for r in requirements])
+                           requirements=sorted((r.split('==') for r in requirements),
+                                               key=lambda x: x[0].lower()))
 
 
 @config.app.route('/privacy/', methods=['GET'])
