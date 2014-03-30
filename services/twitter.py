@@ -12,7 +12,8 @@ class Twitter(foauth.providers.OAuth1):
     request_token_url = 'https://api.twitter.com/oauth/request_token'
     authorize_url = 'https://api.twitter.com/oauth/authorize'
     access_token_url = 'https://api.twitter.com/oauth/access_token'
-    api_domain = 'api.twitter.com'
+    api_domains = ['api.twitter.com', 'stream.twitter.com',
+                   'sitestream.twitter.com', 'userstream.twitter.com']
 
     available_permissions = [
         (None, 'read your tweets'),
@@ -48,5 +49,5 @@ class Twitter(foauth.providers.OAuth1):
         return super(Twitter, self).callback(data, *args, **kwargs)
 
     def get_user_id(self, key):
-        r = self.api(key, self.api_domain, u'/1.1/account/verify_credentials.json')
+        r = self.api(key, self.api_domains[0], u'/1.1/account/verify_credentials.json')
         return unicode(r.json()[u'id'])
