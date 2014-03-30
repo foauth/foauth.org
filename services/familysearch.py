@@ -8,6 +8,7 @@ class FamilySearch(foauth.providers.OAuth2):
     provider_url = 'http://www.familysearch.com/'
     docs_url = 'https://familysearch.org/developers/docs/api/resources'
     category = 'Genealogy'
+    favicon_url = 'https://familysearch.org/favicon.ico'
 
     # URLs to interact with the API
     authorize_url = 'https://sandbox.familysearch.org/cis-web/oauth2/v3/authorization'
