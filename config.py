@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['DEBUG'] = 'DEBUG' in os.environ
 app.wsgi_app = ProxyFix(app.wsgi_app)
 if 'SSLIFY' in os.environ:
-    SSLify(app, subdomains=True)
+    SSLify(app, age=300)
 
 
 def get_service_modules():
