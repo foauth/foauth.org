@@ -65,8 +65,15 @@ class Google(foauth.providers.OAuth2):
         scopes.append('https://www.googleapis.com/auth/userinfo.email')
         params = super(Google, self).get_authorize_params(redirect_uri, scopes)
         params['access_type'] = 'offline'
+        params['approval_prompt'] = 'force'
         return params
 
     def get_user_id(self, key):
         r = self.api(key, self.api_domains[0], u'/oauth2/v2/userinfo')
         return r.json()[u'id']
+
+    def refresh_token(self, token):
+        # Retain the original refresh token, just to be sure we have one
+        details = super(Google, self).refresh_token(token)
+        details['refresh_token'] = token
+        return details
