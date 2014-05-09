@@ -11,7 +11,7 @@ class Flickr(foauth.providers.OAuth1):
     request_token_url = 'http://www.flickr.com/services/oauth/request_token'
     authorize_url = 'http://www.flickr.com/services/oauth/authorize'
     access_token_url = 'http://www.flickr.com/services/oauth/access_token'
-    api_domain = 'secure.flickr.com'
+    api_domain = 'api.flickr.com'
 
     available_permissions = [
         (None, 'access your public and private photos'),
