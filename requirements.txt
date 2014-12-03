@@ -14,9 +14,9 @@ blinker==1.2
 certifi==0.0.8
 docutils==0.10
 feedgenerator==1.5
-gunicorn==0.14.3
+gunicorn==19.1.1
 oauthlib==0.3.4
-pelican==3.1.1
+pelican==3.5.0
 psycopg2==2.4.5
 pyasn1==0.1.6
 pytz==2013b
