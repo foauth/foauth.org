@@ -10,7 +10,7 @@ class Signup(Form):
     ])
     password = PasswordField('Password', [
         validators.Required('How else will we know it\'s really you?'),
-        validators.EqualTo('retype', message='If you can't type it twice now, you'll never be able to log in with it.')
+        validators.EqualTo('retype', message='If you can\'t type it twice now, you\'ll never be able to log in with it.')
     ])
     retype = PasswordField('Password (again)')
     consent = BooleanField('Accept the Terms', [
@@ -36,5 +36,5 @@ class Password(Form):
         validators.Required('How else will we know it\'s really you?'),
     ])
     retype = PasswordField('Password (again)', [
-        validators.EqualTo('password', message='If you can't type it twice now, you'll never be able to log in with it.')
+        validators.EqualTo('password', message='If you can\'t type it twice now, you\'ll never be able to log in with it.')
     ])
