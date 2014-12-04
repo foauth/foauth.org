@@ -4,3 +4,4 @@ ENV/
 .DS_Store
 codekit-config.json
 .env
+*.orig
