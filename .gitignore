@@ -1,0 +1,5 @@
+*.pyc
+.Python
+ENV/
+.DS_Store
+codekit-config.json
