@@ -16,8 +16,9 @@
 							<li>Expiration information, including special tokens designed to refresh your authorization token. Some tokens expire after a certain amount of time, while others are permanent, and still others officially expire but can be refreshed indefinitely. foauth.org stores expiration dates when given, as well as refresh tokens to prevent you from having to reauthorize manually. Not all services support refreshing.</li>
 							<li>A unique ID to represent you with each service, which may or may not be your username. This is often a numeric ID, but can also be a username or email address, if that's how a service recognizes you. The purpose of storing this information is to allow you to use a previously authorized service as a secondary login, if you ever forget your foauth.org password. No other information about your accounts will be stored.</li>
 						</ul>
+						<p>foauth.org is also subject to the <a href="https://www.runscope.com/privacy?utm_source=partner&utm_medium=link&utm_campaign=foauth">Runscope Privacy Policy</a>.</p>
 						<p>If you'd like to remove your authorization tokens for any reason, you can simply <a href="{{ url_for('oauth_login') }}">login using one of your authorized services</a>. This will automatically wipe out your authorizations, for <a href="{{ url_for('security') }}">security reasons</a>.</p>
-						<p>If you'd like more details, the entire source code of the site is available <a href="https://github.com/foauth/foauth.org/">on GitHub</a> and you email us at <a href="mailto:privacy@foauth.org"><strong>privacy@foauth.org</strong></a>.</p>
+						<p>If you'd like more details, the entire source code of the site is available <a href="https://github.com/foauth/foauth.org/">on GitHub</a> and you email us at <a href="mailto:foauth@runscope.com"><strong>foauth@runscope.com</strong></a>.</p>
 					</div>
 				</div>
 			</div>

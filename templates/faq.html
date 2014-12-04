@@ -10,19 +10,19 @@
 				<div class="row">
 					<div class="span16">
 						<dl>
-							<dt>Doesn&rsquo;t this reintroduce the <a href="http://adactio.com/journal/1357/">password anti-pattern</a>?</dt>
+							<dt>Doesn't this reintroduce the <a href="http://adactio.com/journal/1357/">password anti-pattern</a>?</dt>
 							<dd>
-								<p>This problem occurs when one site asks for your username and password for another site. That isn&rsquo;t at all what we do here. We only ever ask you for the username and password you used to sign up with us, and all other authen&shy;tication goes through OAuth. We don&rsquo;t even see your username, much less your password; all we get is a token that only means something to the service in question.
+								<p>This problem occurs when one site asks for your username and password for another site. That isn't at all what we do here. We only ever ask you for the username and password you used to sign up with us, and all other authentication goes through OAuth. We don't even see your username, much less your password; all we get is a token that only means something to the service in question.
 								</p>
 							</dd>
-							<dt>Why doesn&rsquo;t foauth.org remember which permissions I&rsquo;ve selected?</dt>
+							<dt>Why doesn't foauth.org remember which permissions I've selected?</dt>
 							<dd>
-								<p>We could, but it would quickly get out of sync with the provider. If you authorize a provider with full permissions, then re-authorize it with limited permissions later, foauth.org will store the limited permissions, even though provider will typically keep the original permissions intact. Your token would have greater permissions than we know about, and if we tried to tell you what we do know, it&rsquo;d be an outright lie.</p>
+								<p>We could, but it would quickly get out of sync with the provider. If you authorize a provider with full permissions, then re-authorize it with limited permissions later, foauth.org will store the limited permissions, even though provider will typically keep the original permissions intact. Your token would have greater permissions than we know about, and if we tried to tell you what we do know, it'd be an outright lie.</p>
 							</dd>
 							<dt>How do I revoke access to services I no longer wish foauth.org to use?</dt>
 							<dd>
-								<p>You&rsquo;ll have to figure that out with each of those services themselves. With OAuth, service providers can revoke the token that foauth.org uses to access your data, but that can only be done on their end. Usually, it&rsquo;s somewhere in your account settings.</p>
-								<p>Technically, we could offer a feature for that as well, where we simply delete your token, but that would be another anti-pattern we don&rsquo;t want to start. After all, someone less scrupulous could just tell you they deleted your OAuth tokens but still keep them behind the scenes. It&rsquo;s just better for you to manage it with your services directly.</p>
+								<p>You'll have to figure that out with each of those services themselves. With OAuth, service providers can revoke the token that foauth.org uses to access your data, but that can only be done on their end. Usually, it's somewhere in your account settings.</p>
+								<p>Technically, we could offer a feature for that as well, where we simply delete your token, but that would be another anti-pattern we don't want to start. After all, someone less scrupulous could just tell you they deleted your OAuth tokens but still keep them behind the scenes. It's just better for you to manage it with your services directly.</p>
 							</dd>
 						</dl>
 					</div>

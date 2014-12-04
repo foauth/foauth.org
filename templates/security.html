@@ -9,21 +9,11 @@
 				</div>
 				<div class="row">
 					<div class="span12">
-						<p>foauth.org grants access to dozens of social networks, so security is a very serious concern. The entire source code of the site is available <a href="https://github.com/foauth/foauth.org/">on GitHub</a> and the rest of the software stack is listed on the right-hand side of this page, including what versions are currently in use. View the <a href="{{ url_for('privacy') }}">privacy information</a> for details of what we store and what we do with it.</p>
-						<p>If you've found any security issues in the current code or operation of the site, please report it to <a href="security@foauth.org"><strong>security@foauth.org</strong></a> so it can be dealt with as quickly as possible.</p>
+						<p>foauth.org grants access to dozens of social networks, so security is a very serious concern. The entire source code of the site is available <a href="https://github.com/foauth/foauth.org/">on GitHub</a>. View the <a href="{{ url_for('privacy') }}">privacy information</a> for details of what we store and what we do with it.</p>
+						<p>If you've found any security issues in the current code or operation of the site, please report it to <a href="foauth@runscope.com"><strong>foauth@runscope.com</strong></a> so it can be dealt with as quickly as possible.</p>
 						<h2>A note about password resets</h2>
 						<p>Rather than conventional password resets over email, foauth.org allows you to use your existing authorizations to temporarily verify your identify. This is easier to implement on our end, and faster to reset on your end. Because most services offer to remember your login information indefinitely, it's possible that anyone with physical access to your computer could access any account you're currently logged into.</p>
-						<p>That's an unfortunate situation on its own, but it gets worth when you consider that our password reset procedure means an attacker could use this process to gain control of all your authorized services. To combat this, a password reset will immediately remove all of your authorization tokens form foauth.og. You'll still see which ones you had previously authorized, but everything sensitive will have been purged from the system. This also makes password reset a sort of panic button, if you ever need to wipe out your authorizations.</p>
-					</div>
-					<div class="span4">
-						<dl class="info-list">
-							<dt><a href="http://python.org/">Python</a></dt>
-							<dd>{{ py_version.major }}.{{ py_version.minor }}.{{ py_version.micro }}</dd>
-{% for package, version in requirements %}
-							<dt><a href="https://pypi.python.org/pypi/{{ package }}/{{ version }}">{{ package }}</a></dt>
-							<dd><span>{{ version }}</span></dd>
-{% endfor %}
-						</dl>
+						<p>That's an unfortunate situation on its own, but it gets worth when you consider that our password reset procedure means an attacker could use this process to gain control of all your authorized services. To combat this, a password reset will immediately remove all of your authorization tokens from foauth.org. You'll still see which ones you had previously authorized, but everything sensitive will have been purged from the system. This also makes password reset a sort of panic button, if you ever need to wipe out your authorizations.</p>
 					</div>
 				</div>
 			</div>

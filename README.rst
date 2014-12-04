@@ -32,7 +32,13 @@ OAuth support. This means that new providers can be requested and added using
 GitHub's pull requests. Documentation for how to define these provider classes
 is still forthcoming.
 
+Credits
+-------
+A `Runscope`_ Community Project. Originally created by `Marty Alchin`_.
+
 .. _OAuth: http://oauth.net/
 .. _requests: https://github.com/kennethreitz/requests
 .. _oauthlib: https://github.com/idan/oauthlib
 .. _Flask: https://flask.pocoo.org/
+.. _Runscope: https://www.runscope.com/community
+.. _Marty Alchin: https://github.com/gulopine

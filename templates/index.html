@@ -7,14 +7,14 @@
 	</div>
 	<div class="row">
 		<div class="span16">
-			<p><a href="http://oauth.net/">OAuth</a> is a great idea for interaction between big sites with lots of users. But, as one of those users, it&rsquo;s a pretty terrible way to get at your own data. That&rsquo;s where foauth.org comes in, giving you access to these services in three easy steps:</p>
+			<p><a href="http://oauth.net/">OAuth</a> is a great idea for interaction between big sites with lots of users. But, as one of those users, it's a pretty terrible way to get at your own data. That's where foauth.org comes in, giving you access to these services in three easy steps:</p>
 		</div>
 	</div>
 	<ol class="row">
 		<li class="span8 signup">
 			<h2>Sign up with foauth.org</h2>
 			{% if current_user.is_authenticated() %}
-			<p>Looks like you&rsquo;ve already signed up. Well done!</p>
+			<p>Looks like you've already signed up. Well done!</p>
 			{% else %}
 			<p>This is the entire form. No joke.</p>
 			<form action="{{ url_for('signup') }}" method="post" class="row">
@@ -42,7 +42,7 @@
 						<input type="checkbox" name="consent" {% if form.data.consent %}checked{% endif %}>
 						Accept the <a href="{{ url_for('terms') }}">terms of service</a>.
 					</label>
-					Don&rsquo;t worry, they&rsquo;re really simple.
+					Don't worry, they're really simple.
 				</p>
 				<button type="submit" class="span8 btn primary">Sign up</button>
 			</form>
@@ -51,9 +51,9 @@
 		<li class="span8">
 			<h2>Activate your services</h2>
 			{% if current_user.is_authenticated() %}
-			<p>You&rsquo;ve already authorized {{ current_user.keys.count() }} service{% if current_user.keys.count() != 1 %}s{% endif %}, why not <a href="{{ url_for('services') }}">add more</a>?</p>
+			<p>You've already authorized {{ current_user.keys.count() }} service{% if current_user.keys.count() != 1 %}s{% endif %}, why not <a href="{{ url_for('services') }}">add more</a>?</p>
 			{% else %}
-			<p>This only takes a couple clicks if you&rsquo;re already logged in with them. You can connect up to <a href="{{ url_for('services') }}">{{ services|length }} different services</a> so far:</p>
+			<p>This only takes a couple clicks if you're already logged in with them. You can connect up to <a href="{{ url_for('services') }}">{{ services|length }} different services</a> so far:</p>
 			<p>
 			{% for service in services %}
 				<img class="favicon" src="{{ service.favicon_url }}" alt="{{ service.name }}" title="{{ service.name }}" style="margin:2px">
@@ -63,7 +63,7 @@
 		</li>
 		<li class="span16">
 			<h2>Access your own data</h2>
-			<p>Write your own programs to access your data, using HTTP Basic authen&shy;tication, which is much easier to deal with. Most program&shy;ming languages have built-in support for it, and we don&rsquo;t even care which one you use. Sure, <a href="{{ url_for('about') }}">we love Python</a>, but it&rsquo;s okay if you don&rsquo;t.</p>
+			<p>Write your own programs to access your data, using HTTP Basic authentication, which is much easier to deal with. Most programming languages have built-in support for it, and we don't even care which one you use. Sure, <a href="{{ url_for('about') }}">we love Python</a>, but it's okay if you don't.</p>
 			<pre>>>> import <a href="https://github.com/kennethreitz/requests">requests</a>
 >>> auth = 'email@example.com', 'password'
 >>> data = {'status': "Just signed up with https://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"}
