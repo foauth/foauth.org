@@ -15,10 +15,16 @@ class Spotify(foauth.providers.OAuth2):
 
     available_permissions = [
         (None, 'Read your publicly available information'),
-        ('playlist-modify', 'Manage your public playlists'),
-        ('playlist-modify-private', 'Manage all your playlists (even private)'),
         ('playlist-read-private', 'Access your private playlists'),
-        ('user-read-private', 'Access your name, image and subscription details'),
+        ('playlist-modify-public', 'Manage your public playlists'),
+        ('playlist-modify-private', 'Manage your private playlists'),
+        ('streaming', 'Play music and control playback on your other devices'),
+        ('user-follow-modify', 'Manage who you are following'),
+        ('user-follow-read', 'Access your followers and who you are following'),
+        ('user-library-read', 'Access your saved tracks and albums'),
+        ('user-library-modify', 'Manage your saved tracks and albums'),
+        ('user-read-private', 'Access your subscription details'),
+        ('user-read-birthdate', 'Receive your birthdate'),
         ('user-read-email', 'Get your real email address'),
     ]
 
