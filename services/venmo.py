@@ -6,6 +6,7 @@ class Venmo(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://venmo.com/'
     docs_url = 'https://developer.venmo.com/docs/oauth'
+    favicon_url = provider_url + 'favicon.ico'
     category = 'Money'
 
     # URLs to interact with the API

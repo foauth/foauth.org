@@ -8,6 +8,7 @@ class Yahoo(foauth.providers.OAuth1):
     name = 'Yahoo!'
     provider_url = 'http://www.yahoo.com/'
     docs_url = 'http://developer.yahoo.com/everything.html'
+    favicon_url = provider_url + 'favicon.ico'
     category = 'Productivity'
 
     # URLs to interact with the API
