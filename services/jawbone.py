@@ -6,6 +6,7 @@ class Jawbone(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://jawbone.com/'
     docs_url = 'https://jawbone.com/up/developer/endpoints'
+    favicon_url = provider_url + 'favicon.ico'
     category = 'Fitness'
 
     # URLs to interact with the API

@@ -7,7 +7,7 @@ from oauthlib.oauth1.rfc5849 import SIGNATURE_TYPE_QUERY
 class Netflix(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://www.netflix.com/'
-    favicon_url = 'https://netflix.hs.llnwd.net/e1/en_US/icons/nficon.ico'
+    favicon_url = provider_url + 'favicon.ico'
     docs_url = 'http://developer.netflix.com/docs'
     category = 'Movies/TV'
 

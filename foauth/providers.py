@@ -49,10 +49,8 @@ class OAuthMeta(type):
             cls.api_domains = [cls.api_domain]
         if 'provider_url' in attrs and 'favicon_url' not in attrs:
             # Use a favicon service when no favicon is supplied
-            primary = 'https://getfavicon.appspot.com/%s' % cls.provider_url
             domain = urlparse.urlparse(cls.provider_url).netloc
-            backup = 'https://www.google.com/s2/favicons?domain=%s' % domain
-            cls.favicon_url = '%s?defaulticon=%s' % (primary, urllib.quote(backup))
+            cls.favicon_url = 'https://www.google.com/s2/favicons?domain=%s' % domain
 
         if 'name' not in attrs:
             cls.name = cls.__name__

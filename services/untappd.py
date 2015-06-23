@@ -8,6 +8,7 @@ class Untappd(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://untappd.com/'
     docs_url = 'https://untappd.com/api/docs'
+    favicon_url = provider_url + 'favicon.ico'
     category = 'Food/Drink'
 
     # URLs to interact with the API

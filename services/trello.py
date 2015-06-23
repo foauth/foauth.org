@@ -5,6 +5,7 @@ class Trello(foauth.providers.OAuth1):
     # General info about the provider
     provider_url = 'https://trello.com/'
     docs_url = 'https://trello.com/docs/api/'
+    favicon_url = provider_url + '/favicon.ico'
     category = 'Tasks'
 
     # URLs to interact with the API
