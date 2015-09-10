@@ -34,13 +34,15 @@ for module_name in get_service_modules():
     for service in get_oauth_providers(module_name):
         alias = service.alias.upper()
         if alias[0].isdigit():
-            underscore_alias = "_" + alias
-            key = os.environ.get('%s_KEY' % alias, '').decode('utf8') or os.environ.get('%s_KEY' % underscore_alias, '').decode('utf8')
-            secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8') or os.environ.get('%s_SECRET' % underscore_alias, '').decode('utf8')
+            key = os.environ.get('%s_KEY' % alias) or os.environ.get('_%s_KEY' % alias) or ''
+            secret = os.environ.get('%s_SECRET' % alias, '') or os.environ.get('_%s_SECRET' % alias, '') or ''
+            key = key.decode('utf8')
+            secret = secret.decode('utf8')
         else:
             key = os.environ.get('%s_KEY' % alias, '').decode('utf8')
             secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8')
-        if key and secret:  # Only initialize if all the pieces are in place
+        if key and secret:
+          # Only initialize if all the pieces are in place
             services.append(service(key, secret))
 
 
