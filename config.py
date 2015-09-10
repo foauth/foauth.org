@@ -14,7 +14,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 if 'SSLIFY' in os.environ:
     SSLify(app)
 
-
+ 
 def get_service_modules():
     for filename in glob.glob(os.path.join('services', '*.py')):
         module_name = os.path.splitext(os.path.split(filename)[1])[0]
@@ -33,10 +33,16 @@ services = []
 for module_name in get_service_modules():
     for service in get_oauth_providers(module_name):
         alias = service.alias.upper()
-        key = os.environ.get('%s_KEY' % alias, '').decode('utf8')
-        secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8')
-
-        if key and secret:  # Only initialize if all the pieces are in place
+        if alias[0].isdigit():
+            key = os.environ.get('%s_KEY' % alias) or os.environ.get('_%s_KEY' % alias) or ''
+            secret = os.environ.get('%s_SECRET' % alias, '') or os.environ.get('_%s_SECRET' % alias, '') or ''
+            key = key.decode('utf8')
+            secret = secret.decode('utf8')
+        else:
+            key = os.environ.get('%s_KEY' % alias, '').decode('utf8')
+            secret = os.environ.get('%s_SECRET' % alias, '').decode('utf8')
+        if key and secret:
+          # Only initialize if all the pieces are in place
             services.append(service(key, secret))
 
 
