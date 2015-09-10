@@ -3,8 +3,8 @@ import foauth.providers
 
 class Flickr(foauth.providers.OAuth1):
     # General info about the provider
-    provider_url = 'http://www.flickr.com/'
-    docs_url = 'http://www.flickr.com/services/api/'
+    provider_url = 'https://www.flickr.com/'
+    docs_url = 'https://www.flickr.com/services/api/'
     favicon_url = provider_url + 'favicon.ico'
     category = 'Pictures'
 

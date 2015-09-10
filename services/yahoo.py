@@ -6,8 +6,8 @@ import foauth.providers
 class Yahoo(foauth.providers.OAuth1):
     # General info about the provider
     name = 'Yahoo!'
-    provider_url = 'http://www.yahoo.com/'
-    docs_url = 'http://developer.yahoo.com/everything.html'
+    provider_url = 'https://www.yahoo.com/'
+    docs_url = 'https://developer.yahoo.com/everything.html'
     favicon_url = provider_url + 'favicon.ico'
     category = 'Productivity'
 
