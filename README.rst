@@ -34,7 +34,7 @@ is still forthcoming.
 
 Credits
 -------
-A `Runscope`_ Community Project. Originally created by `Marty Alchin`_.
+Written by by `Marty Alchin`_, named by `Kenneth Reitz`_
 
 .. _OAuth: http://oauth.net/
 .. _requests: https://github.com/kennethreitz/requests
@@ -42,3 +42,4 @@ A `Runscope`_ Community Project. Originally created by `Marty Alchin`_.
 .. _Flask: https://flask.pocoo.org/
 .. _Runscope: https://www.runscope.com/community
 .. _Marty Alchin: https://github.com/gulopine
+.. _Kenneth Reitz: https://github.com/kennethreitz
