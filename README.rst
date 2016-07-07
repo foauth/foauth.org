@@ -11,11 +11,10 @@ HTTP Basic, which is easily available in hundreds of existing tools, such as
 
   >>> import requests
   >>> auth = 'email@example.com', 'password'
-  >>> data = {'status': "Just signed up with http://foauth.org/ and it's awesome! Thanks @Gulopine!"}
-  >>> requests.post('https://foauth.org/api.twitter.com/1/statuses/update.json', data=data, auth=auth)
-  >>> r = requests.get('https://foauth.org/api.twitter.com/1/statuses/user_timeline.json', auth=auth)
-  >>> r.json[0]['text']
-  "Just signed up with http://foauth.org/ and it's awesome! Thanks @Gulopine!"
+  >>> requests.post('https://foauth.org/getpocket.com/v3/add', data={'title': 'foauth.org'}, auth=auth)
+  >>> r = requests.post('https://foauth.org/getpocket.com/v3/get', data={'count': 1}, auth=auth)
+  >>> r.json()['list'].values()[0]['resolved_url']
+  'https://foauth.org/'
 
 Implementation
 --------------

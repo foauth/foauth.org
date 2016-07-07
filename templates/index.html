@@ -66,11 +66,10 @@
 			<p>Write your own programs to access your data, using HTTP Basic authentication, which is much easier to deal with. Most programming languages have built-in support for it, and we don't even care which one you use. Sure, <a href="{{ url_for('about') }}">we love Python</a>, but it's okay if you don't.</p>
 			<pre>>>> import <a href="https://github.com/kennethreitz/requests">requests</a>
 >>> auth = 'email@example.com', 'password'
->>> data = {'status': "Just signed up with https://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"}
->>> requests.post('http{% if request.is_secure %}s{% endif %}://{{ request.host }}/<a href="https://dev.twitter.com/docs/api/1.1/post/statuses/update">api.twitter.com/1.1/statuses/update.json</a>', data=data, auth=auth)
->>> r = requests.get('http{% if request.is_secure %}s{% endif %}://{{ request.host }}/<a href="https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline">api.twitter.com/1.1/statuses/user_timeline.json</a>', auth=auth)
->>> r.json()[0]['text']
-"Just signed up with https://foauth.org/ and it's awesome! Thanks <a href="https://twitter.com/gulopine">@Gulopine</a>!"</pre>
+>>> requests.post('http{% if request.is_secure %}s{% endif %}://{{ request.host }}/<a href="https://getpocket.com/developer/docs/v3/add">getpocket.com/v3/add</a>', data={'title': '<a href="https://foauth.org/">foauth.org</a>'}, auth=auth)
+>>> r = requests.post('http{% if request.is_secure %}s{% endif %}://{{ request.host }}/<a href="https://getpocket.com/developer/docs/v3/retrieve">getpocket.com/v3/get</a>', data={'count': 1}, auth=auth)
+>>> r.json()['list'].values()[0]['resolved_url']
+'<a href="https://foauth.org/">https://foauth.org/</a>'
 		</li>
 	</ol>
 </div>
