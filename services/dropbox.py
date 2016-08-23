@@ -1,8 +1,7 @@
 import foauth.providers
-from oauthlib.oauth1.rfc5849 import SIGNATURE_PLAINTEXT
 
 
-class Dropbox(foauth.providers.OAuth1):
+class Dropbox(foauth.providers.OAuth2):
     # General info about the provider
     provider_url = 'https://www.dropbox.com/'
     docs_url = 'https://www.dropbox.com/developers/reference/api'
@@ -10,17 +9,14 @@ class Dropbox(foauth.providers.OAuth1):
     category = 'Files'
 
     # URLs to interact with the API
-    request_token_url = 'https://api.dropbox.com/1/oauth/request_token'
-    authorize_url = 'https://www.dropbox.com/1/oauth/authorize'
-    access_token_url = 'https://api.dropbox.com/1/oauth/access_token'
-    api_domains = ['api.dropbox.com', 'api-content.dropbox.com']
-
-    signature_method = SIGNATURE_PLAINTEXT
+    authorize_url = 'https://www.dropbox.com/oauth2/authorize'
+    access_token_url = 'https://api.dropboxapi.com/oauth2/token'
+    api_domains = ['api.dropboxapi.com', 'content.dropboxapi.com', 'notify.dropboxapi.com']
 
     available_permissions = [
         (None, 'read and write to your entire Dropbox'),
     ]
 
     def get_user_id(self, key):
-        r = self.api(key, self.api_domains[0], u'/1/account/info')
-        return unicode(r.json()[u'uid'])
+        r = self.api(key, self.api_domains[0], u'/2/users/get_current_account', method='POST')
+        return unicode(r.json()[u'account_id'])
